@@ -1,0 +1,83 @@
+{
+  "departments": [
+    {
+      "subject": "CS",
+      "name": "Computer Science",
+      "description": "Computer Science and Engineering courses",
+      "terms": ["1258", "1256"],
+      "lastUpdated": "Fall 2025",
+      "gpaDataAvailable": true,
+      "colorScheme": "blue"
+    },
+    {
+      "subject": "MATH",
+      "name": "Mathematics",
+      "description": "Mathematics and Statistics courses",
+      "terms": ["1258"],
+      "lastUpdated": "Fall 2025",
+      "gpaDataAvailable": false,
+      "colorScheme": "purple"
+    },
+    {
+      "subject": "PHYS",
+      "name": "Physics",
+      "description": "Physics and Astronomy courses",
+      "terms": ["1258"],
+      "lastUpdated": "Fall 2025",
+      "gpaDataAvailable": false,
+      "colorScheme": "indigo"
+    },
+    {
+      "subject": "CHEM",
+      "name": "Chemistry",
+      "description": "Chemistry and Biochemistry courses",
+      "terms": ["1258"],
+      "lastUpdated": "Fall 2025",
+      "gpaDataAvailable": false,
+      "colorScheme": "green"
+    },
+    {
+      "subject": "BIOL",
+      "name": "Biology",
+      "description": "Biology and Life Sciences courses",
+      "terms": ["1258"],
+      "lastUpdated": "Fall 2025",
+      "gpaDataAvailable": false,
+      "colorScheme": "emerald"
+    },
+    {
+      "subject": "ECON",
+      "name": "Economics",
+      "description": "Economics and Business courses",
+      "terms": ["1258"],
+      "lastUpdated": "Fall 2025",
+      "gpaDataAvailable": false,
+      "colorScheme": "yellow"
+    },
+    {
+      "subject": "ENGL",
+      "name": "English",
+      "description": "English Literature and Writing courses",
+      "terms": ["1258"],
+      "lastUpdated": "Fall 2025",
+      "gpaDataAvailable": false,
+      "colorScheme": "red"
+    },
+    {
+      "subject": "HIST",
+      "name": "History",
+      "description": "History and Historical Studies courses",
+      "terms": ["1258"],
+      "lastUpdated": "Fall 2025",
+      "gpaDataAvailable": false,
+      "colorScheme": "amber"
+    }
+  ],
+  "globalSettings": {
+    "defaultTerm": "1258",
+    "gpaScrapingEnabled": true,
+    "autoUpdateFrequency": "weekly",
+    "outputDirectory": "output",
+    "dataDirectory": "data"
+  }
+} 

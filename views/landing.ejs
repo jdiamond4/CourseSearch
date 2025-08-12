@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-6 py-8">
+            <div class="text-center">
+                <h1 class="text-5xl font-bold mb-4">UVA Course Search</h1>
+                <p class="text-xl text-blue-100">Find the perfect courses with real-time enrollment data and instructor ratings</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Explore the Course Catalog by School or Requirement</h2>
+            <p class="text-lg text-gray-600">Click a school to see its departments, or open requirement groups to browse options. Each link takes you to the official catalog.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            <!-- Schools & Departments -->
+            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                        <span class="text-xl">🏛️</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-blue-800">Schools & Departments</h3>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="border-b border-gray-200 pb-3">
+                        <div class="flex items-center justify-between cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                            <span class="text-lg font-medium text-gray-700">School of Arts & Sciences</span>
+                            <span class="text-blue-600">›</span>
+                        </div>
+                    </div>
+                    
+                    <div class="border-b border-gray-200 pb-3">
+                        <div class="flex items-center justify-between cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                            <span class="text-lg font-medium text-gray-700">School of Engineering</span>
+                            <span class="text-blue-600">›</span>
+                        </div>
+                    </div>
+                    
+                    <div class="border-b border-gray-200 pb-3">
+                        <div class="flex items-center justify-between cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                            <span class="text-lg font-medium text-gray-700">School of Business</span>
+                            <span class="text-blue-600">›</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Degree Requirements -->
+            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                        <span class="text-xl">🎓</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-green-800">Degree Requirements</h3>
+                    </div>
+                
+                <div class="space-y-4">
+                    <div class="border-b border-gray-200 pb-3">
+                        <div class="flex items-center justify-between cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                            <span class="text-lg font-medium text-gray-700">Core Curriculum</span>
+                            <span class="text-green-600">›</span>
+                        </div>
+                    </div>
+                    
+                    <div class="border-b border-gray-200 pb-3">
+                        <div class="flex items-center justify-between cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                            <span class="text-lg font-medium text-gray-700">Advanced & Electives</span>
+                            <span class="text-green-600">›</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Access -->
+        <div class="text-center mt-12">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Quick Access</h3>
+            <div class="inline-flex flex-wrap gap-4 justify-center">
+                <a href="/courses/CS/1258" 
+                   class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+                    <span class="mr-2">🚀</span>
+                    CS Fall 2025
+                </a>
+                <a href="/api/courses/CS/1258" 
+                   class="inline-flex items-center px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors">
+                    <span class="mr-2">📊</span>
+                    API Data
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-300">UVA Course Search System</p>
+            <p class="text-sm text-gray-400 mt-2">Real-time enrollment data • Instructor ratings • Course analytics</p>
+        </div>
+    </footer>
+
+    <script>
+        function selectDepartment(code) {
+            // For now, just redirect to CS Fall 2025
+            // Later we can add a modal or form to select term
+            window.location.href = `/courses/${code}/1258`;
+        }
+
+        function selectTerm(code) {
+            // For now, just redirect to CS with selected term
+            // Later we can add a modal or form to select department
+            window.location.href = `/courses/CS/${code}`;
+        }
+    </script>
+</body>
+</html> 
