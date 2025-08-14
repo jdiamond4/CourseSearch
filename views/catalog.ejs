@@ -50,16 +50,16 @@
 </head>
 <body class="bg-slate-100 min-h-screen">
     <!-- Header -->
-    <header class="bg-white shadow-lg border-b border-gray-200">
-        <div class="container mx-auto px-6 py-4">
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="container mx-auto px-4 py-3">
             <div class="flex items-center justify-between">
                 <div>
-                    <a href="/" class="text-gray-600 hover:text-gray-800 font-medium">← Back to Home</a>
-                    <h1 class="text-3xl font-bold text-gray-800 mt-2"><%= subject %> Courses - <%= term %></h1>
+                    <a href="/" class="text-gray-600 hover:text-gray-800 font-medium text-sm">← Back to Home</a>
+                    <h1 class="text-2xl font-bold text-gray-800 mt-1"><%= subject %> Courses - <%= term %></h1>
                 </div>
                 <div class="text-right">
-                    <p class="text-sm text-gray-600">Page <%= page %></p>
-                    <p class="text-lg font-semibold text-gray-700"><%= courses.length %> Courses</p>
+                    <p class="text-xs text-gray-600">Page <%= page %></p>
+                    <p class="text-base font-semibold text-gray-700"><%= courses.length %> Courses</p>
                 </div>
             </div>
         </div>
@@ -78,19 +78,19 @@
     </div>
 
     <!-- Course List -->
-    <main class="container mx-auto px-6 py-8">
+    <main class="container mx-auto px-4 py-6">
         <div id="courseList">
             <% courses.forEach(function(course) { %>
-                <div class="course-card bg-white rounded-xl shadow-lg border-2 border-gray-200 mb-6 hover:border-gray-400 transition-all duration-300" 
+                <div class="course-card bg-white rounded-lg shadow-md border border-gray-200 mb-4 hover:border-gray-300 transition-all duration-200" 
                      data-course-id="<%= course.mnemonic %>-<%= course.number %>">
                     
                     <!-- Course Header -->
-                    <div class="p-6 border-b border-gray-200">
-                        <div class="flex justify-between items-start">
+                    <div class="p-4 border-b border-gray-200">
+                        <div class="flex justify-between items-center">
                             <div>
-                                <div class="flex items-center gap-3 mb-2">
-                                    <h2 class="text-2xl font-bold text-gray-800">
-                                        <%= course.mnemonic %> <%= course.number %>
+                                <div class="flex items-center gap-3 mb-1">
+                                    <h2 class="text-xl font-bold text-gray-800">
+                                        <%= course.mnemonic %> <%= course.number %>: <%= course.title || 'No title available' %>
                                     </h2>
                                     <% 
                                         // Determine overall course status
@@ -108,46 +108,45 @@
                                             statusText = 'Wait List';
                                         }
                                     %>
-                                    <span class="enrollment-badge <%= statusClass %> text-sm"><%= statusText %></span>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <p class="text-lg font-semibold text-gray-700"><%= course.title || 'No title available' %></p>
-                                    <div class="flex gap-3">
-                                        <div class="bg-gray-50 rounded border border-gray-200 px-2 py-1 text-center">
-                                            <div class="text-xs font-semibold text-gray-700"><%= course.sections.length %></div>
-                                            <div class="text-xs text-gray-600">Lec</div>
-                                        </div>
-                                        <div class="bg-gray-50 rounded border border-gray-200 px-2 py-1 text-center">
-                                            <div class="text-xs font-semibold text-gray-700"><%= course.discussions.length %></div>
-                                            <div class="text-xs text-gray-600">Lab</div>
-                                        </div>
-                                        <div class="bg-gray-50 rounded border border-gray-200 px-2 py-1 text-center">
-                                            <div class="text-xs font-semibold text-gray-700">
-                                                <%= course.sections.reduce((sum, s) => sum + (s.currentEnrollment || 0), 0) %>/<%= course.sections.reduce((sum, s) => sum + (s.maxEnrollment || 0), 0) %>
-                                            </div>
-                                            <div class="text-xs text-gray-600">Enroll</div>
-                                        </div>
-                                    </div>
+                                    <span class="enrollment-badge <%= statusClass %> text-xs"><%= statusText %></span>
                                 </div>
                             </div>
                             <div class="text-right">
                                 <% 
                                     // Calculate average GPA from sections that have instructor GPA data
-                                    const sectionsWithGPA = course.sections.filter(s => s.instructorGPA && s.instructorGPA !== 'N/A');
+                                    const sectionsWithGPA = course.sections.filter(s => {
+                                        return s.instructorGPA && 
+                                               s.instructorGPA !== 'N/A' && 
+                                               s.instructorGPA !== '—' && 
+                                               !isNaN(parseFloat(s.instructorGPA));
+                                    });
                                     const totalGPA = sectionsWithGPA.reduce((sum, s) => sum + parseFloat(s.instructorGPA), 0);
-                                    const averageGPA = sectionsWithGPA.length > 0 ? (totalGPA / sectionsWithGPA.length) : 0;
+                                    const averageGPA = sectionsWithGPA.length > 0 ? (totalGPA / sectionsWithGPA.length) : null;
+                                    
+                                    // Debug info
+                                    console.log('Course:', course.mnemonic, course.number);
+                                    console.log('Sections with GPA:', sectionsWithGPA.length);
+                                    console.log('Sections:', course.sections.map(s => ({ num: s.sectionNumber, gpa: s.instructorGPA })));
+                                    console.log('Average GPA:', averageGPA);
                                 %>
-                                <div class="text-2xl font-bold text-gray-700">
-                                    <%= averageGPA.toFixed(2) %>
-                                </div>
-                                <div class="text-sm text-gray-500">Avg GPA</div>
+                                <% if (averageGPA !== null && !isNaN(averageGPA)) { %>
+                                    <div class="text-2xl font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded border border-blue-200">
+                                        <%= averageGPA.toFixed(2) %>
+                                    </div>
+                                    <div class="text-xs font-medium text-blue-700 mt-1">GPA</div>
+                                <% } else { %>
+                                    <div class="text-2xl font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded border border-gray-300">
+                                        N/A
+                                    </div>
+                                    <div class="text-xs font-medium text-gray-600 mt-1">GPA</div>
+                                <% } %>
                             </div>
                         </div>
                     </div>
 
                     <!-- Simple Table Headers -->
-                    <div class="mb-3 px-6">
-                        <div class="grid grid-cols-8 gap-3 px-3 py-2 bg-gray-100 rounded text-xs font-semibold text-gray-700">
+                    <div class="mb-3">
+                        <div class="grid grid-cols-8 gap-3 px-3 py-2 bg-gray-100 rounded text-xs font-semibold text-gray-700 ml-1">
                             <div class="w-16">Section</div>
                             <div class="text-center w-20">Status</div>
                             <div class="text-center w-24">Enrollment</div>
@@ -161,92 +160,82 @@
 
                     <!-- Lecture Sections -->
                     <% if (course.sections.length > 0) { %>
-                        <div class="px-6 pb-4">
-                            <h3 class="text-lg font-semibold text-gray-700 mb-3">
-                                Lecture Sections (<%= course.sections.length %>)
-                            </h3>
-                            <% course.sections.forEach(function(section) { %>
-                                <div class="section-item border-l-4 border-gray-500 bg-white border border-gray-200 rounded-r-lg p-4 mb-3 hover:shadow-lg hover:border-gray-400 transition-all duration-200 cursor-pointer">
-                                    <div class="grid grid-cols-8 gap-3 items-center text-sm">
-                                        <div class="font-semibold text-gray-800"><%= section.sectionNumber %></div>
-                                        <div class="text-center">
-                                            <% 
-                                                let enrollmentClass = 'enrollment-open';
-                                                let enrollmentText = 'Open';
-                                                if (section.status === 'Closed') {
-                                                    enrollmentClass = 'enrollment-full';
-                                                    enrollmentText = 'Closed';
-                                                } else if (section.status === 'Wait List') {
-                                                    enrollmentClass = 'enrollment-waitlist';
-                                                    enrollmentText = 'Wait List';
-                                                }
-                                            %>
-                                            <span class="enrollment-badge <%= enrollmentClass %> text-xs"><%= enrollmentText %></span>
-                                        </div>
-                                        <div class="text-center font-medium text-gray-800"><%= section.currentEnrollment %>/<%= section.maxEnrollment %></div>
-                                        <div class="text-center font-medium text-gray-800"><%= section.teacherName %></div>
-                                        <div class="text-center text-gray-700 whitespace-nowrap">
-                                            <% if (section.startTime && section.endTime && section.startTime !== 0 && section.endTime !== 0) { %>
-                                                <%= formatTime(section.startTime) %> - <%= formatTime(section.endTime) %>
-                                            <% } else { %>
-                                                TBA
-                                            <% } %>
-                                        </div>
-                                        <div class="text-center text-gray-700"><%= section.days.join(' ') || 'TBA' %></div>
-                                        <div class="text-center text-gray-700"><%= section.location %></div>
-                                        <div class="text-center">
-                                            <% if (section.instructorGPA && section.instructorGPA !== 'N/A') { %>
-                                                <span class="gpa-badge"><%= section.instructorGPA %></span>
-                                            <% } else { %>
-                                                <span class="gpa-na">N/A</span>
-                                            <% } %>
-                                        </div>
+                        <% course.sections.forEach(function(section) { %>
+                            <div class="section-item border-l-4 border-blue-500 bg-blue-50 border border-blue-200 rounded-r p-3 mb-2 hover:bg-blue-100 transition-colors duration-150 cursor-pointer">
+                                <div class="grid grid-cols-8 gap-3 items-center text-sm">
+                                    <div class="font-semibold text-gray-800">Lecture: <%= section.sectionNumber %></div>
+                                    <div class="text-center">
+                                        <% 
+                                            let enrollmentClass = 'enrollment-open';
+                                            let enrollmentText = 'Open';
+                                            if (section.status === 'Closed') {
+                                                enrollmentClass = 'enrollment-full';
+                                                enrollmentText = 'Closed';
+                                            } else if (section.status === 'Wait List') {
+                                                enrollmentClass = 'enrollment-waitlist';
+                                                enrollmentText = 'Wait List';
+                                            }
+                                        %>
+                                        <span class="enrollment-badge <%= enrollmentClass %> text-xs"><%= enrollmentText %></span>
+                                    </div>
+                                    <div class="text-center font-medium text-gray-800"><%= section.currentEnrollment %>/<%= section.maxEnrollment %></div>
+                                    <div class="text-center font-medium text-gray-800"><%= section.teacherName %></div>
+                                    <div class="text-center text-gray-700 whitespace-nowrap">
+                                        <% if (section.startTime && section.endTime && section.startTime !== 0 && section.endTime !== 0) { %>
+                                            <%= formatTime(section.startTime) %> - <%= formatTime(section.endTime) %>
+                                        <% } else { %>
+                                            TBA
+                                        <% } %>
+                                    </div>
+                                    <div class="text-center text-gray-700"><%= section.days.join(' ') || 'TBA' %></div>
+                                    <div class="text-center text-gray-700"><%= section.location %></div>
+                                    <div class="text-center">
+                                        <% if (section.instructorGPA && section.instructorGPA !== 'N/A') { %>
+                                            <span class="gpa-badge"><%= section.instructorGPA %></span>
+                                        <% } else { %>
+                                            <span class="gpa-na">N/A</span>
+                                        <% } %>
                                     </div>
                                 </div>
-                            <% }); %>
-                        </div>
+                            </div>
+                        <% }); %>
                     <% } %>
 
                     <!-- Discussion/Lab Sections -->
                     <% if (course.discussions.length > 0) { %>
-                        <div class="px-6 pb-6">
-                            <h3 class="text-lg font-semibold text-gray-700 mb-3">
-                                <%= course.discussions[0].type || 'Discussion' %>s (<%= course.discussions.length %>)
-                            </h3>
-                            <% course.discussions.forEach(function(discussion) { %>
-                                <div class="discussion-item border-l-4 border-gray-500 bg-white border border-gray-200 rounded-r-lg p-4 mb-3 hover:shadow-lg hover:border-gray-400 transition-all duration-200 cursor-pointer">
-                                    <div class="grid grid-cols-8 gap-3 items-center text-sm">
-                                        <div class="font-semibold text-gray-800"><%= discussion.sectionNumber %></div>
-                                        <div class="text-center">
-                                            <% 
-                                                let enrollmentClass = 'enrollment-open';
-                                                let enrollmentText = 'Open';
-                                                if (discussion.status === 'Closed') {
-                                                    enrollmentClass = 'enrollment-full';
-                                                    enrollmentText = 'Closed';
-                                                } else if (discussion.status === 'Wait List') {
-                                                    enrollmentClass = 'enrollment-waitlist';
-                                                    enrollmentText = 'Wait List';
-                                                }
-                                            %>
-                                            <span class="enrollment-badge <%= enrollmentClass %> text-xs"><%= enrollmentText %></span>
-                                        </div>
-                                        <div class="text-center font-medium text-gray-800"><%= discussion.currentEnrollment %>/<%= discussion.maxEnrollment %></div>
-                                        <div class="text-center font-medium text-gray-800"><%= discussion.teacherName %></div>
-                                        <div class="text-center text-gray-700 whitespace-nowrap">
-                                            <% if (discussion.startTime && discussion.endTime && discussion.startTime !== 0 && discussion.endTime !== 0) { %>
-                                                <%= formatTime(discussion.startTime) %> - <%= formatTime(discussion.endTime) %>
-                                            <% } else { %>
-                                                TBA
-                                            <% } %>
-                                        </div>
-                                        <div class="text-center text-gray-700"><%= discussion.days.join(' ') || 'TBA' %></div>
-                                        <div class="text-center text-gray-700"><%= discussion.location %></div>
-                                        <div class="text-center text-gray-400">—</div>
+                        <% course.discussions.forEach(function(discussion) { %>
+                            <div class="discussion-item border-l-4 border-green-500 bg-green-50 border border-green-200 rounded-r p-3 mb-2 hover:bg-green-100 transition-colors duration-150 cursor-pointer">
+                                <div class="grid grid-cols-8 gap-3 items-center text-sm">
+                                    <div class="font-semibold text-gray-800"><%= discussion.type || 'Lab' %>: <%= discussion.sectionNumber %></div>
+                                    <div class="text-center">
+                                        <% 
+                                            let enrollmentClass = 'enrollment-open';
+                                            let enrollmentText = 'Open';
+                                            if (discussion.status === 'Closed') {
+                                                enrollmentClass = 'enrollment-full';
+                                                enrollmentText = 'Closed';
+                                            } else if (discussion.status === 'Wait List') {
+                                                enrollmentClass = 'enrollment-waitlist';
+                                                enrollmentText = 'Wait List';
+                                            }
+                                        %>
+                                        <span class="enrollment-badge <%= enrollmentClass %> text-xs"><%= enrollmentText %></span>
                                     </div>
+                                    <div class="text-center font-medium text-gray-800"><%= discussion.currentEnrollment %>/<%= discussion.maxEnrollment %></div>
+                                    <div class="text-center font-medium text-gray-800"><%= discussion.teacherName %></div>
+                                    <div class="text-center text-gray-700 whitespace-nowrap">
+                                        <% if (discussion.startTime && discussion.endTime && discussion.startTime !== 0 && discussion.endTime !== 0) { %>
+                                            <%= formatTime(discussion.startTime) %> - <%= formatTime(discussion.endTime) %>
+                                        <% } else { %>
+                                            TBA
+                                        <% } %>
+                                    </div>
+                                    <div class="text-center text-gray-700"><%= discussion.days.join(' ') || 'TBA' %></div>
+                                    <div class="text-center text-gray-700"><%= discussion.location %></div>
+                                    <div class="text-center text-gray-400">—</div>
                                 </div>
-                            <% }); %>
-                        </div>
+                            </div>
+                        <% }); %>
                     <% } %>
                 </div>
             <% }); %>
