@@ -162,9 +162,8 @@
                     <!-- Lecture Sections -->
                     <% if (course.sections.length > 0) { %>
                         <div class="px-6 pb-4">
-                            <h3 class="text-lg font-semibold text-blue-700 mb-3 flex items-center">
-                                <span class="mr-2">📖</span>
-                                Lecture Sections (<%= course.sections.length %>):
+                            <h3 class="text-lg font-semibold text-blue-700 mb-3">
+                                Lecture Sections (<%= course.sections.length %>)
                             </h3>
                             <% course.sections.forEach(function(section) { %>
                                 <div class="section-item border-l-4 border-blue-500 bg-white border border-gray-200 rounded-r-lg p-4 mb-3 hover:shadow-lg hover:border-blue-400 transition-all duration-200 cursor-pointer">
@@ -211,9 +210,8 @@
                     <!-- Discussion/Lab Sections -->
                     <% if (course.discussions.length > 0) { %>
                         <div class="px-6 pb-6">
-                            <h3 class="text-lg font-semibold text-green-700 mb-3 flex items-center">
-                                <span class="mr-2">💬</span>
-                                <%= course.discussions[0].type || 'Discussion' %>s (<%= course.discussions.length %>):
+                            <h3 class="text-lg font-semibold text-green-700 mb-3">
+                                <%= course.discussions[0].type || 'Discussion' %>s (<%= course.discussions.length %>)
                             </h3>
                             <% course.discussions.forEach(function(discussion) { %>
                                 <div class="discussion-item border-l-4 border-green-500 bg-white border border-gray-200 rounded-r-lg p-4 mb-3 hover:shadow-lg hover:border-green-400 transition-all duration-200 cursor-pointer">
