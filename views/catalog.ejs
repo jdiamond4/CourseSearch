@@ -28,10 +28,16 @@
             font-weight: 600;
             border: 1px solid #d1d5db;
         }
-        
         .gpa-na {
-            color: #6b7280;
+            color: #9ca3af;
             font-style: italic;
+        }
+        .department-link {
+            transition: all 0.2s ease;
+        }
+        .department-link:hover {
+            background-color: #f3f4f6;
+            transform: translateX(4px);
         }
         
         /* Ensure proper grid alignment */
@@ -48,18 +54,22 @@
         }
     </style>
 </head>
-<body class="bg-slate-100 min-h-screen">
+<body class="bg-gray-50">
     <!-- Header -->
     <header class="bg-white shadow-sm border-b border-gray-200">
-        <div class="container mx-auto px-4 py-3">
+        <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
-                <div>
-                    <a href="/" class="text-gray-600 hover:text-gray-800 font-medium text-sm">← Back to Home</a>
-                    <h1 class="text-2xl font-bold text-gray-800 mt-1"><%= subject %> Courses - <%= term %></h1>
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold text-gray-800 hover:text-gray-600 transition-colors">
+                        CourseSearch
+                    </a>
                 </div>
-                <div class="text-right">
-                    <p class="text-xs text-gray-600">Page <%= page %></p>
-                    <p class="text-base font-semibold text-gray-700"><%= courses.length %> Courses</p>
+                <div class="text-sm text-gray-500">
+                    <% if (department) { %>
+                        <%= department %> Department
+                    <% } else { %>
+                        Course Catalog
+                    <% } %>
                 </div>
             </div>
         </div>
@@ -79,8 +89,14 @@
 
     <!-- Course List -->
     <main class="container mx-auto px-4 py-6">
-        <div id="courseList">
-            <% courses.forEach(function(course) { %>
+        <% if (courses && courses.length > 0) { %>
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2"><%= title %></h2>
+                <p class="text-gray-600"><%= courses.length %> courses found</p>
+            </div>
+            
+            <div id="courseList">
+                <% courses.forEach(function(course) { %>
                 <div class="course-card bg-white rounded-lg shadow-md border border-gray-200 mb-4 hover:border-gray-300 transition-all duration-200" 
                      data-course-id="<%= course.mnemonic %>-<%= course.number %>">
                     
@@ -240,6 +256,15 @@
                 </div>
             <% }); %>
         </div>
+        <% } else { %>
+            <div class="text-center py-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">No Courses Found</h2>
+                <p class="text-gray-600 mb-6">No courses match your current criteria.</p>
+                <a href="/" class="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                    Back to Home
+                </a>
+            </div>
+        <% } %>
     </main>
 
     <script>

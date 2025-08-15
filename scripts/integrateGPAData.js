@@ -40,9 +40,23 @@ class GPADataIntegrator {
   // Load SIS data
   loadSISData() {
     try {
-      const sisPath = path.join(__dirname, '../data/organized-term-1258-subject-CS-page-1.json');
+      // Allow specifying department and term via command line arguments
+      const department = process.argv[2] || 'CS';
+      const term = process.argv[3] || '1258';
+      const page = process.argv[4] || '1';
+      
+      const sisPath = path.join(__dirname, `../data/organized-term-${term}-subject-${department}-page-${page}.json`);
+      
+      if (!fs.existsSync(sisPath)) {
+        console.error(`❌ SIS data file not found: ${sisPath}`);
+        console.log('💡 Usage: node scripts/integrateGPAData.js <DEPARTMENT> <TERM> <PAGE>');
+        console.log('   Example: node scripts/integrateGPAData.js MATH 1258 1');
+        console.log('   Example: node scripts/integrateGPAData.js CS 1258 1');
+        return false;
+      }
+      
       this.sisData = JSON.parse(fs.readFileSync(sisPath, 'utf8'));
-      console.log(`📚 Loaded SIS data for ${this.sisData.courses.length} courses`);
+      console.log(`📚 Loaded SIS data for ${this.sisData.courses.length} courses from ${department} department`);
       return true;
     } catch (error) {
       console.error('❌ Error loading SIS data:', error.message);
@@ -128,7 +142,11 @@ class GPADataIntegrator {
     }
 
     try {
-      const outputPath = path.join(__dirname, '../data/integrated-term-1258-subject-CS-page-1.json');
+      const department = process.argv[2] || 'CS';
+      const term = process.argv[3] || '1258';
+      const page = process.argv[4] || '1';
+      
+      const outputPath = path.join(__dirname, `../data/integrated-term-${term}-subject-${department}-page-${page}.json`);
       fs.writeFileSync(outputPath, JSON.stringify(this.integratedData, null, 2));
       console.log(`💾 Integrated data saved to: ${outputPath}`);
       return true;
@@ -182,6 +200,14 @@ class GPADataIntegrator {
 
 // Run the integration
 if (require.main === module) {
+  if (process.argv.length < 3) {
+    console.log('❌ Usage: node scripts/integrateGPAData.js <DEPARTMENT> [TERM] [PAGE]');
+    console.log('   Example: node scripts/integrateGPAData.js MATH 1258 1');
+    console.log('   Example: node scripts/integrateGPAData.js CS 1258 1');
+    console.log('   Example: node scripts/integrateGPAData.js MATH (uses defaults: term=1258, page=1)');
+    process.exit(1);
+  }
+  
   const integrator = new GPADataIntegrator();
   integrator.run().catch(console.error);
 }

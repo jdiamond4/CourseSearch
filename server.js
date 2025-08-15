@@ -29,62 +29,69 @@ app.locals.formatTime = function(time) {
 
 // Routes
 app.get('/', (req, res) => {
-  res.render('landing', { title: 'UVA Course Search' });
+    res.render('landing', { title: 'UVA Course Search' });
 });
 
-app.get('/courses/:subject/:term', async (req, res) => {
-  try {
-    const { subject, term } = req.params;
-    const page = req.query.page || 1;
-    
-    const dataPath = path.join(__dirname, 'data', `integrated-term-${term}-subject-${subject}-page-${page}.json`);
-    
+app.get('/catalog', async (req, res) => {
     try {
-      const data = await fs.readFile(dataPath, 'utf8');
-      const courseData = JSON.parse(data);
-      res.render('catalog', { 
-        courses: courseData.courses, 
-        subject, 
-        term, 
-        page,
-        title: `${subject} Courses - ${term}`
-      });
-    } catch (fileError) {
-      console.log(`Data file not found, attempting to generate: ${dataPath}`);
-      res.status(404).render('error', { 
-        message: 'Course data not available',
-        error: 'The requested course data could not be found or generated.',
-        title: 'Data Not Available'
-      });
+        const { department, filters } = req.query;
+        
+        // For now, use the existing CS data
+        let courses = [];
+        
+        if (department === 'CS') {
+            const dataPath = path.join(__dirname, 'data', 'integrated-term-1258-subject-CS-page-1.json');
+            try {
+                const data = await fs.readFile(dataPath, 'utf8');
+                const courseData = JSON.parse(data);
+                courses = courseData.courses;
+            } catch (fileError) {
+                console.log(`CS data file not found: ${dataPath}`);
+                courses = [];
+            }
+        }
+        
+        // Generate dynamic title based on what's being displayed
+        let title = 'Course Catalog';
+        if (department) {
+            title = `${department} Courses`;
+        }
+        
+        res.render('catalog', { 
+            courses, 
+            department,
+            filters,
+            title
+        });
+    } catch (error) {
+        console.error('Error rendering catalog:', error);
+        res.status(500).render('error', { 
+            message: 'Server Error',
+            error: 'An error occurred while processing your request.',
+            title: 'Server Error'
+        });
     }
-  } catch (error) {
-    console.error('Error rendering catalog:', error);
-    res.status(500).render('error', { 
-      message: 'Server Error',
-      error: 'An error occurred while processing your request.',
-      title: 'Server Error'
-    });
-  }
 });
 
 // API Routes
 app.get('/api/courses/:subject/:term', async (req, res) => {
-  try {
-    const { subject, term } = req.params;
-    const page = req.query.page || 1;
-    
-    const dataPath = path.join(__dirname, 'data', `integrated-term-${term}-subject-${subject}-page-${page}.json`);
-    
     try {
-      const data = await fs.readFile(dataPath, 'utf8');
-      const courseData = JSON.parse(data);
-      res.json(courseData);
-    } catch (fileError) {
-      res.status(404).json({ error: 'Data not available' });
+        const { subject, term } = req.params;
+        const page = req.query.page || 1;
+        
+        // Changed from 'organized-term-...' to 'integrated-term-...'
+        const dataPath = path.join(__dirname, 'data', `integrated-term-${term}-subject-${subject}-page-${page}.json`);
+        
+        try {
+            const data = await fs.readFile(dataPath, 'utf8');
+            const courseData = JSON.parse(data);
+            res.json(courseData);
+        } catch (fileError) {
+            res.status(404).json({ error: 'Data not available' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
     }
-  } catch (error) {
-    res.status(500).json({ error: 'Server error' });
-  }
 });
 
 // Search endpoint (placeholder for future AI integration)
