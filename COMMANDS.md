@@ -18,43 +18,65 @@ node scripts/databuilder.js --subject=CS --term=1258
 node scripts/databuilder.js --subject=MATH --term=1258
 ```
 
-## Common Department Codes
+## Update All Departments
 
-- `CS` - Computer Science
-- `MATH` - Mathematics  
-- `PHYS` - Physics
-- `CHEM` - Chemistry
-- `BIOL` - Biology
-- `ECON` - Economics
-- `ENGL` - English
-- `HIST` - History
-- `PSYC` - Psychology
+```bash
+# Update live enrollment data for ALL departments at once
+node scripts/databuilder.js --all --term=1258
 
-## Start/Stop Server
+# This will automatically:
+# - Read from data/departments.csv
+# - Update each department one by one
+# - Show progress and results
+```
+
+## Common Codes
+
+```bash
+# Term codes
+1258 = Fall 2025
+1256 = Spring 2025
+1254 = Fall 2024
+
+# Department IDs (for GPA scraping)
+CS = 16
+MATH = 16  
+ASTR = 4
+STAT = 34
+```
+
+## Server Management
 
 ```bash
 # Start server
-node server.js
+npm start
 
-# Stop server (in another terminal)
+# Kill existing server
 pkill -f "node server.js"
+
+# Restart server
+pkill -f "node server.js" && npm start
 ```
 
-## Test the System
+## Testing
 
 ```bash
-# Test CS courses
-curl "http://localhost:3000/catalog?department=CS"
+# Test single department update
+node scripts/databuilder.js --subject=CS --term=1258
 
-# Test MATH courses  
-curl "http://localhost:3000/catalog?department=MATH"
-
-# Test search
-curl "http://localhost:3000/catalog?search=Programming"
+# Test GPA scraping
+node scripts/scrapeCourseForum.js --departmentId=16 --subject=CS --term=1258
 ```
 
-## Workflow for New Semester
+## Workflow
 
-1. **Update all departments** with fresh SIS data
-2. **Get fresh GPA data** for all departments
-3. **Run enrollment updates** every few minutes during peak season 
+```bash
+# 1. Update all departments (gets latest enrollment data)
+node scripts/databuilder.js --all --term=1258
+
+# 2. Scrape GPA data for new departments (if needed)
+node scripts/scrapeCourseForum.js --departmentId=34 --subject=STAT --term=1258
+
+# 3. Start server to view results
+npm start
+``` 
