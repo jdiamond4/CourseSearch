@@ -256,9 +256,20 @@ async function fetchAllPages(term, subject) {
 async function main() {
   const term = getArg('term', '1258');
   const subject = getArg('subject', 'MATH');
+  const updateAll = process.argv.includes('--all');
   
-  if (!term || !subject) {
-    console.error('Missing required arguments: --term and --subject');
+  if (!term) {
+    console.error('Missing required argument: --term');
+    process.exit(1);
+  }
+  
+  if (updateAll) {
+    await updateAllDepartments(term);
+    return;
+  }
+  
+  if (!subject) {
+    console.error('Missing required argument: --subject');
     process.exit(1);
   }
   
@@ -320,6 +331,77 @@ async function main() {
     
   } catch (error) {
     console.error(`❌ Error building master SIS data: ${error.message}`);
+    process.exit(1);
+  }
+}
+
+async function updateAllDepartments(term) {
+  const departmentsPath = path.join(process.cwd(), 'data', 'departments.csv');
+  
+  if (!fs.existsSync(departmentsPath)) {
+    console.error(`❌ Departments file not found: ${departmentsPath}`);
+    process.exit(1);
+  }
+  
+  console.log(`🚀 Starting update of all departments for term ${term}...`);
+  console.log(`📖 Reading departments from: ${departmentsPath}`);
+  
+  try {
+    const departments = parseCSV(departmentsPath);
+    console.log(`📋 Found ${departments.length} departments to update`);
+    
+    const results = [];
+    
+    for (const dept of departments) {
+      const { name, nemonic, id } = dept;
+      
+      if (!nemonic) {
+        console.log(`⚠️  Skipping department with no nemonic: ${name}`);
+        continue;
+      }
+      
+      console.log(`\n🔄 Updating ${name} (${nemonic})...`);
+      
+      try {
+        const command = `node scripts/buildMasterAllDepartments.js --subject=${nemonic} --term=${term}`;
+        console.log(`   Running: ${command}`);
+        
+        const output = execSync(command, { encoding: 'utf8' });
+        console.log(`   ✅ ${name} updated successfully`);
+        
+        results.push({ name, nemonic, status: 'success' });
+        
+      } catch (error) {
+        console.log(`   ❌ ${name} failed: ${error.message}`);
+        results.push({ name, nemonic, status: 'failed', error: error.message });
+      }
+      
+      // Small delay between departments
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    
+    // Summary
+    console.log(`\n📊 Update Summary:`);
+    const successful = results.filter(r => r.status === 'success');
+    const failed = results.filter(r => r.status === 'failed');
+    
+    console.log(`   ✅ Successful: ${successful.length}`);
+    console.log(`   ❌ Failed: ${failed.length}`);
+    
+    if (successful.length > 0) {
+      console.log(`\n✅ Successfully updated:`);
+      successful.forEach(r => console.log(`   - ${r.name} (${r.nemonic})`));
+    }
+    
+    if (failed.length > 0) {
+      console.log(`\n❌ Failed to update:`);
+      failed.forEach(r => console.log(`   - ${r.name} (${r.nemonic}): ${r.error}`));
+    }
+    
+    console.log(`\n🎉 Department update process completed!`);
+    
+  } catch (error) {
+    console.error(`❌ Error updating departments: ${error.message}`);
     process.exit(1);
   }
 }
