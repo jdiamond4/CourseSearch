@@ -128,7 +128,14 @@ if (require.main === module) {
   const page = args.find(arg => arg.startsWith('--page='))?.split('=')[1];
   
   if (!term || !subject || !page) {
-    console.log('Usage: node processAndOrganize.js --term=1258 --subject=CS --page=1');
+    console.log('Usage: node processAndOrganize.js --term=<TERM> --subject=<SUBJECT> --page=<PAGE>');
+    console.log('  --term: Term code (e.g., 1258 for Fall 2025)');
+    console.log('  --subject: Subject code (e.g., MATH, CS, PHYS)');
+    console.log('  --page: Page number (default: 1)');
+    console.log('');
+    console.log('Examples:');
+    console.log('  node processAndOrganize.js --term=1258 --subject=MATH --page=1');
+    console.log('  node processAndOrganize.js --term=1258 --subject=CS --page=1');
     process.exit(1);
   }
   

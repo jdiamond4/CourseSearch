@@ -223,19 +223,19 @@ if (require.main === module) {
       const term = args.find(arg => arg.startsWith('--term='))?.split('=')[1];
       
       if (!subject) {
-        console.log('❌ Please specify --subject=CODE');
+        console.log('❌ Please specify --subject=<SUBJECT>');
         process.exit(1);
       }
       
       builder.buildDepartment(subject, term);
       break;
 
-    case 'term':
+    case 'all':
       // Build all departments for specific term
       const termCode = args.find(arg => arg.startsWith('--term='))?.split('=')[1];
       
       if (!termCode) {
-        console.log('❌ Please specify --term=CODE');
+        console.log('❌ Please specify --term=<TERM>');
         process.exit(1);
       }
       
@@ -253,14 +253,15 @@ Usage: node buildCourseCatalog.js <command> [options]
 
 Commands:
   build                                    Build entire course catalog
-  department --subject=CS [--term=1258]   Build specific department
-  term --term=1258                        Build all departments for term
+  department --subject=<SUBJECT> [--term=<TERM>]   Build specific department
+  all [--term=<TERM>]                              Build all departments
   validate                                 Validate configuration
 
 Examples:
   node buildCourseCatalog.js build
+  node buildCourseCatalog.js department --subject=MATH --term=1258
   node buildCourseCatalog.js department --subject=CS --term=1258
-  node buildCourseCatalog.js term --term=1258
+  node buildCourseCatalog.js all --term=1258
   node buildCourseCatalog.js validate
       `);
   }

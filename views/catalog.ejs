@@ -65,8 +65,14 @@
                     </a>
                 </div>
                 <div class="text-sm text-gray-500">
-                    <% if (department) { %>
+                    <% if (typeof department !== 'undefined' && department) { %>
                         <%= department %> Department
+                    <% } else if (typeof search !== 'undefined' && search) { %>
+                        Search Results
+                    <% } else if (typeof level !== 'undefined' && level) { %>
+                        <%= level %> Level
+                    <% } else if (typeof status !== 'undefined' && status) { %>
+                        <%= status.charAt(0).toUpperCase() + status.slice(1) %>
                     <% } else { %>
                         Course Catalog
                     <% } %>
@@ -86,6 +92,32 @@
             </div>
         </div>
     </div>
+
+    <!-- Search Summary -->
+    <% if ((typeof search !== 'undefined' && search) || (typeof department !== 'undefined' && department) || (typeof level !== 'undefined' && level) || (typeof status !== 'undefined' && status)) { %>
+    <div class="bg-blue-50 border-b border-blue-200 py-3">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4 text-sm text-blue-800">
+                    <span class="font-medium">Search Filters:</span>
+                    <% if (typeof department !== 'undefined' && department) { %>
+                        <span class="bg-blue-100 px-2 py-1 rounded">Department: <%= department %></span>
+                    <% } %>
+                    <% if (typeof search !== 'undefined' && search) { %>
+                        <span class="bg-blue-100 px-2 py-1 rounded">Search: "<%= search %>"</span>
+                    <% } %>
+                    <% if (typeof level !== 'undefined' && level) { %>
+                        <span class="bg-blue-100 px-2 py-1 rounded">Level: <%= level %></span>
+                    <% } %>
+                    <% if (typeof status !== 'undefined' && status) { %>
+                        <span class="bg-blue-100 px-2 py-1 rounded">Status: <%= status.charAt(0).toUpperCase() + status.slice(1) %></span>
+                    <% } %>
+                </div>
+                <a href="/catalog" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Clear All</a>
+            </div>
+        </div>
+    </div>
+    <% } %>
 
     <!-- Course List -->
     <main class="container mx-auto px-4 py-6">
@@ -179,7 +211,7 @@
                         <% course.sections.forEach(function(section) { %>
                             <div class="section-item border-l-4 border-blue-500 bg-blue-50 border border-blue-200 rounded-r p-3 mb-2 hover:bg-blue-100 transition-colors duration-150 cursor-pointer">
                                 <div class="grid grid-cols-8 gap-3 items-center text-sm">
-                                    <div class="font-semibold text-gray-800">Lecture: <%= section.sectionNumber %></div>
+                                    <div class="font-semibold text-gray-800"><%= section.sectionType || 'Lecture' %>: <%= section.sectionNumber %></div>
                                     <div class="text-center">
                                         <% 
                                             let enrollmentClass = 'enrollment-open';
@@ -194,7 +226,12 @@
                                         %>
                                         <span class="enrollment-badge <%= enrollmentClass %> text-xs"><%= enrollmentText %></span>
                                     </div>
-                                    <div class="text-center font-medium text-gray-800"><%= section.currentEnrollment %>/<%= section.maxEnrollment %></div>
+                                    <div class="text-center font-medium text-gray-800">
+                                        <%= section.currentEnrollment %>/<%= section.maxEnrollment %>
+                                        <% if (section.status === 'Wait List' && section.waitlistCapacity > 0) { %>
+                                            <br><span class="text-xs text-orange-600">(<%= section.waitlistTotal || 0 %>/<%= section.waitlistCapacity %> waitlist)</span>
+                                        <% } %>
+                                    </div>
                                     <div class="text-center font-medium text-gray-800"><%= section.teacherName %></div>
                                     <div class="text-center text-gray-700 whitespace-nowrap">
                                         <% if (section.startTime && section.endTime && section.startTime !== 0 && section.endTime !== 0) { %>
@@ -203,7 +240,7 @@
                                             TBA
                                         <% } %>
                                     </div>
-                                    <div class="text-center text-gray-700"><%= section.days.join(' ') || 'TBA' %></div>
+                                    <div class="text-center text-gray-700"><%= section.days || 'TBA' %></div>
                                     <div class="text-center text-gray-700"><%= section.location %></div>
                                     <div class="text-center">
                                         <% if (section.instructorGPA && section.instructorGPA !== 'N/A') { %>
@@ -222,7 +259,7 @@
                         <% course.discussions.forEach(function(discussion) { %>
                             <div class="discussion-item border-l-4 border-green-500 bg-green-50 border border-green-200 rounded-r p-3 mb-2 hover:bg-green-100 transition-colors duration-150 cursor-pointer">
                                 <div class="grid grid-cols-8 gap-3 items-center text-sm">
-                                    <div class="font-semibold text-gray-800"><%= discussion.type || 'Lab' %>: <%= discussion.sectionNumber %></div>
+                                    <div class="font-semibold text-gray-800"><%= discussion.sectionType || 'Lab' %>: <%= discussion.sectionNumber %></div>
                                     <div class="text-center">
                                         <% 
                                             let enrollmentClass = 'enrollment-open';
@@ -237,7 +274,12 @@
                                         %>
                                         <span class="enrollment-badge <%= enrollmentClass %> text-xs"><%= enrollmentText %></span>
                                     </div>
-                                    <div class="text-center font-medium text-gray-800"><%= discussion.currentEnrollment %>/<%= discussion.maxEnrollment %></div>
+                                    <div class="text-center font-medium text-gray-800">
+                                        <%= discussion.currentEnrollment %>/<%= discussion.maxEnrollment %>
+                                        <% if (discussion.status === 'Wait List' && discussion.waitlistCapacity > 0) { %>
+                                            <br><span class="text-xs text-orange-600">(<%= discussion.waitlistTotal || 0 %>/<%= discussion.waitlistCapacity %> waitlist)</span>
+                                        <% } %>
+                                    </div>
                                     <div class="text-center font-medium text-gray-800"><%= discussion.teacherName %></div>
                                     <div class="text-center text-gray-700 whitespace-nowrap">
                                         <% if (discussion.startTime && discussion.endTime && discussion.startTime !== 0 && discussion.endTime !== 0) { %>
@@ -246,7 +288,7 @@
                                             TBA
                                         <% } %>
                                     </div>
-                                    <div class="text-center text-gray-700"><%= discussion.days.join(' ') || 'TBA' %></div>
+                                    <div class="text-center text-gray-700"><%= discussion.days || 'TBA' %></div>
                                     <div class="text-center text-gray-700"><%= discussion.location %></div>
                                     <div class="text-center text-gray-400">—</div>
                                 </div>

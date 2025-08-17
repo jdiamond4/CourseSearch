@@ -15,9 +15,28 @@ app.use(express.static('public'));
 
 // Helper function for time formatting
 app.locals.formatTime = function(time) {
-  if (!time || time === 0) return 'TBA';
+  if (!time || time === 0 || time === '') return 'TBA';
   
-  const timeStr = time.toString().padStart(4, '0');
+  // Handle SIS time format: "13.00.00.000000" or "09.30.00.000000"
+  let timeStr = time.toString();
+  
+  // Extract hours and minutes from the SIS format
+  if (timeStr.includes('.')) {
+    const parts = timeStr.split('.');
+    const hours = parseInt(parts[0]);
+    const minutes = parseInt(parts[1]);
+    
+    if (isNaN(hours) || isNaN(minutes)) return 'TBA';
+    
+    // Format as 12-hour time
+    if (hours === 0) return `12:${minutes.toString().padStart(2, '0')} AM`;
+    if (hours < 12) return `${hours}:${minutes.toString().padStart(2, '0')} AM`;
+    if (hours === 12) return `12:${minutes.toString().padStart(2, '0')} PM`;
+    return `${hours - 12}:${minutes.toString().padStart(2, '0')} PM`;
+  }
+  
+  // Fallback for other time formats
+  timeStr = timeStr.padStart(4, '0');
   const hours = parseInt(timeStr.substring(0, 2));
   const minutes = timeStr.substring(2, 4);
   
@@ -27,6 +46,173 @@ app.locals.formatTime = function(time) {
   return `${hours - 12}:${minutes} PM`;
 };
 
+// Helper function to parse CSV
+async function parseCSV(filePath) {
+  try {
+    const csvContent = await fs.readFile(filePath, 'utf8');
+    const lines = csvContent.trim().split('\n');
+    const headers = lines[0].split(',').map(h => h.trim());
+    
+    const data = [];
+    for (let i = 1; i < lines.length; i++) {
+      const values = lines[i].split(',').map(v => v.trim());
+      const row = {};
+      headers.forEach((header, index) => {
+        row[header] = values[index] || '';
+      });
+      data.push(row);
+    }
+    return data;
+  } catch (error) {
+    console.error(`Error parsing CSV ${filePath}:`, error);
+    return [];
+  }
+}
+
+// Helper function to load GPA data
+async function loadGPAData() {
+  try {
+    const gpaPath = path.join(__dirname, 'data', 'master-gpa-data.csv');
+    if (await fs.access(gpaPath).then(() => true).catch(() => false)) {
+      return await parseCSV(gpaPath);
+    }
+    return [];
+  } catch (error) {
+    console.error('Error loading GPA data:', error);
+    return [];
+  }
+}
+
+// Helper function to find matching GPA data for multiple instructors
+function findMatchingGPA(gpaData, subject, catalogNbr, instructorNames) {
+  // Split instructor names by semicolon and trim whitespace
+  const instructors = instructorNames.split(';').map(name => name.trim());
+  
+  let bestMatch = null;
+  let bestGPA = -1;
+  
+  // Check each instructor
+  for (const instructor of instructors) {
+    const match = gpaData.find(gpa => 
+      gpa.department === subject && 
+      gpa.courseNumber.toString() === catalogNbr.toString() && 
+      gpa.instructorName === instructor
+    );
+    
+    if (match && match.instructorGPA && match.instructorGPA !== '—' && match.instructorGPA !== 'N/A') {
+      const gpa = parseFloat(match.instructorGPA);
+      if (!isNaN(gpa) && gpa > bestGPA) {
+        bestGPA = gpa;
+        bestMatch = match;
+      }
+    }
+  }
+  
+  return bestMatch;
+}
+
+// Helper function to transform SIS data into course objects
+function transformSISDataToCourses(sisData, gpaData) {
+  const courseMap = new Map();
+  
+  sisData.forEach(row => {
+    const courseKey = `${row.subject} ${row.catalog_nbr}`;
+    
+    if (!courseMap.has(courseKey)) {
+      courseMap.set(courseKey, {
+        mnemonic: row.subject,
+        number: parseInt(row.catalog_nbr),
+        title: row.course_title || 'No title available',
+        units: row.units || '',
+        sections: [],
+        discussions: []
+      });
+    }
+    
+    const course = courseMap.get(courseKey);
+    
+    // Create section object
+    const section = {
+      sectionNumber: row.class_section || '',
+      component: row.component || '',
+      sectionType: row.section_type || '',
+      status: getEnrollmentStatus(row.enrollment_available, row.enrl_stat),
+      currentEnrollment: parseInt(row.enrollment_total) || 0,
+      maxEnrollment: parseInt(row.class_capacity) || 0,
+      waitlistTotal: parseInt(row.wait_tot) || 0,
+      waitlistCapacity: parseInt(row.wait_cap) || 0,
+      teacherName: row.instructor_names || 'TBA',
+      startTime: row.start_times || '',
+      endTime: row.end_times || '',
+      days: row.meeting_days || '',
+      building: row.buildings || '',
+      room: row.rooms || '',
+      location: row.facilities || '',
+      startDate: row.start_date || '',
+      endDate: row.end_date || '',
+      campus: row.campus_descr || '',
+      instructionMode: row.instruction_mode_descr || '',
+      gradingBasis: row.grading_basis || '',
+      courseAttributes: row.course_attributes || '',
+      courseAttributeValues: row.course_attribute_values || '',
+      requirements: row.rqmnt_designtn || '',
+      topic: row.topic || '',
+      combinedSection: row.combined_section || '',
+      schedulePrint: row.schedule_print || ''
+    };
+    
+    // Try to merge GPA data
+    if (row.instructor_names && row.instructor_names !== 'TBA') {
+      const gpaMatch = findMatchingGPA(gpaData, row.subject, row.catalog_nbr, row.instructor_names);
+      if (gpaMatch) {
+        section.instructorGPA = gpaMatch.instructorGPA || 'N/A';
+        section.instructorRating = gpaMatch.instructorRating || 'N/A';
+        section.instructorDifficulty = gpaMatch.instructorDifficulty || 'N/A';
+        section.instructorLastTaught = gpaMatch.instructorLastTaught || 'N/A';
+        
+        // Log when we find a match for multiple instructors
+        if (row.instructor_names.includes(';')) {
+          console.log(`✅ Multi-instructor match: ${row.subject} ${row.catalog_nbr} - ${row.instructor_names} → Best: ${gpaMatch.instructorName} (GPA: ${gpaMatch.instructorGPA})`);
+        }
+      } else {
+        section.instructorGPA = 'N/A';
+        section.instructorRating = 'N/A';
+        section.instructorDifficulty = 'N/A';
+        section.instructorLastTaught = 'N/A';
+      }
+    } else {
+      section.instructorGPA = 'N/A';
+      section.instructorRating = 'N/A';
+      section.instructorDifficulty = 'N/A';
+      section.instructorLastTaught = 'N/A';
+    }
+    
+    // Categorize as section or discussion based on component
+    if (row.component === 'DIS' || row.component === 'LAB' || row.component === 'SEM' || row.component === 'SPS') {
+      course.discussions.push(section);
+    } else {
+      course.sections.push(section);
+    }
+  });
+  
+  // Convert map to array and sort
+  return Array.from(courseMap.values())
+    .map(course => {
+      // Sort sections and discussions by section number
+      course.sections.sort((a, b) => a.sectionNumber.localeCompare(b.sectionNumber));
+      course.discussions.sort((a, b) => a.sectionNumber.localeCompare(b.sectionNumber));
+      return course;
+    })
+    .sort((a, b) => a.number - b.number);
+}
+
+// Helper function to determine enrollment status
+function getEnrollmentStatus(available, status) {
+  if (status === 'W') return 'Wait List';
+  if (parseInt(available) > 0) return 'Open';
+  return 'Closed';
+}
+
 // Routes
 app.get('/', (req, res) => {
     res.render('landing', { title: 'UVA Course Search' });
@@ -34,21 +220,80 @@ app.get('/', (req, res) => {
 
 app.get('/catalog', async (req, res) => {
     try {
-        const { department, filters } = req.query;
+        const { department, search, level, status, filters } = req.query;
         
-        // For now, use the existing CS data
         let courses = [];
         
-        if (department === 'CS') {
-            const dataPath = path.join(__dirname, 'data', 'integrated-term-1258-subject-CS-page-1.json');
-            try {
-                const data = await fs.readFile(dataPath, 'utf8');
-                const courseData = JSON.parse(data);
-                courses = courseData.courses;
-            } catch (fileError) {
-                console.log(`CS data file not found: ${dataPath}`);
+        try {
+            // Load from unified master SIS data file
+            const masterPath = path.join(__dirname, 'data', `master-sis-data-1258.csv`);
+            
+            if (await fs.access(masterPath).then(() => true).catch(() => false)) {
+                console.log(`Loading from master SIS data: ${masterPath}`);
+                
+                // Parse master SIS data
+                const allSisData = await parseCSV(masterPath);
+                console.log(`Loaded ${allSisData.length} total SIS records`);
+                
+                // Apply search filters
+                let filteredData = allSisData;
+                
+                // Filter by department if specified
+                if (department) {
+                    filteredData = filteredData.filter(row => row.subject === department);
+                    console.log(`Filtered to ${filteredData.length} records for department: ${department}`);
+                }
+                
+                // Filter by search term if specified
+                if (search) {
+                    const searchLower = search.toLowerCase();
+                    filteredData = filteredData.filter(row => {
+                        return (
+                            (row.course_title && row.course_title.toLowerCase().includes(searchLower)) ||
+                            (row.catalog_nbr && row.catalog_nbr.toString().includes(search)) ||
+                            (row.subject && row.subject.toLowerCase().includes(searchLower))
+                        );
+                    });
+                    console.log(`Filtered to ${filteredData.length} records after search: ${search}`);
+                }
+                
+                // Filter by course level if specified
+                if (level) {
+                    const levelNum = parseInt(level);
+                    filteredData = filteredData.filter(row => {
+                        if (row.catalog_nbr) {
+                            const courseNum = parseInt(row.catalog_nbr);
+                            return courseNum >= levelNum && courseNum < levelNum + 1000;
+                        }
+                        return false;
+                    });
+                    console.log(`Filtered to ${filteredData.length} records for level: ${level}`);
+                }
+                
+                // Filter by enrollment status if specified
+                if (status) {
+                    filteredData = filteredData.filter(row => {
+                        const enrollmentStatus = getEnrollmentStatus(row.enrollment_available, row.enrl_stat);
+                        return enrollmentStatus.toLowerCase() === status.toLowerCase();
+                    });
+                    console.log(`Filtered to ${filteredData.length} records for status: ${status}`);
+                }
+                
+                // Load GPA data
+                const gpaData = await loadGPAData();
+                console.log(`📊 Loaded ${gpaData.length} GPA records`);
+                
+                // Transform filtered data into course objects
+                courses = transformSISDataToCourses(filteredData, gpaData);
+                console.log(`Transformed into ${courses.length} courses`);
+                
+            } else {
+                console.log(`Master SIS data file not found: ${masterPath}`);
                 courses = [];
             }
+        } catch (fileError) {
+            console.log(`Error reading data: ${fileError.message}`);
+            courses = [];
         }
         
         // Generate dynamic title based on what's being displayed
@@ -56,10 +301,22 @@ app.get('/catalog', async (req, res) => {
         if (department) {
             title = `${department} Courses`;
         }
+        if (search) {
+            title = `Search Results for "${search}"`;
+        }
+        if (level) {
+            title = `${level} Level Courses`;
+        }
+        if (status) {
+            title = `${status.charAt(0).toUpperCase() + status.slice(1)} Courses`;
+        }
         
         res.render('catalog', { 
             courses, 
             department,
+            search,
+            level,
+            status,
             filters,
             title
         });

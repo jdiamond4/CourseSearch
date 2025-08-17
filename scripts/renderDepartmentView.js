@@ -178,7 +178,7 @@ if (require.main === module) {
     case 'render':
       // Single department render
       const term = args.find(arg => arg.startsWith('--term='))?.split('=')[1] || '1258';
-      const subject = args.find(arg => arg.startsWith('--subject='))?.split('=')[1] || 'CS';
+      const subject = args.find(arg => arg.startsWith('--subject='))?.split('=')[1] || 'MATH';
       const page = args.find(arg => arg.startsWith('--page='))?.split('=')[1] || '1';
       
       renderer.renderDepartmentView({ term, subject, page });
@@ -187,9 +187,9 @@ if (require.main === module) {
     case 'batch':
       // Batch render multiple departments
       const renderJobs = [
-        { term: '1258', subject: 'CS', page: '1' },
         { term: '1258', subject: 'MATH', page: '1' },
-        { term: '1258', subject: 'PHYS', page: '1' }
+        { term: '1258', subject: 'PHYS', page: '1' },
+        { term: '1258', subject: 'CS', page: '1' }
       ];
       
       renderer.renderBatch(renderJobs);
@@ -198,12 +198,6 @@ if (require.main === module) {
     case 'index':
       // Generate department index
       const departments = [
-        {
-          subject: 'CS',
-          name: 'Computer Science',
-          terms: ['1258', '1256'],
-          lastUpdated: 'Fall 2025'
-        },
         {
           subject: 'MATH',
           name: 'Mathematics',
@@ -214,6 +208,12 @@ if (require.main === module) {
           subject: 'PHYS',
           name: 'Physics',
           terms: ['1258'],
+          lastUpdated: 'Fall 2025'
+        },
+        {
+          subject: 'CS',
+          name: 'Computer Science',
+          terms: ['1258', '1256'],
           lastUpdated: 'Fall 2025'
         }
       ];

@@ -2,6 +2,7 @@
 /**
  * Read saved SIS JSON from data/ and generate a simple HTML summary to output/.
  * Usage:
+ *   node scripts/renderSisHtml.js --term 1258 --subject MATH [--page 1]
  *   node scripts/renderSisHtml.js --term 1258 --subject CS [--page 1]
  */
 
@@ -118,7 +119,7 @@ function saveHtml(content, { term, subject, page }) {
 
 function main() {
   const term = getArg('term', process.env.TERM || '1258');
-  const subject = getArg('subject', process.env.SUBJECT || 'CS');
+  const subject = getArg('subject', process.env.SUBJECT || 'MATH');
   const page = Number(getArg('page', process.env.PAGE || '1'));
 
   const data = loadData({ term, subject, page });

@@ -2,6 +2,7 @@
 /**
  * Fetch UVA SIS class search JSON via a headless browser (Playwright).
  * Usage:
+ *   node scripts/fetchSis.js --term 1258 --subject MATH [--page 1]
  *   node scripts/fetchSis.js --term 1258 --subject CS [--page 1]
  */
 
@@ -53,7 +54,7 @@ function normalizeClass(item) {
 
 async function main() {
   const term = getArg('term', process.env.TERM || '1258');
-  const subject = getArg('subject', process.env.SUBJECT || 'CS');
+  const subject = getArg('subject', process.env.SUBJECT || 'MATH');
   const page = Number(getArg('page', process.env.PAGE || '1'));
   const shouldSave = (getArg('save', process.env.SAVE || 'true') || 'true').toString().toLowerCase() !== 'false';
 

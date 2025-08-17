@@ -23,12 +23,14 @@ function getArg(name, defaultValue = undefined) {
 }
 
 class CourseForumScraper {
-  constructor(departmentId, subject) {
+  constructor(departmentId, subject, term = null) {
     this.browser = null;
     this.page = null;
     this.courses = [];
     this.departmentId = departmentId;
     this.subject = subject;
+    this.term = term;
+    this.masterCSVPath = path.join(__dirname, '..', 'data', 'master-gpa-data.csv');
   }
 
   async initialize() {
@@ -43,222 +45,233 @@ class CourseForumScraper {
     await this.page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
   }
 
-  async scrapeDepartment() {
+  // Load SIS data to get course numbers for this semester
+  async loadSISData() {
     try {
-      console.log(`🚀 Starting to scrape theCourseForum ${this.subject} department...`);
-      console.log(`📍 Department ID: ${this.departmentId}, Subject: ${this.subject}`);
+      console.log(`🔍 Fetching fresh SIS data for ${this.subject} department...`);
       
-      // Navigate to the department page
-      const departmentUrl = `https://thecourseforum.com/department/${this.departmentId}/`;
-      console.log(`🌐 Navigating to: ${departmentUrl}`);
+      // Import the SIS fetching logic directly
+      const { chromium } = require('playwright');
       
-      await this.page.goto(departmentUrl, {
+      let allCourseNumbers = new Set();
+      let page = 1;
+      let hasMoreData = true;
+      
+      while (hasMoreData && page <= 20) { // Safety limit of 20 pages
+        try {
+          console.log(`📄 Fetching page ${page}...`);
+          
+          // Build the SIS URL directly
+          const base = 'https://sisuva.admin.virginia.edu/psc/ihprd/UVSS/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch';
+          const params = new URLSearchParams({
+            institution: 'UVA01',
+            term: this.term,
+            subject: this.subject,
+            page: String(page)
+          });
+          const url = `${base}?${params.toString()}`;
+          
+          // Fetch the data
+          const browser = await chromium.launch({ headless: true });
+          const context = await browser.newContext();
+          const pageObj = await context.newPage();
+          
+          try {
+            const response = await pageObj.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
+            if (!response) {
+              throw new Error('No response received');
+            }
+            const status = response.status();
+            if (status < 200 || status >= 300) {
+              throw new Error(`HTTP ${status}`);
+            }
+            
+            const body = await response.text();
+            let json;
+            try {
+              json = JSON.parse(body);
+            } catch (e) {
+              throw new Error('Failed to parse JSON from response');
+            }
+            
+            const classes = Array.isArray(json?.classes) ? json.classes : Array.isArray(json) ? json : [];
+            
+            if (classes.length > 0) {
+              // Extract course numbers from this page
+              classes.forEach(course => {
+                if (course.subject === this.subject && course.catalog_nbr) {
+                  allCourseNumbers.add(parseInt(course.catalog_nbr));
+                }
+              });
+              
+              console.log(`  ✅ Page ${page}: Found ${classes.length} classes, ${allCourseNumbers.size} unique courses so far`);
+              page++;
+            } else {
+              console.log(`  ⚠️ Page ${page}: No more data, stopping`);
+              hasMoreData = false;
+            }
+            
+          } finally {
+            await browser.close();
+          }
+          
+          // Small delay between pages
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          
+        } catch (error) {
+          console.log(`⚠️ Error on page ${page}, stopping: ${error.message}`);
+          hasMoreData = false;
+        }
+      }
+      
+      // Convert Set to sorted array
+      const courseNumbers = Array.from(allCourseNumbers).sort((a, b) => a - b);
+      
+      console.log(`🔢 Found ${courseNumbers.length} unique course numbers: ${courseNumbers.join(', ')}`);
+      
+      return courseNumbers;
+    } catch (error) {
+      console.error('❌ Error loading SIS data:', error.message);
+      return false;
+    }
+  }
+
+  // Scrape instructor data from a specific course page
+  async scrapeCoursePage(courseNumber) {
+    try {
+      const courseUrl = `https://thecourseforum.com/course/${this.subject}/${courseNumber}/`;
+      console.log(`📖 Scraping ${this.subject} ${courseNumber}: ${courseUrl}`);
+      
+      await this.page.goto(courseUrl, {
         waitUntil: 'networkidle2',
         timeout: 30000
       });
-
-      // Wait for the page to fully load
-      await new Promise(resolve => setTimeout(resolve, 5000));
       
-      // Verify we're on the right page
-      const currentUrl = this.page.url();
-      console.log(`✅ Current URL: ${currentUrl}`);
+      // Wait for the page to load
+      await new Promise(resolve => setTimeout(resolve, 3000));
       
-      // Check for pagination and get all courses from all pages
-      let allCourses = [];
-      let currentPage = 1;
-      let hasMorePages = true;
-      
-      while (hasMorePages) {
-        console.log(`📄 Processing page ${currentPage}...`);
+      // Extract instructor data from this course page
+      const instructorData = await this.page.evaluate(() => {
+        const instructors = [];
         
-        // Extract course data from the current page
-        const pageCourseData = await this.page.evaluate((subject) => {
-          const courses = [];
-          
-          // Get the page text content to find course information
-          const textContent = document.body.innerText;
-          
-          // Look for course patterns with "LAST TAUGHT" information
-          const coursePattern = new RegExp(`${subject}\\s+(\\d{4})\\s*\\n([^\\n]+)\\s*\\n\\s*RATING\\s*\\n\\s*([\\d.]+)\\s*\\n\\s*DIFFICULTY\\s*\\n\\s*([\\d.]+)\\s*\\n\\s*GPA\\s*\\n\\s*([\\d.]+)\\s*\\n\\s*LAST TAUGHT\\s*\\n\\s*([^\\n]+)`, 'g');
-          
-          let match;
-          while ((match = coursePattern.exec(textContent)) !== null) {
-            const courseId = match[1];
-            const title = match[2].trim();
-            const rating = match[3];
-            const difficulty = match[4];
-            const gpa = match[5];
-            const lastTaught = match[6].trim();
-            
-            // Find the corresponding course link for this course
-            const courseLinks = document.querySelectorAll('a[href*="/course/"]');
-            let courseUrl = null;
-            
-            courseLinks.forEach(link => {
-              const href = link.getAttribute('href');
-              const courseMatch = href.match(new RegExp(`/course/${subject}/(\\d{4})/?$`));
-              if (courseMatch && courseMatch[1] === courseId) {
-                courseUrl = href;
-              }
-            });
-            
-            courses.push({
-              courseId: `${subject} ${courseId}`,
-              title,
-              overallRating: rating,
-              overallDifficulty: difficulty,
-              overallGPA: gpa,
-              lastTaught,
-              courseUrl: courseUrl,
-              instructors: [] // Will be populated later
-            });
-          }
-          
-          return courses;
-        }, this.subject);
+        // Find all instructor cards
+        const instructorCards = document.querySelectorAll('.row.no-gutters');
         
-        // Debug: Check what we actually got from the page
-        console.log(`🔍 Raw page data: Found ${pageCourseData.length} courses`);
-        if (pageCourseData.length > 0) {
-          console.log(`   First course: ${pageCourseData[0].courseId} - ${pageCourseData[0].title}`);
-        }
-        
-        // If no courses found on this page, stop pagination
-        if (pageCourseData.length === 0) {
-          console.log(`⚠️ No courses found on page ${currentPage}, stopping pagination`);
-          hasMorePages = false;
-          break;
-        }
-        
-        allCourses = allCourses.concat(pageCourseData);
-        console.log(`✅ Extracted ${pageCourseData.length} courses from page ${currentPage}`);
-        
-        // Check if there's a next page button and if we should continue
-        const nextPageButton = await this.page.$('a[href*="page="]');
-        if (nextPageButton && currentPage < 10) { // Limit to 10 pages max to prevent infinite loop
+        instructorCards.forEach(card => {
           try {
-            await nextPageButton.click();
-            await new Promise(resolve => setTimeout(resolve, 3000)); // Wait for page load
-            currentPage++;
+            // Get instructor name from the h3 title
+            const nameElement = card.querySelector('h3#title');
+            if (!nameElement) return;
+            
+            const name = nameElement.textContent.trim();
+            
+            // Extract stats from the info elements
+            const ratingElement = card.querySelector('#rating');
+            const difficultyElement = card.querySelector('#difficulty');
+            const gpaElement = card.querySelector('#gpa');
+            const sectionsElement = card.querySelector('#times');
+            const lastTaughtElement = card.querySelector('#recency');
+            
+            const rating = ratingElement ? ratingElement.textContent.trim() : 'N/A';
+            const difficulty = difficultyElement ? difficultyElement.textContent.trim() : 'N/A';
+            const gpa = gpaElement ? gpaElement.textContent.trim() : 'N/A';
+            const sections = sectionsElement ? sectionsElement.textContent.trim() : 'N/A';
+            const lastTaught = lastTaughtElement ? lastTaughtElement.textContent.trim() : 'N/A';
+            
+            // Only include instructors who taught in Fall 2025
+            if (lastTaught === 'Fall 2025') {
+              instructors.push({
+                name,
+                rating,
+                difficulty,
+                gpa,
+                sections,
+                lastTaught
+              });
+            }
+            
           } catch (error) {
-            console.log('⚠️ Could not navigate to next page, stopping pagination');
-            hasMorePages = false;
+            console.log('Error parsing instructor card:', error);
           }
-        } else {
-          if (currentPage >= 10) {
-            console.log('⚠️ Reached maximum page limit (10), stopping pagination');
-          } else {
-            console.log('📄 No more pages found');
-          }
-          hasMorePages = false;
-        }
+        });
+        
+        return instructors;
+      });
+
+      if (instructorData && instructorData.length > 0) {
+        console.log(`✅ Found ${instructorData.length} instructors for ${this.subject} ${courseNumber} (Fall 2025)`);
+        
+        // Add course context to each instructor record
+        instructorData.forEach(instructor => {
+          this.courses.push({
+            department: this.subject,
+            courseNumber: courseNumber.toString(),
+            courseTitle: `Course ${courseNumber}`, // We'll get the actual title from SIS data later
+            instructorName: instructor.name,
+            instructorGPA: instructor.gpa,
+            instructorRating: instructor.rating,
+            instructorDifficulty: instructor.difficulty,
+            instructorLastTaught: instructor.lastTaught,
+            sections: instructor.sections,
+            scrapedAt: new Date().toISOString()
+          });
+        });
+      } else {
+        console.log(`⚠️ No Fall 2025 instructors found for ${this.subject} ${courseNumber}`);
       }
       
-      this.courses = allCourses;
-      console.log(`✅ Total courses extracted from all pages: ${this.courses.length}`);
+      return instructorData;
+
+    } catch (error) {
+      console.error(`❌ Error scraping ${this.subject} ${courseNumber}:`, error.message);
+      return null;
+    }
+  }
+
+  // Main scraping process
+  async scrapeDepartment() {
+    try {
+      console.log(`🚀 Starting to scrape theCourseForum ${this.subject} department...`);
+      console.log(`📍 Department ID: ${this.departmentId}, Subject: ${this.subject}, Term: ${this.term}`);
       
-      console.log('📚 Page loaded, extracting course data...');
-
-      // Filter for Fall 2025 courses
-      const fall2025Courses = this.courses.filter(course => 
-        course.lastTaught === 'Fall 2025'
-      );
-
-      console.log(`\n📊 Found ${fall2025Courses.length} courses taught in Fall 2025`);
-
-      // Try to get more detailed instructor data by clicking on course links
-      console.log('\n🔍 Attempting to get detailed instructor data...');
+      // Load SIS data to get course numbers
+      const courseNumbers = await this.loadSISData();
+      if (!courseNumbers) {
+        throw new Error('Failed to load SIS data');
+      }
       
-      for (let i = 0; i < fall2025Courses.length; i++) {
+      console.log(`\n🔍 Scraping instructor data for ${courseNumbers.length} courses...`);
+      
+      // Scrape each course page
+      for (let i = 0; i < courseNumbers.length; i++) {
+        const courseNumber = courseNumbers[i];
+        
         try {
-          const course = fall2025Courses[i];
+          await this.scrapeCoursePage(courseNumber);
           
-          // Navigate to the course page
-          const fullUrl = `https://thecourseforum.com${course.courseUrl}`;
-          console.log(`📖 Navigating to: ${fullUrl}`);
-          
-          await this.page.goto(fullUrl, {
-            waitUntil: 'networkidle2',
-            timeout: 30000
-          });
-          
-          // Wait for the page to load
-          await new Promise(resolve => setTimeout(resolve, 3000));
-          
-          // Extract instructor data from this course page
-          const instructorData = await this.page.evaluate(() => {
-            const instructors = [];
-            
-            // Find all instructor rating cards
-            const instructorCards = document.querySelectorAll('.rating-card-link');
-            
-            instructorCards.forEach(card => {
-              try {
-                const nameElement = card.querySelector('h3#title');
-                const name = nameElement ? nameElement.textContent.trim() : 'Unknown';
-                
-                // Get the parent container to find rating, difficulty, GPA, etc.
-                const container = card.closest('.row.no-gutters');
-                if (container) {
-                  const ratingElement = container.querySelector('#rating');
-                  const difficultyElement = container.querySelector('#difficulty');
-                  const gpaElement = container.querySelector('#gpa');
-                  const lastTaughtElement = container.querySelector('#recency');
-                  
-                  const rating = ratingElement ? ratingElement.textContent.trim() : 'N/A';
-                  const difficulty = difficultyElement ? difficultyElement.textContent.trim() : 'N/A';
-                  const gpa = gpaElement ? gpaElement.textContent.trim() : 'N/A';
-                  const lastTaught = lastTaughtElement ? lastTaughtElement.textContent.trim() : 'N/A';
-                  
-                  instructors.push({
-                    name,
-                    rating,
-                    difficulty,
-                    gpa,
-                    lastTaught
-                  });
-                }
-              } catch (error) {
-                console.log('Error parsing instructor card:', error);
-              }
-            });
-            
-            return instructors;
-          });
-          
-          if (instructorData && instructorData.length > 0) {
-            course.instructors = instructorData;
-            console.log(`✅ Got instructor data for ${course.courseId}: ${instructorData.length} instructors`);
-          } else {
-            console.log(`⚠️ No instructor data found for ${course.courseId}`);
-          }
-          
-          // Go back to the main department page to continue with next course
-          await this.page.goBack();
+          // Small delay to be respectful to the server
           await new Promise(resolve => setTimeout(resolve, 2000));
           
         } catch (error) {
-          console.error(`❌ Error getting instructor data for ${fall2025Courses[i].courseId}:`, error.message);
-          
-          // Try to go back to main page even if there was an error
-          try {
-            await this.page.goBack();
-            await new Promise(resolve => setTimeout(resolve, 2000));
-          } catch (goBackError) {
-            console.log('⚠️ Could not return to main page, continuing...');
-          }
+          console.error(`❌ Error processing ${this.subject} ${courseNumber}:`, error.message);
         }
       }
 
-      // Save the scraped data
+      console.log(`\n📊 Scraping completed! Found ${this.courses.length} instructor records for Fall 2025`);
+
+      // Update master CSV with new data
+      await this.updateMasterCSV();
+
+      // Also save department-specific JSON for reference
       const outputPath = path.join(__dirname, '..', 'data', `courseforum-${this.subject.toLowerCase()}-gpa-data.json`);
       const outputData = {
         scraped_at: new Date().toISOString(),
         department: this.subject,
         department_id: this.departmentId,
-        total_courses: this.courses.length,
-        fall_2025_courses: fall2025Courses
+        term: this.term,
+        total_courses_scraped: courseNumbers.length,
+        total_instructors_found: this.courses.length,
+        courses: this.courses
       };
 
       // Ensure data directory exists
@@ -268,13 +281,124 @@ class CourseForumScraper {
       }
 
       fs.writeFileSync(outputPath, JSON.stringify(outputData, null, 2));
-      console.log(`💾 Saved GPA data to: ${outputPath}`);
+      console.log(`💾 Saved department data to: ${outputPath}`);
 
-      return fall2025Courses;
+      return this.courses;
 
     } catch (error) {
       console.error('❌ Scraping failed:', error);
       throw error;
+    }
+  }
+
+  // Load existing master CSV data
+  loadMasterCSV() {
+    try {
+      if (fs.existsSync(this.masterCSVPath)) {
+        const csvContent = fs.readFileSync(this.masterCSVPath, 'utf8');
+        const lines = csvContent.trim().split('\n');
+        const headers = lines[0].split(',');
+        const data = [];
+        
+        for (let i = 1; i < lines.length; i++) {
+          const values = lines[i].split(',');
+          const row = {};
+          headers.forEach((header, index) => {
+            row[header.trim()] = values[index] ? values[index].trim() : '';
+          });
+          data.push(row);
+        }
+        
+        console.log(`📊 Loaded ${data.length} existing GPA records from master CSV`);
+        return data;
+      } else {
+        console.log('📊 Creating new master CSV file');
+        return [];
+      }
+    } catch (error) {
+      console.error('❌ Error loading master CSV:', error.message);
+      return [];
+    }
+  }
+
+  // Update master CSV with new department data
+  async updateMasterCSV() {
+    console.log(`🔄 Updating master CSV with ${this.subject} department data...`);
+    
+    // Load existing data
+    const existingData = this.loadMasterCSV();
+    
+    // Remove old data for this department
+    const filteredData = existingData.filter(record => record.department !== this.subject);
+    
+    // Convert new data to CSV format
+    const newRecords = this.courses.map(course => ({
+      department: course.department,
+      courseNumber: course.courseNumber,
+      courseTitle: course.courseTitle,
+      instructorName: course.instructorName,
+      instructorGPA: course.instructorGPA,
+      instructorRating: course.instructorRating,
+      instructorDifficulty: course.instructorDifficulty,
+      instructorLastTaught: course.instructorLastTaught,
+      sections: course.sections,
+      scrapedAt: course.scrapedAt
+    }));
+    
+    // Combine old and new data
+    const allData = [...filteredData, ...newRecords];
+    
+    // Save updated master CSV
+    if (this.saveMasterCSV(allData)) {
+      console.log(`✅ Master CSV updated with ${newRecords.length} new records from ${this.subject}`);
+      console.log(`📊 Master CSV now contains ${allData.length} total records`);
+    }
+  }
+
+  // Save master CSV
+  saveMasterCSV(data) {
+    try {
+      // Define CSV headers
+      const headers = [
+        'department',
+        'courseNumber',
+        'courseTitle',
+        'instructorName',
+        'instructorGPA',
+        'instructorRating',
+        'instructorDifficulty',
+        'instructorLastTaught',
+        'sections',
+        'scrapedAt'
+      ];
+
+      // Create CSV content
+      let csvContent = headers.join(',') + '\n';
+      
+      data.forEach(record => {
+        const row = headers.map(header => {
+          const value = record[header] || '';
+          // Escape commas and quotes in CSV values
+          if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+            return `"${value.replace(/"/g, '""')}"`;
+          }
+          return value;
+        });
+        csvContent += row.join(',') + '\n';
+      });
+
+      // Ensure data directory exists
+      const dataDir = path.dirname(this.masterCSVPath);
+      if (!fs.existsSync(dataDir)) {
+        fs.mkdirSync(dataDir, { recursive: true });
+      }
+
+      fs.writeFileSync(this.masterCSVPath, csvContent);
+      console.log(`💾 Master CSV saved to: ${this.masterCSVPath}`);
+      return true;
+    } catch (error) {
+      console.error('❌ Error saving master CSV:', error.message);
+      return false;
     }
   }
 
@@ -288,33 +412,30 @@ class CourseForumScraper {
 async function main() {
   const departmentId = getArg('departmentId', '31'); // Default to CS department ID
   const subject = getArg('subject', 'CS'); // Default to CS
+  const term = getArg('term', '1258'); // Default to Fall 2025
 
   console.log(`🔧 Parsed arguments:`);
   console.log(`   Department ID: ${departmentId}`);
   console.log(`   Subject: ${subject}`);
+  console.log(`   Term: ${term}`);
   console.log(`   Full command: ${process.argv.join(' ')}`);
 
-  const scraper = new CourseForumScraper(departmentId, subject);
+  const scraper = new CourseForumScraper(departmentId, subject, term);
   
   try {
     await scraper.initialize();
-    const fall2025Courses = await scraper.scrapeDepartment();
+    const courses = await scraper.scrapeDepartment();
     
     console.log('\n🎉 Scraping completed successfully!');
-    console.log(`📚 Total courses found: ${fall2025Courses.length}`);
+    console.log(`📚 Total instructor records found: ${courses.length}`);
     
-    // Display summary of Fall 2025 courses
-    fall2025Courses.forEach(course => {
-      console.log(`\n${course.courseId}: ${course.title}`);
-      console.log(`  Overall GPA: ${course.overallGPA}, Rating: ${course.overallRating}, Difficulty: ${course.overallDifficulty}`);
-      console.log(`  Last Taught: ${course.lastTaught}`);
-      
-      if (course.instructors && course.instructors.length > 0) {
-        course.instructors.forEach(instructor => {
-          console.log(`    👨‍🏫 ${instructor.name}: GPA ${instructor.gpa}, Rating ${instructor.rating}`);
-        });
-      }
-    });
+    // Display summary
+    if (courses.length > 0) {
+      console.log('\n📊 Sample data:');
+      courses.slice(0, 5).forEach(record => {
+        console.log(`  ${record.department} ${record.courseNumber}: ${record.instructorName} - GPA: ${record.instructorGPA}, Rating: ${record.instructorRating}`);
+      });
+    }
 
   } catch (error) {
     console.error('❌ Scraping failed:', error);
