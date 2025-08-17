@@ -236,6 +236,26 @@ function getEnrollmentStatus(available, status) {
   return 'Closed';
 }
 
+// Helper function to build pagination URLs with current query parameters
+function buildPaginationUrl(page, perPage, currentQuery) {
+  const url = new URL('http://localhost/catalog'); // Base URL
+  const params = new URLSearchParams();
+  
+  // Add current query parameters
+  if (currentQuery.department) params.set('department', currentQuery.department);
+  if (currentQuery.search) params.set('search', currentQuery.search);
+  if (currentQuery.level) params.set('level', currentQuery.level);
+  if (currentQuery.status) params.set('status', currentQuery.status);
+  if (currentQuery.gpa) params.set('gpa', currentQuery.gpa);
+  if (currentQuery.filters) params.set('filters', currentQuery.filters);
+  
+  // Add pagination parameters
+  params.set('page', page.toString());
+  params.set('perPage', perPage.toString());
+  
+  return `?${params.toString()}`;
+}
+
 // Routes
 app.get('/', (req, res) => {
     res.render('landing', { title: 'UVA Course Search' });
@@ -243,7 +263,7 @@ app.get('/', (req, res) => {
 
 app.get('/catalog', async (req, res) => {
     try {
-        const { department, search, level, status, gpa, filters } = req.query;
+        const { department, search, level, status, gpa, filters, page = 1, perPage = 25 } = req.query;
         
         let courses = [];
         
@@ -353,15 +373,38 @@ app.get('/catalog', async (req, res) => {
             title = `${req.query.gpa}+ GPA Courses`;
         }
         
+        // Pagination logic
+        const currentPage = parseInt(page);
+        const itemsPerPage = parseInt(perPage);
+        const totalCourses = courses.length;
+        const totalPages = Math.ceil(totalCourses / itemsPerPage);
+        
+        // Get courses for current page
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const paginatedCourses = courses.slice(startIndex, endIndex);
+        
+        // Always create pagination object, even for empty results
+        const pagination = {
+            currentPage,
+            totalPages,
+            totalCourses,
+            itemsPerPage,
+            startIndex: totalCourses > 0 ? startIndex + 1 : 0,
+            endIndex: totalCourses > 0 ? Math.min(endIndex, totalCourses) : 0
+        };
+        
         res.render('catalog', { 
-            courses, 
+            courses: paginatedCourses, 
             department,
             search,
             level,
             status,
             gpa: req.query.gpa,
             filters,
-            title
+            title,
+            pagination,
+            buildPaginationUrl: (page, perPage) => buildPaginationUrl(page, perPage, req.query)
         });
     } catch (error) {
         console.error('Error rendering catalog:', error);

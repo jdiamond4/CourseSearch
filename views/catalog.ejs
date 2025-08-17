@@ -123,8 +123,30 @@
     <main class="container mx-auto px-4 py-6">
         <% if (courses && courses.length > 0) { %>
             <div class="mb-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-2"><%= title %></h2>
-                <p class="text-gray-600"><%= courses.length %> courses found</p>
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2"><%= title %></h2>
+                        <p class="text-gray-600">
+                            <% if (pagination.totalCourses > 0) { %>
+                                Showing <%= pagination.startIndex %>-<%= pagination.endIndex %> of <%= pagination.totalCourses %> courses
+                            <% } else { %>
+                                No courses found
+                            <% } %>
+                        </p>
+                    </div>
+                    
+                    <!-- Items per page dropdown -->
+                    <div class="flex items-center gap-2">
+                        <label for="perPage" class="text-sm font-medium text-gray-700">Show:</label>
+                        <select id="perPage" class="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="10" <%= pagination.itemsPerPage === 10 ? 'selected' : '' %>>10</option>
+                            <option value="25" <%= pagination.itemsPerPage === 25 ? 'selected' : '' %>>25</option>
+                            <option value="50" <%= pagination.itemsPerPage === 50 ? 'selected' : '' %>>50</option>
+                            <option value="100" <%= pagination.itemsPerPage === 100 ? 'selected' : '' %>>100</option>
+                        </select>
+                        <span class="text-sm text-gray-500">per page</span>
+                    </div>
+                </div>
             </div>
             
             <div id="courseList">
@@ -298,6 +320,77 @@
                 </div>
             <% }); %>
         </div>
+        
+        <!-- Pagination Controls -->
+        <% if (pagination.totalPages > 1) { %>
+            <div class="mt-8 flex items-center justify-center">
+                <nav class="flex items-center space-x-2" aria-label="Pagination">
+                    <!-- Previous Page -->
+                    <% if (pagination.currentPage > 1) { %>
+                        <a href="<%= buildPaginationUrl(pagination.currentPage - 1, pagination.itemsPerPage) %>" 
+                           class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:text-gray-700">
+                            Previous
+                        </a>
+                    <% } %>
+                    
+                    <!-- Page Numbers -->
+                    <% 
+                        let startPage = Math.max(1, pagination.currentPage - 2);
+                        let endPage = Math.min(pagination.totalPages, pagination.currentPage + 2);
+                        
+                        // Adjust if we're near the beginning or end
+                        if (endPage - startPage < 4) {
+                            if (startPage === 1) {
+                                endPage = Math.min(pagination.totalPages, startPage + 4);
+                            } else {
+                                startPage = Math.max(1, endPage - 4);
+                            }
+                        }
+                    %>
+                    
+                    <% if (startPage > 1) { %>
+                        <a href="<%= buildPaginationUrl(1, pagination.itemsPerPage) %>" 
+                           class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:text-gray-700">
+                            1
+                        </a>
+                        <% if (startPage > 2) { %>
+                            <span class="px-3 py-2 text-sm text-gray-500">...</span>
+                        <% } %>
+                    <% } %>
+                    
+                    <% for (let i = startPage; i <= endPage; i++) { %>
+                        <% if (i === pagination.currentPage) { %>
+                            <span class="px-3 py-2 text-sm font-medium text-white bg-blue-600 border border-blue-600 rounded-md">
+                                <%= i %>
+                            </span>
+                        <% } else { %>
+                            <a href="<%= buildPaginationUrl(i, pagination.itemsPerPage) %>" 
+                               class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:text-gray-700">
+                                <%= i %>
+                            </a>
+                        <% } %>
+                    <% } %>
+                    
+                    <% if (endPage < pagination.totalPages) { %>
+                        <% if (endPage < pagination.totalPages - 1) { %>
+                            <span class="px-3 py-2 text-sm text-gray-500">...</span>
+                        <% } %>
+                        <a href="<%= buildPaginationUrl(pagination.totalPages, pagination.itemsPerPage) %>" 
+                           class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:text-gray-700">
+                            <%= pagination.totalPages %>
+                        </a>
+                    <% } %>
+                    
+                    <!-- Next Page -->
+                    <% if (pagination.currentPage < pagination.totalPages) { %>
+                        <a href="<%= buildPaginationUrl(pagination.currentPage + 1, pagination.itemsPerPage) %>" 
+                           class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:text-gray-700">
+                            Next
+                        </a>
+                    <% } %>
+                </nav>
+            </div>
+        <% } %>
         <% } else { %>
             <div class="text-center py-12">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">No Courses Found</h2>
@@ -310,6 +403,23 @@
     </main>
 
     <script>
+        // Helper function to build pagination URLs
+        function buildPaginationUrl(page, perPage) {
+            const url = new URL(window.location);
+            url.searchParams.set('page', page);
+            url.searchParams.set('perPage', perPage);
+            return url.toString();
+        }
+        
+        // Items per page change handler
+        document.getElementById('perPage').addEventListener('change', function(e) {
+            const newPerPage = e.target.value;
+            const url = new URL(window.location);
+            url.searchParams.set('perPage', newPerPage);
+            url.searchParams.set('page', '1'); // Reset to first page when changing items per page
+            window.location.href = url.toString();
+        });
+        
         // Simple search functionality
         document.getElementById('searchInput').addEventListener('input', function(e) {
             const searchTerm = e.target.value.toLowerCase();
