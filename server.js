@@ -201,6 +201,29 @@ function transformSISDataToCourses(sisData, gpaData) {
       // Sort sections and discussions by section number
       course.sections.sort((a, b) => a.sectionNumber.localeCompare(b.sectionNumber));
       course.discussions.sort((a, b) => a.sectionNumber.localeCompare(b.sectionNumber));
+      
+      // Add hasGPAOver method to each course object
+      course.hasGPAOver = function(minGPA) {
+        // Check all sections and discussions for GPA >= minGPA
+        const allSections = [...this.sections, ...this.discussions];
+        
+        // Debug logging for first few courses
+        if (this.mnemonic === 'CS' && this.number <= 2100) {
+          console.log(`🔍 Checking ${this.mnemonic} ${this.number}: ${allSections.length} sections`);
+          allSections.forEach(section => {
+            console.log(`  Section ${section.sectionNumber}: GPA=${section.instructorGPA}, Teacher=${section.teacherName}`);
+          });
+        }
+        
+        return allSections.some(section => {
+          if (section.instructorGPA && section.instructorGPA !== 'N/A' && section.instructorGPA !== '—') {
+            const gpa = parseFloat(section.instructorGPA);
+            return !isNaN(gpa) && gpa >= minGPA;
+          }
+          return false;
+        });
+      };
+      
       return course;
     })
     .sort((a, b) => a.number - b.number);
@@ -220,7 +243,7 @@ app.get('/', (req, res) => {
 
 app.get('/catalog', async (req, res) => {
     try {
-        const { department, search, level, status, filters } = req.query;
+        const { department, search, level, status, gpa, filters } = req.query;
         
         let courses = [];
         
@@ -287,6 +310,22 @@ app.get('/catalog', async (req, res) => {
                 courses = transformSISDataToCourses(filteredData, gpaData);
                 console.log(`Transformed into ${courses.length} courses`);
                 
+                // Filter by GPA if specified (after object creation)
+                if (gpa) {
+                    console.log(`🎯 GPA filter requested: ${gpa}`);
+                    const minGPA = parseFloat(gpa);
+                    if (!isNaN(minGPA)) {
+                        console.log(`🔍 Filtering courses with GPA >= ${minGPA}`);
+                        const beforeCount = courses.length;
+                        courses = courses.filter(course => course.hasGPAOver(minGPA));
+                        console.log(`✅ GPA filtered: ${beforeCount} → ${courses.length} courses with GPA >= ${minGPA}`);
+                    } else {
+                        console.log(`⚠️ Invalid GPA value: ${gpa}`);
+                    }
+                } else {
+                    console.log(`ℹ️ No GPA filter specified`);
+                }
+                
             } else {
                 console.log(`Master SIS data file not found: ${masterPath}`);
                 courses = [];
@@ -310,6 +349,9 @@ app.get('/catalog', async (req, res) => {
         if (status) {
             title = `${status.charAt(0).toUpperCase() + status.slice(1)} Courses`;
         }
+        if (req.query.gpa) {
+            title = `${req.query.gpa}+ GPA Courses`;
+        }
         
         res.render('catalog', { 
             courses, 
@@ -317,6 +359,7 @@ app.get('/catalog', async (req, res) => {
             search,
             level,
             status,
+            gpa: req.query.gpa,
             filters,
             title
         });

@@ -32,6 +32,11 @@
             background-color: #f3f4f6;
             transform: translateX(4px);
         }
+        
+        /* Make placeholder text white */
+        .search-input::placeholder {
+            color: white !important;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -39,14 +44,14 @@
     <div class="gradient-bg text-white">
         <div class="container mx-auto px-6 py-20">
             <div class="text-center max-w-4xl mx-auto">
-                <h1 class="text-5xl font-bold mb-6">Discover Your Perfect UVA Courses</h1>
+                <h1 class="text-5xl font-bold mb-6">Discover The Perfect UVA Courses</h1>
                 <p class="text-xl text-blue-100 mb-8">Find classes that fit your schedule, meet your requirements, and match your interests. Powered by real-time data and intelligent recommendations.</p>
                 
                 <!-- Search Section -->
                 <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
                     <h2 class="text-2xl font-semibold mb-6">Smart Course Search</h2>
                     <form action="/catalog" method="GET" class="space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
                             <input type="text" 
                                    name="search" 
                                    placeholder="Course name or number..." 
@@ -77,6 +82,14 @@
                                 <option value="open">Open</option>
                                 <option value="closed">Closed</option>
                                 <option value="waitlist">Wait List</option>
+                            </select>
+                            
+                            <select name="gpa" class="search-input text-gray-800 px-4 py-3 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-white/50">
+                                <option value="">Any GPA</option>
+                                <option value="3.8">3.8+ GPA</option>
+                                <option value="3.5">3.5+ GPA</option>
+                                <option value="3.0">3.0+ GPA</option>
+                                <option value="2.5">2.5+ GPA</option>
                             </select>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-4 justify-center">
