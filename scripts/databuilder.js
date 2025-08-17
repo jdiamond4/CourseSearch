@@ -9,6 +9,7 @@
  */
 
 const { chromium } = require('playwright');
+const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
@@ -363,7 +364,7 @@ async function updateAllDepartments(term) {
       console.log(`\n🔄 Updating ${name} (${nemonic})...`);
       
       try {
-        const command = `node scripts/buildMasterAllDepartments.js --subject=${nemonic} --term=${term}`;
+        const command = `node scripts/databuilder.js --subject=${nemonic} --term=${term}`;
         console.log(`   Running: ${command}`);
         
         const output = execSync(command, { encoding: 'utf8' });
