@@ -263,7 +263,7 @@ app.get('/', (req, res) => {
 
 app.get('/catalog', async (req, res) => {
     try {
-        const { department, search, level, status, gpa, filters, page = 1, perPage = 25 } = req.query;
+        const { department, search, level, status, gpa, filters, page = 1, perPage = 15 } = req.query;
         
         let courses = [];
         
