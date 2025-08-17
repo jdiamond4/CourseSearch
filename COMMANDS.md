@@ -38,11 +38,12 @@ node scripts/databuilder.js --all --term=1258
 1256 = Spring 2025
 1254 = Fall 2024
 
-# Department IDs (for GPA scraping)
-CS = 16
-MATH = 16  
-ASTR = 4
-STAT = 34
+        # Department IDs (for GPA scraping)
+        CS = 16
+        MATH = 16  
+        ASTR = 4
+        STAT = 34
+        RELB = 26
 ```
 
 ## Server Management
