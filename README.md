@@ -1,164 +1,92 @@
-# CourseSearch - UVA Course Search and Catalog System
+# CourseSearch: Smart Course Discovery for UVA Students
 
-A comprehensive system for scraping, storing, and searching UVA course data with GPA information from theCourseForum.
+## My Mission
 
-## 🚀 **Quick Start**
+My goal is to build a smarter, more modern course search solution that goes beyond basic course catalogs. This is going to be a platform that helps UVA students make informed decisions by comparing not just typical course information, but also instructor GPAs and ratings to find the best learning experience. I found that this was the most important yet unknown piece of information about courses yet it was always so hard to quickly find and compare to the course options open during enrollment. 
 
-### **Scrape GPA Data for Any Department**
-```bash
-# Scrape MATH department (department ID 16)
-node scripts/scrapeCourseForum.js --departmentId=16 --subject=MATH
+## What We're Building
 
-# Scrape CS department (department ID 31) 
-node scripts/scrapeCourseForum.js --departmentId=31 --subject=CS
+### Current Features
+- **Smart Course Filtering**: Search by department, course level, enrollment status, and instructor GPA
+- **Real-time Data**: Live enrollment information and up-to-date course details
+- **GPA Integration**: See instructor ratings and GPAs from theCourseForum.com
+- **Modern Interface**: Clean, intuitive design that makes course discovery effortless
 
-# Scrape with term filter (e.g., only Fall 2025 courses)
-node scripts/scrapeCourseForum.js --departmentId=16 --subject=MATH --term=1258
+### Future Vision
+- **AI-Powered Recommendations**: Custom searches that fit your specific schedule and preferences
+- **Smart Scheduling**: Intelligent suggestions based on your academic goals and time constraints
+- **Predictive Analytics**: Course difficulty predictions and success rate insights
+- **Personalized Experience**: Learning from your preferences to suggest better course combinations
 
-# Scrape any other department by changing departmentId and subject
-```
+## Why This Matters
 
-### **Integrate GPA Data with SIS Data**
-```bash
-# After scraping, integrate with SIS data
-node scripts/integrateGPAData.js MATH 1258 1
-node scripts/integrateGPAData.js CS 1258 1
-```
+### For Students
+- **Make Better Decisions**: Compare courses beyond just descriptions and times
+- **Find Great Instructors**: See actual student feedback and GPA data
+- **Optimize Your Schedule**: Build a course load that fits your learning style
+- **Save Time**: No more digging through multiple websites for course information
 
-### **Start the Web Server**
-```bash
-npm start
-# Visit http://localhost:3000/catalog?department=MATH
-# Visit http://localhost:3000/catalog?department=CS
-```
+### For the UVA Community
+- **Transparency**: Open access to course and instructor data
+- **Data-Driven Choices**: Evidence-based course selection
+- **Community Building**: Shared insights about courses and instructors
 
-## 📊 **System Architecture**
+## How It Works
 
-### **Unified GPA Data System**
-- **Master CSV**: All GPA data consolidated in `data/master-gpa-data.csv`
-- **Department Scraping**: Generic scraper works with any department
-- **Data Integration**: Seamlessly combines GPA and SIS data
+### Data Sources
+- **SIS Integration**: Real-time course data from UVA's Student Information System
+- **GPA Data**: Instructor ratings and GPAs from theCourseForum.com
+- **Live Updates**: Enrollment data refreshed every few minutes during peak periods
 
-### **Data Flow**
-1. **Scrape** → `scrapeCourseForum.js` collects GPA data from any department
-2. **Consolidate** → Data automatically added to master CSV
-3. **Integrate** → `integrateGPAData.js` merges GPA data with SIS data
-4. **Serve** → Web interface displays integrated course information
+### Smart Filtering
+- **Department & Level**: Find courses in your major or explore new subjects
+- **Enrollment Status**: See what's actually available right now
+- **Instructor Quality**: Filter by minimum GPA thresholds (3.8+, 3.5+, 3.0+, 2.5+)
+- **Combined Searches**: Mix and match filters for precise results
 
-## 🛠 **Available Scripts**
+### Future AI Integration
+- **Natural Language Queries**: "Find me a 3000-level CS course with a good professor that fits my Tuesday/Thursday schedule"
+- **Learning Preferences**: AI learns what you value in courses and instructors
+- **Schedule Optimization**: Intelligent suggestions that work with your existing commitments
 
-### **Core Scripts**
-- **`scrapeCourseForum.js`** - Scrapes GPA data from any department
-- **`integrateGPAData.js`** - Integrates GPA data with SIS data
-- **`fetchSis.js`** - Fetches course data from UVA SIS
-- **`processAndOrganize.js`** - Processes and organizes SIS data
+## Our Goals
 
-### **Utility Scripts**
-- **`buildCourseCatalog.js`** - Builds complete course catalog
-- **`renderDepartmentView.js`** - Generates department-specific views
-- **`renderModernUI.js`** - Creates modern UI components
+### Short Term
+- [x] Build comprehensive course database with live enrollment data
+- [x] Integrate instructor GPA and rating information
+- [x] Create intuitive search and filtering interface
+- [x] Support all UVA departments and course levels
 
-## 📁 **Data Structure**
+### Medium Term
+- [ ] AI-powered course recommendations
+- [ ] Smart scheduling suggestions
+- [ ] Course comparison tools and visualizations
 
-### **Master GPA CSV Schema**
-```csv
-department,courseNumber,courseTitle,instructorName,instructorGPA,instructorRating,instructorDifficulty,instructorLastTaught,courseOverallGPA,courseOverallRating,courseOverallDifficulty,courseLastTaught,scrapedAt
-```
+### Long Term
+- [ ] Predictive course difficulty and success rates
+- [ ] Integration with degree planning tools
+- [ ] Personalized academic pathway recommendations
 
-### **File Organization**
-```
-data/
-├── master-gpa-data.csv          # Consolidated GPA data
-├── courseforum-math-gpa-data.json    # Department-specific data
-├── courseforum-cs-gpa-data.json      # Department-specific data
-├── integrated-term-1258-subject-MATH-page-1.json  # Integrated data
-└── integrated-term-1258-subject-CS-page-1.json    # Integrated data
-```
+## Technology
 
-## 🔧 **Configuration**
+- **Real-time Data**: Live enrollment updates every few minutes
+- **Smart Caching**: Fast searches across thousands of course records
+- **Open Architecture**: Designed for easy integration with future AI services
+- **Production Ready**: Built to handle thousands of users during enrollment season
 
-### **Department IDs**
-- **MATH**: 16
-- **CS**: 31
-- **PHYS**: 22
-- **CHEM**: 18
-- **BIOL**: 17
+## Get Started
 
-### **Term Codes**
-- **1258**: Fall 2025
-- **1256**: Spring 2025
-- **1254**: Fall 2024
+Visit our url coming soon to start discovering courses smarter.
 
-## 📈 **Usage Examples**
+### Quick Start
+1. **Choose Your Department**: CS, Math, Physics, or browse all
+2. **Set Your Preferences**: Course level, enrollment status, instructor quality
+3. **Find Your Courses**: Get personalized results with GPA insights
+4. **Plan Your Schedule**: See what fits and what's available
 
-### **Complete Workflow for MATH Department**
-```bash
-# 1. Scrape GPA data (only Fall 2025 courses)
-node scripts/scrapeCourseForum.js --departmentId=16 --subject=MATH --term=1258
 
-# 2. Fetch SIS data (if not already available)
-node scripts/fetchSis.js --term=1258 --subject=MATH --page=1
+## Questions?
 
-# 3. Process SIS data
-node scripts/processAndOrganize.js --term=1258 --subject=MATH --page=1
-
-# 4. Integrate GPA and SIS data
-node scripts/integrateGPAData.js MATH 1258 1
-
-# 5. View results
-open http://localhost:3000/catalog?department=MATH
-```
-
-### **Batch Processing Multiple Departments**
-```bash
-# Scrape multiple departments (only Fall 2025 courses)
-node scripts/scrapeCourseForum.js --departmentId=16 --subject=MATH --term=1258
-node scripts/scrapeCourseForum.js --departmentId=31 --subject=CS --term=1258
-node scripts/scrapeCourseForum.js --departmentId=22 --subject=PHYS --term=1258
-
-# Integrate all departments
-node scripts/integrateGPAData.js MATH 1258 1
-node scripts/integrateGPAData.js CS 1258 1
-node scripts/integrateGPAData.js PHYS 1258 1
-```
-
-## 🎯 **Features**
-
-- ✅ **Generic Department Support** - Works with any UVA department
-- ✅ **Term Filtering** - Filter courses by specific semester (e.g., --term=1258 for Fall 2025)
-- ✅ **Unified Data Storage** - Single master CSV for all GPA data
-- ✅ **Automatic Integration** - Seamlessly combines GPA and SIS data
-- ✅ **Web Interface** - Browse courses with integrated information
-- ✅ **Flexible Scraping** - Easy to add new departments
-
-## 🚧 **Development**
-
-### **Adding New Departments**
-1. Find the department ID from theCourseForum
-2. Run: `node scripts/scrapeCourseForum.js --departmentId=<ID> --subject=<CODE>`
-3. Data automatically added to master CSV
-
-### **Customizing Scraping**
-- Modify `scrapeCourseForum.js` for department-specific logic
-- Adjust timing and selectors as needed
-- Add new data fields to the CSV schema
-
-## 📝 **Notes**
-
-- **Respectful Scraping**: Built-in delays to avoid overwhelming servers
-- **Error Handling**: Robust error handling with fallback mechanisms
-- **Data Validation**: Automatic validation and cleaning of scraped data
-- **Performance**: Optimized for large datasets with efficient processing
-- **Term Filtering**: Use --term argument to only scrape courses from specific semesters
-
-## 🤝 **Contributing**
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 📄 **License**
-
-MIT License - see LICENSE file for details.
+If you have any questions about CourseSearch, feel free to reach out at pyb4xe@virginia.edu
+Justin Diamond 
+UVA 2028
