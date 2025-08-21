@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs').promises;
+const fsSync = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -236,12 +237,118 @@ function getEnrollmentStatus(available, status) {
   return 'Closed';
 }
 
+// Department categories loaded from departments.csv
+let departmentCategories = {};
+
+// Landing page buttons loaded from landing-buttons.csv
+let landingButtons = {};
+
+// Helper function to parse CSV line with proper quote handling
+function parseCSVLine(line) {
+    const result = [];
+    let current = '';
+    let inQuotes = false;
+    
+    for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        
+        if (char === '"') {
+            inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+            result.push(current.trim());
+            current = '';
+        } else {
+            current += char;
+        }
+    }
+    
+    // Add the last field
+    result.push(current.trim());
+    
+    // Remove quotes from fields
+    return result.map(field => field.replace(/^"|"$/g, ''));
+}
+
+// Load department categories and landing buttons from CSV
+function loadDepartmentCategories() {
+    try {
+        // Load department categories
+        const departmentsPath = path.join(process.cwd(), 'data', 'departments.csv');
+        if (fsSync.existsSync(departmentsPath)) {
+            const csvContent = fsSync.readFileSync(departmentsPath, 'utf8');
+            const lines = csvContent.trim().split('\n');
+            const headers = parseCSVLine(lines[0]);
+            
+            // Find column indices
+            const categoryIndex = headers.indexOf('category');
+            const nemonicIndex = headers.indexOf('nemonic');
+            
+            if (categoryIndex !== -1 && nemonicIndex !== -1) {
+                // Group departments by category
+                for (let i = 1; i < lines.length; i++) {
+                    const values = parseCSVLine(lines[i]);
+                    const category = values[categoryIndex];
+                    const nemonic = values[nemonicIndex];
+                    
+                    if (category && category !== 'none' && nemonic) {
+                        if (!departmentCategories[category]) {
+                            departmentCategories[category] = [];
+                        }
+                        departmentCategories[category].push(nemonic);
+                    }
+                }
+                console.log(`📚 Loaded ${Object.keys(departmentCategories).length} department categories`);
+            }
+        }
+
+        // Load landing page buttons
+        const landingButtonsPath = path.join(process.cwd(), 'data', 'landing-buttons.csv');
+        if (fsSync.existsSync(landingButtonsPath)) {
+            const csvContent = fsSync.readFileSync(landingButtonsPath, 'utf8');
+            const lines = csvContent.trim().split('\n');
+            const headers = parseCSVLine(lines[0]);
+            
+            // Find column indices
+            const schoolIndex = headers.indexOf('school');
+            const displayNameIndex = headers.indexOf('displayName');
+            const typeIndex = headers.indexOf('type');
+            const filterIndex = headers.indexOf('filter');
+            
+            if (schoolIndex !== -1 && displayNameIndex !== -1 && typeIndex !== -1 && filterIndex !== -1) {
+                // Group buttons by school
+                for (let i = 1; i < lines.length; i++) {
+                    const values = parseCSVLine(lines[i]);
+                    const school = values[schoolIndex];
+                    const displayName = values[displayNameIndex];
+                    const type = values[typeIndex];
+                    const filter = values[filterIndex];
+                    
+                    if (school && displayName && type && filter) {
+                        if (!landingButtons[school]) {
+                            landingButtons[school] = [];
+                        }
+                        landingButtons[school].push({
+                            displayName,
+                            type,
+                            filter
+                        });
+                    }
+                }
+                console.log(`🏠 Loaded landing buttons`);
+            }
+        }
+    } catch (error) {
+        console.error('❌ Error loading CSV data:', error);
+    }
+}
+
 // Helper function to build pagination URLs with current query parameters
 function buildPaginationUrl(page, perPage, currentQuery) {
   const url = new URL('http://localhost/catalog'); // Base URL
   const params = new URLSearchParams();
   
   // Add current query parameters
+  if (currentQuery.category) params.set('category', currentQuery.category);
   if (currentQuery.department) params.set('department', currentQuery.department);
   if (currentQuery.search) params.set('search', currentQuery.search);
   if (currentQuery.level) params.set('level', currentQuery.level);
@@ -258,12 +365,15 @@ function buildPaginationUrl(page, perPage, currentQuery) {
 
 // Routes
 app.get('/', (req, res) => {
-    res.render('landing', { title: 'UVA Course Search' });
+    res.render('landing', { 
+        title: 'UVA Course Search',
+        landingButtons 
+    });
 });
 
 app.get('/catalog', async (req, res) => {
     try {
-        const { department, search, level, status, gpa, filters, page = 1, perPage = 15 } = req.query;
+        const { category, department, search, level, status, gpa, filters, page = 1, perPage = 15 } = req.query;
         
         let courses = [];
         
@@ -272,19 +382,22 @@ app.get('/catalog', async (req, res) => {
             const masterPath = path.join(__dirname, 'data', `master-sis-data-1258.csv`);
             
             if (await fs.access(masterPath).then(() => true).catch(() => false)) {
-                console.log(`Loading from master SIS data: ${masterPath}`);
-                
                 // Parse master SIS data
                 const allSisData = await parseCSV(masterPath);
-                console.log(`Loaded ${allSisData.length} total SIS records`);
                 
                 // Apply search filters
                 let filteredData = allSisData;
                 
-                // Filter by department if specified
-                if (department) {
+                // Filter by category if specified (overrides department filter)
+                if (category && departmentCategories[category]) {
+                    const categoryDepartments = departmentCategories[category];
+                    filteredData = filteredData.filter(row => categoryDepartments.includes(row.subject));
+
+                }
+                // Filter by department if specified (only if no category)
+                else if (department) {
                     filteredData = filteredData.filter(row => row.subject === department);
-                    console.log(`Filtered to ${filteredData.length} records for department: ${department}`);
+
                 }
                 
                 // Filter by search term if specified
@@ -297,7 +410,7 @@ app.get('/catalog', async (req, res) => {
                             (row.subject && row.subject.toLowerCase().includes(searchLower))
                         );
                     });
-                    console.log(`Filtered to ${filteredData.length} records after search: ${search}`);
+
                 }
                 
                 // Filter by course level if specified
@@ -310,7 +423,7 @@ app.get('/catalog', async (req, res) => {
                         }
                         return false;
                     });
-                    console.log(`Filtered to ${filteredData.length} records for level: ${level}`);
+
                 }
                 
                 // Filter by enrollment status if specified
@@ -319,45 +432,48 @@ app.get('/catalog', async (req, res) => {
                         const enrollmentStatus = getEnrollmentStatus(row.enrollment_available, row.enrl_stat);
                         return enrollmentStatus.toLowerCase() === status.toLowerCase();
                     });
-                    console.log(`Filtered to ${filteredData.length} records for status: ${status}`);
+
                 }
                 
                 // Load GPA data
                 const gpaData = await loadGPAData();
-                console.log(`📊 Loaded ${gpaData.length} GPA records`);
+
                 
                 // Transform filtered data into course objects
                 courses = transformSISDataToCourses(filteredData, gpaData);
-                console.log(`Transformed into ${courses.length} courses`);
+
                 
                 // Filter by GPA if specified (after object creation)
                 if (gpa) {
-                    console.log(`🎯 GPA filter requested: ${gpa}`);
                     const minGPA = parseFloat(gpa);
                     if (!isNaN(minGPA)) {
-                        console.log(`🔍 Filtering courses with GPA >= ${minGPA}`);
                         const beforeCount = courses.length;
                         courses = courses.filter(course => course.hasGPAOver(minGPA));
-                        console.log(`✅ GPA filtered: ${beforeCount} → ${courses.length} courses with GPA >= ${minGPA}`);
-                    } else {
-                        console.log(`⚠️ Invalid GPA value: ${gpa}`);
                     }
-                } else {
-                    console.log(`ℹ️ No GPA filter specified`);
                 }
                 
             } else {
-                console.log(`Master SIS data file not found: ${masterPath}`);
                 courses = [];
             }
         } catch (fileError) {
-            console.log(`Error reading data: ${fileError.message}`);
             courses = [];
         }
         
         // Generate dynamic title based on what's being displayed
         let title = 'Course Catalog';
-        if (department) {
+        if (category && departmentCategories[category]) {
+            const categoryDepartments = departmentCategories[category];
+            // Find display name from landing buttons
+            let displayName = null;
+            for (const school in landingButtons) {
+                const button = landingButtons[school].find(b => b.type === 'category' && b.filter === category);
+                if (button) {
+                    displayName = button.displayName;
+                    break;
+                }
+            }
+            title = displayName ? `${displayName} Courses` : `${categoryDepartments.join(', ')} Courses`;
+        } else if (department) {
             title = `${department} Courses`;
         }
         if (search) {
@@ -396,6 +512,7 @@ app.get('/catalog', async (req, res) => {
         
         res.render('catalog', { 
             courses: paginatedCourses, 
+            category,
             department,
             search,
             level,
@@ -449,6 +566,9 @@ app.get('/api/search', (req, res) => {
     term
   });
 });
+
+// Load department categories before starting server
+loadDepartmentCategories();
 
 // Start server
 app.listen(PORT, () => {

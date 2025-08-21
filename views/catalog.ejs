@@ -94,12 +94,15 @@
     </div>
 
     <!-- Search Summary -->
-    <% if ((typeof search !== 'undefined' && search) || (typeof department !== 'undefined' && department) || (typeof level !== 'undefined' && level) || (typeof status !== 'undefined' && status)) { %>
+    <% if ((typeof category !== 'undefined' && category) || (typeof search !== 'undefined' && search) || (typeof department !== 'undefined' && department) || (typeof level !== 'undefined' && level) || (typeof status !== 'undefined' && status)) { %>
     <div class="bg-blue-50 border-b border-blue-200 py-3">
         <div class="container mx-auto px-6">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4 text-sm text-blue-800">
                     <span class="font-medium">Search Filters:</span>
+                    <% if (typeof category !== 'undefined' && category) { %>
+                        <span class="bg-blue-100 px-2 py-1 rounded">Category: <%= category.charAt(0).toUpperCase() + category.slice(1) %></span>
+                    <% } %>
                     <% if (typeof department !== 'undefined' && department) { %>
                         <span class="bg-blue-100 px-2 py-1 rounded">Department: <%= department %></span>
                     <% } %>
