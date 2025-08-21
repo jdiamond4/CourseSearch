@@ -262,27 +262,6 @@ class CourseForumScraper {
       // Update master CSV with new data
       await this.updateMasterCSV();
 
-      // Also save department-specific JSON for reference
-      const outputPath = path.join(__dirname, '..', 'data', `courseforum-${this.subject.toLowerCase()}-gpa-data.json`);
-      const outputData = {
-        scraped_at: new Date().toISOString(),
-        department: this.subject,
-        department_id: this.departmentId,
-        term: this.term,
-        total_courses_scraped: courseNumbers.length,
-        total_instructors_found: this.courses.length,
-        courses: this.courses
-      };
-
-      // Ensure data directory exists
-      const dataDir = path.dirname(outputPath);
-      if (!fs.existsSync(dataDir)) {
-        fs.mkdirSync(dataDir, { recursive: true });
-      }
-
-      fs.writeFileSync(outputPath, JSON.stringify(outputData, null, 2));
-      console.log(`💾 Saved department data to: ${outputPath}`);
-
       return this.courses;
 
     } catch (error) {
