@@ -366,7 +366,7 @@ function buildPaginationUrl(page, perPage, currentQuery) {
 // Routes
 app.get('/', (req, res) => {
     res.render('landing', { 
-        title: 'UVA Course Search',
+        title: 'HoosList - UVA Course Search',
         landingButtons 
     });
 });

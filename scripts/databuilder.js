@@ -176,9 +176,19 @@ function getCSVHeaders() {
 function arrayToCSV(data, headers) {
   const csvRows = [headers.join(',')];
   
-  for (const row of data) {
+  for (let i = 0; i < data.length; i++) {
+    const row = data[i];
     const values = headers.map(header => {
       const value = row[header] || '';
+      
+      // Check for extremely long strings that might cause issues
+      if (typeof value === 'string' && value.length > 1000) {
+        console.warn(`⚠️  Very long string found in row ${i}, header ${header}: ${value.length} characters`);
+        // Truncate extremely long strings more aggressively
+        const truncated = value.substring(0, 1000);
+        return `"${truncated.replace(/"/g, '""')}"`;
+      }
+      
       // Escape commas and quotes in CSV
       if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
         return `"${value.replace(/"/g, '""')}"`;
@@ -309,6 +319,19 @@ async function main() {
     const allClasses = [...existingData, ...newClasses];
     console.log(`Total records after merge: ${allClasses.length}`);
     
+    // Debug: Check for problematic data
+    console.log(`🔍 Checking data for CSV issues...`);
+    for (let i = 0; i < allClasses.length; i++) {
+      const row = allClasses[i];
+      for (const header of allHeaders) {
+        const value = row[header];
+        if (typeof value === 'string' && value.length > 5000) {
+          console.warn(`⚠️  Long string in row ${i}, ${header}: ${value.length} chars`);
+          console.warn(`   Preview: ${value.substring(0, 100)}...`);
+        }
+      }
+    }
+    
     // Create CSV
     const csvContent = arrayToCSV(allClasses, allHeaders);
     
@@ -318,7 +341,27 @@ async function main() {
       fs.mkdirSync(dataDir, { recursive: true });
     }
     
-    fs.writeFileSync(masterPath, csvContent);
+    console.log(`💾 Writing CSV file...`);
+    try {
+      fs.writeFileSync(masterPath, csvContent);
+    } catch (writeError) {
+      console.error(`❌ CSV write error: ${writeError.message}`);
+      console.error(`❌ Error details:`, writeError);
+      
+      // Try to identify the problematic row
+      console.log(`🔍 Attempting to identify problematic data...`);
+      for (let i = 0; i < allClasses.length; i++) {
+        const row = allClasses[i];
+        for (const header of allHeaders) {
+          const value = row[header];
+          if (typeof value === 'string' && value.length > 100000) {
+            console.error(`🚨 Extremely long string in row ${i}, ${header}: ${value.length} chars`);
+            console.error(`   First 200 chars: ${value.substring(0, 200)}`);
+          }
+        }
+      }
+      throw writeError;
+    }
     console.log(`✅ Master SIS data updated: ${masterPath}`);
     console.log(`📊 Total records: ${allClasses.length}`);
     console.log(`📋 Fields captured: ${allHeaders.length}`);

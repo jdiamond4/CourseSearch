@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
+    <title>HoosList - <%= title %></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .enrollment-badge {
@@ -56,15 +56,15 @@
 </head>
 <body class="bg-gray-50">
     <!-- Header -->
-    <header class="bg-white shadow-sm border-b border-gray-200">
+    <header class="bg-[#232D4B] shadow-sm border-b border-[#232D4B]">
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
-                    <a href="/" class="text-2xl font-bold text-gray-800 hover:text-gray-600 transition-colors">
-                        CourseSearch
+                    <a href="/" class="text-2xl font-bold text-[#E57200] hover:text-[#E57200]/80 transition-colors">
+                        HoosList
                     </a>
                 </div>
-                <div class="text-sm text-gray-500">
+                <div class="text-sm text-white">
                     <% if (typeof department !== 'undefined' && department) { %>
                         <%= department %> Department
                     <% } else if (typeof search !== 'undefined' && search) { %>
@@ -89,6 +89,9 @@
                        id="searchInput" 
                        placeholder="Search courses (e.g., CS 1110, Programming, Morning classes...)" 
                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-400 focus:border-transparent text-lg">
+                <div id="searchResults" class="mt-2 text-sm text-gray-600 hidden">
+                    <span id="resultsCount"></span>
+                </div>
             </div>
         </div>
     </div>
@@ -456,25 +459,68 @@
             window.location.href = url.toString();
         });
         
-        // Simple search functionality
+        // Enhanced search functionality
         document.getElementById('searchInput').addEventListener('input', function(e) {
             const searchTerm = e.target.value.toLowerCase();
             const courseCards = document.querySelectorAll('.course-card');
             
             courseCards.forEach(card => {
+                // Get course ID (e.g., "CS-1110")
                 const courseId = card.getAttribute('data-course-id').toLowerCase();
-                const courseTitle = card.querySelector('h2 + p').textContent.toLowerCase();
-                const instructorNames = Array.from(card.querySelectorAll('.text-center.font-medium.text-gray-800'))
+                
+                // Get course title from the h2 element
+                const courseTitleElement = card.querySelector('h2');
+                const courseTitle = courseTitleElement ? courseTitleElement.textContent.toLowerCase() : '';
+                
+                // Get instructor names from section data
+                const instructorElements = card.querySelectorAll('.text-center.font-medium.text-gray-800');
+                const instructorNames = Array.from(instructorElements)
                     .map(el => el.textContent.toLowerCase())
                     .join(' ');
                 
+                // Check if search term matches any of these fields
                 const matches = courseId.includes(searchTerm) || 
                               courseTitle.includes(searchTerm) || 
                               instructorNames.includes(searchTerm);
                 
-                card.style.display = matches ? 'block' : 'none';
+                // Show/hide the card based on search results
+                if (searchTerm === '') {
+                    // If search is empty, show all cards
+                    card.style.display = 'block';
+                } else {
+                    // If searching, show only matching cards
+                    card.style.display = matches ? 'block' : 'none';
+                }
             });
+            
+            // Update the search results count
+            updateSearchResultsCount();
         });
+        
+        // Function to update search results count
+        function updateSearchResultsCount() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const courseCards = document.querySelectorAll('.course-card');
+            const visibleCards = Array.from(courseCards).filter(card => 
+                card.style.display !== 'none'
+            );
+            
+            const resultsDiv = document.getElementById('searchResults');
+            const resultsCount = document.getElementById('resultsCount');
+            
+            if (searchTerm === '') {
+                resultsDiv.classList.add('hidden');
+            } else {
+                resultsDiv.classList.remove('hidden');
+                if (visibleCards.length === 0) {
+                    resultsCount.textContent = 'No courses found matching your search.';
+                    resultsCount.className = 'text-red-600';
+                } else {
+                    resultsCount.textContent = `Showing ${visibleCards.length} of ${courseCards.length} courses`;
+                    resultsCount.className = 'text-gray-600';
+                }
+            }
+        }
     </script>
 </body>
 </html> 
