@@ -51,22 +51,15 @@
                 <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
                     <h2 class="text-2xl font-semibold mb-6">Smart Course Search</h2>
                     <form action="/catalog" method="GET" class="space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-11 gap-4 mb-6">
                             <input type="text" 
                                    name="search" 
-                                   placeholder="Course name or number..." 
-                                   class="search-input text-gray-800 px-4 py-3 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-white/50">
+                                   placeholder="Course name" 
+                                   class="search-input text-gray-800 px-4 py-3 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-white/50 md:col-span-3">
                             
-                            <select name="department" class="search-input text-gray-800 px-4 py-3 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-white/50">
-                                <option value="">Any Department</option>
-                                <option value="CS">Computer Science</option>
-                                                                  <option value="MATH">Mathematics</option>
-                                  <option value="ASTR">Astronomy</option>
-                                  <option value="STAT">Statistics</option>
-                                  <option value="RELB">Buddhism</option>
-                            </select>
+                            <input type="text" name="department" placeholder="Department" class="search-input text-gray-800 px-4 py-3 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-white/50 md:col-span-2">
                             
-                            <select name="level" class="search-input text-gray-800 px-4 py-3 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-white/50">
+                            <select name="level" class="search-input text-gray-800 px-4 py-3 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-white/50 md:col-span-2">
                                 <option value="">Any Level</option>
                                 <option value="1000">1000 Level</option>
                                 <option value="2000">2000 Level</option>
@@ -79,14 +72,14 @@
                                 <option value="9000">9000 Level</option>
                             </select>
                             
-                            <select name="status" class="search-input text-gray-800 px-4 py-3 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-white/50">
+                            <select name="status" class="search-input text-gray-800 px-4 py-3 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-white/50 md:col-span-2">
                                 <option value="">Any Status</option>
                                 <option value="open">Open</option>
                                 <option value="closed">Closed</option>
                                 <option value="waitlist">Wait List</option>
                             </select>
                             
-                            <select name="gpa" class="search-input text-gray-800 px-4 py-3 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-white/50">
+                            <select name="gpa" class="search-input text-gray-800 px-4 py-3 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-white/50 md:col-span-2">
                                 <option value="">Any GPA</option>
                                 <option value="3.8">3.8+ GPA</option>
                                 <option value="3.5">3.5+ GPA</option>
