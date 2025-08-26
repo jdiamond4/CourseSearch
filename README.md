@@ -32,7 +32,6 @@ My goal is to build a smarter, more modern course search solution that goes beyo
 ### For the UVA Community
 - **Transparency**: Open access to course and instructor data
 - **Data-Driven Choices**: Evidence-based course selection
-- **Community Building**: Shared insights about courses and instructors
 
 ## How It Works
 

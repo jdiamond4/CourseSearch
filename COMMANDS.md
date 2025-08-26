@@ -30,6 +30,18 @@ node scripts/databuilder.js --all --term=1258
 # - Show progress and results
 ```
 
+## Update All GPA Data
+
+```bash
+# Scrape GPA data for ALL departments at once
+node scripts/scrapeCourseForum.js --all --term=1258
+
+# This will automatically:
+# - Read from data/departments.csv
+# - Scrape GPA data for each department one by one
+# - Show progress and results
+```
+
 ## Common Codes
 
 ```bash
@@ -75,8 +87,8 @@ node scripts/scrapeCourseForum.js --departmentId=16 --subject=CS --term=1258
 # 1. Update all departments (gets latest enrollment data)
 node scripts/databuilder.js --all --term=1258
 
-# 2. Scrape GPA data for new departments (if needed)
-node scripts/scrapeCourseForum.js --departmentId=34 --subject=STAT --term=1258
+# 2. Scrape GPA data for all departments (updates instructor ratings)
+node scripts/scrapeCourseForum.js --all --term=1258
 
 # 3. Start server to view results
 npm start
