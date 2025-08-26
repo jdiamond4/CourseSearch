@@ -52,11 +52,13 @@ async function parseCSV(filePath) {
   try {
     const csvContent = await fs.readFile(filePath, 'utf8');
     const lines = csvContent.trim().split('\n');
-    const headers = lines[0].split(',').map(h => h.trim());
+    
+    // Use the existing parseCSVLine function for proper quote handling
+    const headers = parseCSVLine(lines[0]);
     
     const data = [];
     for (let i = 1; i < lines.length; i++) {
-      const values = lines[i].split(',').map(v => v.trim());
+      const values = parseCSVLine(lines[i]);
       const row = {};
       headers.forEach((header, index) => {
         row[header] = values[index] || '';

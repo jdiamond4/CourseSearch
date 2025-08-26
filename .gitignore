@@ -99,4 +99,8 @@ coverage/
 
 # Temporary folders
 tmp/
-temp/ 
+temp/
+
+# Documentation and planning files
+AUTOMATED_DATA_UPDATE_PLAN.md
+search.md 

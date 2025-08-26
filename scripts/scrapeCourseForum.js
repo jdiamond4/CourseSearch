@@ -389,129 +389,37 @@ class CourseForumScraper {
 }
 
 async function main() {
-  const allFlag = process.argv.includes('--all');
   const departmentId = getArg('departmentId', '31'); // Default to CS department ID
   const subject = getArg('subject', 'CS'); // Default to CS
   const term = getArg('term', '1258'); // Default to Fall 2025
 
-  if (allFlag) {
-    console.log('🔄 Starting bulk GPA update for all departments...');
-    await updateAllDepartments(term);
-  } else {
-    console.log(`🔧 Parsed arguments:`);
-    console.log(`   Department ID: ${departmentId}`);
-    console.log(`   Subject: ${subject}`);
-    console.log(`   Term: ${term}`);
-    console.log(`   Full command: ${process.argv.join(' ')}`);
+  console.log(`🔧 Parsed arguments:`);
+  console.log(`   Department ID: ${departmentId}`);
+  console.log(`   Subject: ${subject}`);
+  console.log(`   Term: ${term}`);
+  console.log(`   Full command: ${process.argv.join(' ')}`);
 
-    const scraper = new CourseForumScraper(departmentId, subject, term);
-    
-    try {
-      await scraper.initialize();
-      const courses = await scraper.scrapeDepartment();
-      
-      console.log('\n🎉 Scraping completed successfully!');
-      console.log(`📚 Total instructor records found: ${courses.length}`);
-      
-      // Display summary
-      if (courses.length > 0) {
-        console.log('\n📊 Sample data:');
-        courses.slice(0, 5).forEach(record => {
-          console.log(`  ${record.department} ${record.courseNumber}: ${record.instructorName} - GPA: ${record.instructorGPA}, Rating: ${record.instructorRating}`);
-        });
-      }
-
-    } catch (error) {
-      console.error('❌ Scraping failed:', error);
-    } finally {
-      await scraper.close();
-    }
-  }
-}
-
-async function updateAllDepartments(term) {
+  const scraper = new CourseForumScraper(departmentId, subject, term);
+  
   try {
-    // Load departments from CSV
-    const departmentsPath = path.join(__dirname, '..', 'data', 'departments.csv');
-    if (!fs.existsSync(departmentsPath)) {
-      throw new Error('departments.csv not found');
-    }
-
-    const csvContent = fs.readFileSync(departmentsPath, 'utf8');
-    const lines = csvContent.trim().split('\n');
-    const headers = lines[0].split(',');
+    await scraper.initialize();
+    const courses = await scraper.scrapeDepartment();
     
-    // Find column indices
-    const nameIndex = headers.indexOf('name');
-    const nemonicIndex = headers.indexOf('nemonic');
-    const idIndex = headers.indexOf('id');
+    console.log('\n🎉 Scraping completed successfully!');
+    console.log(`📚 Total instructor records found: ${courses.length}`);
     
-    if (nameIndex === -1 || nemonicIndex === -1 || idIndex === -1) {
-      throw new Error('Required columns not found in departments.csv');
-    }
-
-    const departments = [];
-    for (let i = 1; i < lines.length; i++) {
-      const values = lines[i].split(',');
-      departments.push({
-        name: values[nameIndex].trim(),
-        nemonic: values[nemonicIndex].trim(),
-        id: values[idIndex].trim()
+    // Display summary
+    if (courses.length > 0) {
+      console.log('\n📊 Sample data:');
+      courses.slice(0, 5).forEach(record => {
+        console.log(`  ${record.department} ${record.courseNumber}: ${record.instructorName} - GPA: ${record.instructorGPA}, Rating: ${record.instructorRating}`);
       });
     }
-
-    console.log(`📚 Found ${departments.length} departments to update`);
-    
-    let successCount = 0;
-    let failCount = 0;
-    const failedDepartments = [];
-
-    for (const dept of departments) {
-      try {
-        console.log(`\n🔄 Updating "${dept.name}" (${dept.nemonic})...`);
-        
-        // Execute the command for this department
-        const command = `node scripts/scrapeCourseForum.js --departmentId=${dept.id} --subject=${dept.nemonic} --term=${term}`;
-        console.log(`   Running: ${command}`);
-        
-        const { execSync } = require('child_process');
-        execSync(command, { stdio: 'inherit' });
-        
-        console.log(`   ✅ ${dept.name} updated successfully`);
-        successCount++;
-        
-      } catch (error) {
-        console.error(`   ❌ ${dept.name} failed: ${error.message}`);
-        failCount++;
-        failedDepartments.push(dept.name);
-      }
-    }
-
-    // Summary
-    console.log(`\n📊 Bulk Update Summary:`);
-    console.log(`   ✅ Successful: ${successCount}`);
-    console.log(`   ❌ Failed: ${failCount}`);
-    
-    if (successCount > 0) {
-      console.log(`✅ Successfully updated:`);
-      departments.forEach(dept => {
-        if (!failedDepartments.includes(dept.name)) {
-          console.log(`   - ${dept.name} (${dept.nemonic})`);
-        }
-      });
-    }
-    
-    if (failCount > 0) {
-      console.log(`❌ Failed to update:`);
-      failedDepartments.forEach(name => {
-        console.log(`   - ${name}`);
-      });
-    }
-
-    console.log(`\n🎉 Department update process completed!`);
 
   } catch (error) {
-    console.error('❌ Error in bulk update:', error.message);
+    console.error('❌ Scraping failed:', error);
+  } finally {
+    await scraper.close();
   }
 }
 
