@@ -228,11 +228,7 @@
                                     const totalGPA = sectionsWithGPA.reduce((sum, s) => sum + parseFloat(s.instructorGPA), 0);
                                     const averageGPA = sectionsWithGPA.length > 0 ? (totalGPA / sectionsWithGPA.length) : null;
                                     
-                                    // Debug info
-                                    console.log('Course:', course.mnemonic, course.number);
-                                    console.log('Sections with GPA:', sectionsWithGPA.length);
-                                    console.log('Sections:', course.sections.map(s => ({ num: s.sectionNumber, gpa: s.instructorGPA })));
-                                    console.log('Average GPA:', averageGPA);
+                                    // Debug info removed
                                 %>
                                 <% if (averageGPA !== null && !isNaN(averageGPA)) { %>
                                     <div class="text-center">

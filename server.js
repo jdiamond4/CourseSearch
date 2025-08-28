@@ -175,7 +175,7 @@ function transformSISDataToCourses(sisData, gpaData) {
         
         // Log when we find a match for multiple instructors
         if (row.instructor_names.includes(';')) {
-          console.log(`✅ Multi-instructor match: ${row.subject} ${row.catalog_nbr} - ${row.instructor_names} → Best: ${gpaMatch.instructorName} (GPA: ${gpaMatch.instructorGPA})`);
+          // Multi-instructor match found
         }
       } else {
         section.instructorGPA = 'N/A';
@@ -212,10 +212,7 @@ function transformSISDataToCourses(sisData, gpaData) {
         
         // Debug logging for first few courses
         if (this.mnemonic === 'CS' && this.number <= 2100) {
-          console.log(`🔍 Checking ${this.mnemonic} ${this.number}: ${allSections.length} sections`);
-          allSections.forEach(section => {
-            console.log(`  Section ${section.sectionNumber}: GPA=${section.instructorGPA}, Teacher=${section.teacherName}`);
-          });
+          // Debug logging removed
         }
         
         return allSections.some(section => {
