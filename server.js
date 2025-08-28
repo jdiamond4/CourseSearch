@@ -398,7 +398,7 @@ app.get('/catalog', async (req, res) => {
                 }
                 // Filter by department if specified (only if no category)
                 else if (department) {
-                    filteredData = filteredData.filter(row => row.subject === department);
+                    filteredData = filteredData.filter(row => row.subject.toLowerCase() === department.toLowerCase());
 
                 }
                 
