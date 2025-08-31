@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs').promises;
 const fsSync = require('fs');
+const https = require('https');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -47,6 +48,31 @@ app.locals.formatTime = function(time) {
   return `${hours - 12}:${minutes} PM`;
 };
 
+// Helper function to fetch data from GitHub data branch
+async function fetchDataFromGitHub(filePath) {
+  return new Promise((resolve, reject) => {
+    const url = `https://raw.githubusercontent.com/jdiamond4/CourseSearch/data/${filePath}`;
+    
+    https.get(url, (response) => {
+      let data = '';
+      
+      response.on('data', (chunk) => {
+        data += chunk;
+      });
+      
+      response.on('end', () => {
+        if (response.statusCode === 200) {
+          resolve(data);
+        } else {
+          reject(new Error(`Failed to fetch data: ${response.statusCode}`));
+        }
+      });
+    }).on('error', (error) => {
+      reject(error);
+    });
+  });
+}
+
 // Helper function to parse CSV
 async function parseCSV(filePath) {
   try {
@@ -72,14 +98,35 @@ async function parseCSV(filePath) {
   }
 }
 
-// Helper function to load GPA data
+// Helper function to load GPA data from GitHub
 async function loadGPAData() {
   try {
-    const gpaPath = path.join(__dirname, 'data', 'master-gpa-data.csv');
-    if (await fs.access(gpaPath).then(() => true).catch(() => false)) {
-      return await parseCSV(gpaPath);
+    // Try to load from GitHub first
+    try {
+      const csvContent = await fetchDataFromGitHub('data/master-gpa-data.csv');
+      const lines = csvContent.trim().split('\n');
+      const headers = parseCSVLine(lines[0]);
+      
+      const data = [];
+      for (let i = 1; i < lines.length; i++) {
+        const values = parseCSVLine(lines[i]);
+        const row = {};
+        headers.forEach((header, index) => {
+          row[header] = values[index] || '';
+        });
+        data.push(row);
+      }
+      console.log(`📊 Loaded ${data.length} GPA records from GitHub`);
+      return data;
+    } catch (error) {
+      console.log('⚠️  Could not load GPA data from GitHub, using fallback');
+      // Fallback to local file
+      const gpaPath = path.join(__dirname, 'data', 'master-gpa-data.csv');
+      if (await fs.access(gpaPath).then(() => true).catch(() => false)) {
+        return await parseCSV(gpaPath);
+      }
+      return [];
     }
-    return [];
   } catch (error) {
     console.error('Error loading GPA data:', error);
     return [];
@@ -268,13 +315,12 @@ function parseCSVLine(line) {
     return result.map(field => field.replace(/^"|"$/g, ''));
 }
 
-// Load department categories and landing buttons from CSV
-function loadDepartmentCategories() {
+// Load department categories and landing buttons from GitHub data branch
+async function loadDepartmentCategories() {
     try {
-        // Load department categories
-        const departmentsPath = path.join(process.cwd(), 'data', 'departments.csv');
-        if (fsSync.existsSync(departmentsPath)) {
-            const csvContent = fsSync.readFileSync(departmentsPath, 'utf8');
+        // Load department categories from GitHub
+        try {
+            const csvContent = await fetchDataFromGitHub('data/departments.csv');
             const lines = csvContent.trim().split('\n');
             const headers = parseCSVLine(lines[0]);
             
@@ -296,14 +342,41 @@ function loadDepartmentCategories() {
                         departmentCategories[category].push(nemonic);
                     }
                 }
-                console.log(`📚 Loaded ${Object.keys(departmentCategories).length} department categories`);
+                console.log(`📚 Loaded ${Object.keys(departmentCategories).length} department categories from GitHub`);
+            }
+        } catch (error) {
+            console.log('⚠️  Could not load departments from GitHub, using fallback');
+            // Fallback to local file if GitHub fails
+            const departmentsPath = path.join(process.cwd(), 'data', 'departments.csv');
+            if (fsSync.existsSync(departmentsPath)) {
+                const csvContent = fsSync.readFileSync(departmentsPath, 'utf8');
+                const lines = csvContent.trim().split('\n');
+                const headers = parseCSVLine(lines[0]);
+                
+                const categoryIndex = headers.indexOf('category');
+                const nemonicIndex = headers.indexOf('nemonic');
+                
+                if (categoryIndex !== -1 && nemonicIndex !== -1) {
+                    for (let i = 1; i < lines.length; i++) {
+                        const values = parseCSVLine(lines[i]);
+                        const category = values[categoryIndex];
+                        const nemonic = values[nemonicIndex];
+                        
+                        if (category && category !== 'none' && nemonic) {
+                            if (!departmentCategories[category]) {
+                                departmentCategories[category] = [];
+                            }
+                            departmentCategories[category].push(nemonic);
+                        }
+                    }
+                    console.log(`📚 Loaded ${Object.keys(departmentCategories).length} department categories from local file`);
+                }
             }
         }
 
-        // Load landing page buttons
-        const landingButtonsPath = path.join(process.cwd(), 'data', 'landing-buttons.csv');
-        if (fsSync.existsSync(landingButtonsPath)) {
-            const csvContent = fsSync.readFileSync(landingButtonsPath, 'utf8');
+        // Load landing page buttons from GitHub
+        try {
+            const csvContent = await fetchDataFromGitHub('data/landing-buttons.csv');
             const lines = csvContent.trim().split('\n');
             const headers = parseCSVLine(lines[0]);
             
@@ -333,7 +406,43 @@ function loadDepartmentCategories() {
                         });
                     }
                 }
-                console.log(`🏠 Loaded landing buttons`);
+                console.log(`🏠 Loaded landing buttons from GitHub`);
+            }
+        } catch (error) {
+            console.log('⚠️  Could not load landing buttons from GitHub, using fallback');
+            // Fallback to local file if GitHub fails
+            const landingButtonsPath = path.join(process.cwd(), 'data', 'landing-buttons.csv');
+            if (fsSync.existsSync(landingButtonsPath)) {
+                const csvContent = fsSync.readFileSync(landingButtonsPath, 'utf8');
+                const lines = csvContent.trim().split('\n');
+                const headers = parseCSVLine(lines[0]);
+                
+                const schoolIndex = headers.indexOf('school');
+                const displayNameIndex = headers.indexOf('displayName');
+                const typeIndex = headers.indexOf('type');
+                const filterIndex = headers.indexOf('filter');
+                
+                if (schoolIndex !== -1 && displayNameIndex !== -1 && typeIndex !== -1 && filterIndex !== -1) {
+                    for (let i = 1; i < lines.length; i++) {
+                        const values = parseCSVLine(lines[i]);
+                        const school = values[schoolIndex];
+                        const displayName = values[displayNameIndex];
+                        const type = values[typeIndex];
+                        const filter = values[filterIndex];
+                        
+                        if (school && displayName && type && filter) {
+                            if (!landingButtons[school]) {
+                                landingButtons[school] = [];
+                            }
+                            landingButtons[school].push({
+                                displayName,
+                                type,
+                                filter
+                            });
+                        }
+                    }
+                    console.log(`🏠 Loaded landing buttons from local file`);
+                }
             }
         }
     } catch (error) {
@@ -377,12 +486,36 @@ app.get('/catalog', async (req, res) => {
         let courses = [];
         
         try {
-            // Load from unified master SIS data file
-            const masterPath = path.join(__dirname, 'data', `master-sis-data-1258.csv`);
+            // Load from unified master SIS data file from GitHub
+            let allSisData = [];
             
-            if (await fs.access(masterPath).then(() => true).catch(() => false)) {
-                // Parse master SIS data
-                const allSisData = await parseCSV(masterPath);
+            try {
+                // Try to load from GitHub first
+                const csvContent = await fetchDataFromGitHub('data/master-sis-data-1258.csv');
+                const lines = csvContent.trim().split('\n');
+                const headers = parseCSVLine(lines[0]);
+                
+                for (let i = 1; i < lines.length; i++) {
+                    const values = parseCSVLine(lines[i]);
+                    const row = {};
+                    headers.forEach((header, index) => {
+                        row[header] = values[index] || '';
+                    });
+                    allSisData.push(row);
+                }
+                console.log(`📚 Loaded ${allSisData.length} SIS records from GitHub`);
+            } catch (error) {
+                console.log('⚠️  Could not load SIS data from GitHub, using fallback');
+                // Fallback to local file
+                const masterPath = path.join(__dirname, 'data', `master-sis-data-1258.csv`);
+                
+                if (await fs.access(masterPath).then(() => true).catch(() => false)) {
+                    // Parse master SIS data
+                    allSisData = await parseCSV(masterPath);
+                }
+            }
+            
+            if (allSisData.length > 0) {
                 
                 // Apply search filters
                 let filteredData = allSisData;
@@ -566,12 +699,22 @@ app.get('/api/search', (req, res) => {
   });
 });
 
-// Load department categories before starting server
-loadDepartmentCategories();
+// Load department categories and start server
+async function startServer() {
+  try {
+    await loadDepartmentCategories();
+    
+    // Start server
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on http://localhost:${PORT}`);
+      console.log(`📚 Course catalog: http://localhost:${PORT}/courses/CS/1258`);
+      console.log(`🔍 API endpoint: http://localhost:${PORT}/api/courses/CS/1258`);
+    });
+  } catch (error) {
+    console.error('❌ Failed to start server:', error);
+    process.exit(1);
+  }
+}
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📚 Course catalog: http://localhost:${PORT}/courses/CS/1258`);
-  console.log(`🔍 API endpoint: http://localhost:${PORT}/api/courses/CS/1258`);
-}); 
+// Start the server
+startServer(); 
