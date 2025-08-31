@@ -18,6 +18,32 @@ My goal is to build a smarter, more modern course search solution that goes beyo
 ### Future Vision
 - **AI-Powered Recommendations**: Custom searches that fit your specific schedule and preferences
 - **Smart Scheduling**: Intelligent suggestions based on your academic goals and time constraints
+
+## Data Management
+
+This project uses a dual-branch approach for clean deployment:
+
+- **`main` branch**: Contains all application code (server, views, scripts)
+- **`data` branch**: Contains only data files (CSV files with course and GPA data)
+
+### Benefits
+- **Clean Deployments**: Code changes don't trigger data updates
+- **Separate Data Updates**: Data can be updated hourly without affecting main codebase
+- **Production Ready**: Vercel deployments use main branch for code, data branch for data
+
+### Updating Data
+When you have new data files, use the provided script:
+```bash
+./update-data-branch.sh
+```
+
+This script will:
+1. Switch to the data branch
+2. Copy new data files from main
+3. Commit and push the updates
+4. Switch back to main branch
+
+The application automatically fetches data from the GitHub data branch with fallback to local files for development.
 - **Predictive Analytics**: Course difficulty predictions and success rate insights
 - **Personalized Experience**: Learning from your preferences to suggest better course combinations
 
