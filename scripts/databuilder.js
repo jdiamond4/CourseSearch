@@ -305,11 +305,9 @@ async function pushToDataBranch() {
       console.log('ℹ️  No remote changes to pull or pull failed, continuing...');
     }
     
-    // Safely remove only data directory and copy fresh data
-    console.log('🧹 Updating data files...');
-    if (fs.existsSync('data')) {
-      execSync('rm -rf data/', { stdio: 'inherit' });
-    }
+    // Clean the data branch completely (except .git)
+    console.log('🧹 Cleaning data branch completely...');
+    execSync('find . -not -path "./.git*" -not -name "." -delete', { stdio: 'inherit' });
     
     // Copy fresh data files from main branch
     console.log('📋 Copying fresh data files from main branch...');
