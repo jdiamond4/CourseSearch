@@ -54,6 +54,9 @@ jobs:
         # Switch to data branch
         git checkout -B data origin/data
         
+        # Reset the data branch to clean state (remove any local modifications)
+        git reset --hard origin/data
+        
         # Get the current data files hash for comparison
         CURRENT_HASH=$(find data/ -type f -exec sha256sum {} \; 2>/dev/null | sort | sha256sum || echo "no_files")
         echo "Current data files hash: $CURRENT_HASH"
