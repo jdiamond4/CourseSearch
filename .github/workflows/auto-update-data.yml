@@ -60,10 +60,17 @@ jobs:
         # Remove node_modules if it was copied
         rm -rf node_modules/
         
+        # Check git status to see what's happening
+        echo "Git status before staging:"
+        git status
+        
         # Always commit and push (we know the data is fresh)
-        echo "Committing fresh data files..."
-        git add data/
-        git commit -m "Auto-update course data - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+        echo "Staging and committing fresh data files..."
+        git add -A
+        git status
+        
+        # Force commit even if git thinks there's nothing to commit
+        git commit --allow-empty -m "Auto-update course data - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
         git push origin data
         echo "✅ Data updated and pushed successfully"
         
