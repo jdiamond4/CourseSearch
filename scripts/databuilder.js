@@ -270,10 +270,26 @@ async function fetchAllPages(term, subject) {
 async function pushToDataBranch() {
   console.log('\n🚀 Pushing data to data branch...');
   
+  let originalBranch = null;
+  let hasChanges = false;
+  
   try {
-    // Get current branch
-    const currentBranch = execSync('git branch --show-current', { encoding: 'utf8' }).trim();
-    console.log(`📍 Current branch: ${currentBranch}`);
+    // Get current branch and check for uncommitted changes
+    originalBranch = execSync('git branch --show-current', { encoding: 'utf8' }).trim();
+    console.log(`📍 Current branch: ${originalBranch}`);
+    
+    // Check for uncommitted changes
+    try {
+      const status = execSync('git status --porcelain', { encoding: 'utf8' });
+      if (status.trim()) {
+        console.log('⚠️  Warning: You have uncommitted changes. Committing them first...');
+        execSync('git add .', { stdio: 'inherit' });
+        execSync('git commit -m "Auto-commit before data push"', { stdio: 'inherit' });
+        hasChanges = true;
+      }
+    } catch (statusError) {
+      console.log('ℹ️  No uncommitted changes detected');
+    }
     
     // Fetch latest changes from remote
     console.log('📡 Fetching latest changes...');
@@ -282,18 +298,22 @@ async function pushToDataBranch() {
     // Switch to data branch and pull latest changes
     console.log('📁 Switching to data branch...');
     execSync('git checkout data', { stdio: 'inherit' });
-    execSync('git pull origin data', { stdio: 'inherit' });
     
-    // Remove all existing files except .git
-    console.log('🧹 Cleaning data branch...');
-    execSync('find . -not -path "./.git*" -delete', { stdio: 'inherit' });
+    try {
+      execSync('git pull origin data', { stdio: 'inherit' });
+    } catch (pullError) {
+      console.log('ℹ️  No remote changes to pull or pull failed, continuing...');
+    }
+    
+    // Safely remove only data directory and copy fresh data
+    console.log('🧹 Updating data files...');
+    if (fs.existsSync('data')) {
+      execSync('rm -rf data/', { stdio: 'inherit' });
+    }
     
     // Copy fresh data files from main branch
     console.log('📋 Copying fresh data files from main branch...');
     execSync('git checkout main -- data/', { stdio: 'inherit' });
-    
-    // Ensure no node_modules or other unwanted files
-    execSync('rm -rf node_modules/ package.json package-lock.json server.js scripts/ views/ models/ utils/ config/ .github/ vercel.json', { stdio: 'inherit' });
     
     // Check what files we have now
     console.log('📁 Files in data branch:');
@@ -306,6 +326,13 @@ async function pushToDataBranch() {
     // Check git status
     console.log('📊 Git status:');
     execSync('git status', { stdio: 'inherit' });
+    
+    // Check if there are actually changes to commit
+    const status = execSync('git status --porcelain', { encoding: 'utf8' });
+    if (!status.trim()) {
+      console.log('ℹ️  No changes to commit, data is already up to date');
+      return;
+    }
     
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const commitMessage = `Auto-update data files - ${timestamp}`;
@@ -321,12 +348,28 @@ async function pushToDataBranch() {
     console.log('✅ Data pushed to data branch successfully');
     
     // Switch back to original branch
-    console.log(`🔄 Switching back to ${currentBranch}...`);
-    execSync(`git checkout ${currentBranch}`, { stdio: 'inherit' });
+    console.log(`🔄 Switching back to ${originalBranch}...`);
+    execSync(`git checkout ${originalBranch}`, { stdio: 'inherit' });
+    
+    console.log('✅ Data push completed successfully');
     
   } catch (error) {
     console.error(`❌ Error pushing to data branch: ${error.message}`);
+    
+    // Attempt to rollback to original branch
+    if (originalBranch) {
+      try {
+        console.log(`🔄 Attempting to rollback to ${originalBranch}...`);
+        execSync(`git checkout ${originalBranch}`, { stdio: 'inherit' });
+        console.log('✅ Rollback successful');
+      } catch (rollbackError) {
+        console.error(`❌ Rollback failed: ${rollbackError.message}`);
+        console.log('⚠️  You may need to manually switch branches');
+      }
+    }
+    
     console.log('💡 Make sure you have the data branch set up and have proper git permissions');
+    console.log('💡 Check that you have uncommitted changes committed before running this command');
     process.exit(1);
   }
 }
