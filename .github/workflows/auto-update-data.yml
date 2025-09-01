@@ -1,0 +1,53 @@
+name: Auto Update Course Data
+
+on:
+  schedule:
+    # Run every 5 hours (at minute 0 of hours 0, 5, 10, 15, 20)
+    - cron: '0 */5 * * *'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Fetch all history for git operations
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Install Playwright browsers
+      run: npx playwright install --with-deps chromium
+      
+    - name: Run data builder
+      run: node scripts/databuilder.js --all --push-to-data --term=1258
+      env:
+        # Add any environment variables your script might need
+        NODE_ENV: production
+        
+    - name: Check for changes
+      id: check_changes
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "changes=true" >> $GITHUB_OUTPUT
+        else
+          echo "changes=false" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: Commit and push changes to data branch
+      if: steps.check_changes.outputs.changes == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "Auto-update course data - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+        git push origin data 
