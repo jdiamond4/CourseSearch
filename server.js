@@ -116,7 +116,7 @@ async function loadGPAData() {
         });
         data.push(row);
       }
-      console.log(`📊 Loaded ${data.length} GPA records from GitHub`);
+  
       return data;
     } catch (error) {
       console.log('⚠️  Could not load GPA data from GitHub, using fallback');
@@ -503,7 +503,7 @@ app.get('/catalog', async (req, res) => {
                     });
                     allSisData.push(row);
                 }
-                console.log(`📚 Loaded ${allSisData.length} SIS records from GitHub`);
+            
             } catch (error) {
                 console.log('⚠️  Could not load SIS data from GitHub, using fallback');
                 // Fallback to local file
