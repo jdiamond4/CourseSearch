@@ -54,13 +54,19 @@ jobs:
         # Switch to data branch
         git checkout -B data origin/data
         
-        # Copy data files from main branch
+        # Remove all files except .git (clean slate)
+        find . -not -path './.git*' -delete
+        
+        # Copy only the data files we need from main branch
         git checkout main -- data/
+        
+        # Remove node_modules if it was copied
+        rm -rf node_modules/
         
         # Check if there are changes
         if [ -n "$(git status --porcelain)" ]; then
           echo "Changes detected, committing..."
-          git add data/
+          git add .
           git commit -m "Auto-update course data - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
           git push origin data
           echo "✅ Data updated successfully"
