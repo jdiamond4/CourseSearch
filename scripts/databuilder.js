@@ -275,41 +275,58 @@ async function pushToDataBranch() {
     const currentBranch = execSync('git branch --show-current', { encoding: 'utf8' }).trim();
     console.log(`📍 Current branch: ${currentBranch}`);
     
-    // Switch to data branch (disambiguate from data/ directory)
-    console.log('📁 Switching to data branch...');
-    execSync('git checkout -B data origin/data', { stdio: 'inherit' });
+    // Fetch latest changes from remote
+    console.log('📡 Fetching latest changes...');
+    execSync('git fetch --all', { stdio: 'inherit' });
     
-    // Copy only data files from main branch
-    console.log('📋 Copying data files from main branch...');
+    // Switch to data branch and pull latest changes
+    console.log('📁 Switching to data branch...');
+    execSync('git checkout data', { stdio: 'inherit' });
+    execSync('git pull origin data', { stdio: 'inherit' });
+    
+    // Remove all existing files except .git
+    console.log('🧹 Cleaning data branch...');
+    execSync('find . -not -path "./.git*" -delete', { stdio: 'inherit' });
+    
+    // Copy fresh data files from main branch
+    console.log('📋 Copying fresh data files from main branch...');
     execSync('git checkout main -- data/', { stdio: 'inherit' });
     
-    // Add and commit changes
-    console.log('💾 Committing changes...');
-    execSync('git add data/', { stdio: 'inherit' });
+    // Ensure no node_modules or other unwanted files
+    execSync('rm -rf node_modules/ package.json package-lock.json server.js scripts/ views/ models/ utils/ config/ .github/ vercel.json', { stdio: 'inherit' });
+    
+    // Check what files we have now
+    console.log('📁 Files in data branch:');
+    execSync('ls -la', { stdio: 'inherit' });
+    
+    // Add all files (should only be data files now)
+    console.log('💾 Staging changes...');
+    execSync('git add .', { stdio: 'inherit' });
+    
+    // Check git status
+    console.log('📊 Git status:');
+    execSync('git status', { stdio: 'inherit' });
     
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const commitMessage = `Auto-update data files - ${timestamp}`;
     
-    try {
-      execSync(`git commit -m "${commitMessage}"`, { stdio: 'inherit' });
-      console.log('✅ Changes committed successfully');
-    } catch (error) {
-      console.log('ℹ️  No changes to commit (files already up to date)');
-    }
+    // Commit changes
+    console.log('💾 Committing changes...');
+    execSync(`git commit -m "${commitMessage}"`, { stdio: 'inherit' });
+    console.log('✅ Changes committed successfully');
     
-    // Push to remote
+    // Push to remote data branch
     console.log('🚀 Pushing to remote data branch...');
     execSync('git push origin data', { stdio: 'inherit' });
+    console.log('✅ Data pushed to data branch successfully');
     
-    // Switch back to main branch
-    console.log('🏠 Switching back to main branch...');
+    // Switch back to original branch
+    console.log(`🔄 Switching back to ${currentBranch}...`);
     execSync(`git checkout ${currentBranch}`, { stdio: 'inherit' });
     
-    console.log('✅ Successfully pushed data to data branch!');
-    
   } catch (error) {
-    console.error('❌ Error pushing to data branch:', error.message);
-    console.error('💡 Make sure you have the data branch set up and have proper git permissions');
+    console.error(`❌ Error pushing to data branch: ${error.message}`);
+    console.log('💡 Make sure you have the data branch set up and have proper git permissions');
     process.exit(1);
   }
 }
