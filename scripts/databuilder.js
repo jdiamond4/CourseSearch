@@ -289,7 +289,13 @@ async function pushToDataBranch() {
     
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const commitMessage = `Auto-update data files - ${timestamp}`;
-    execSync(`git commit -m "${commitMessage}"`, { stdio: 'inherit' });
+    
+    try {
+      execSync(`git commit -m "${commitMessage}"`, { stdio: 'inherit' });
+      console.log('✅ Changes committed successfully');
+    } catch (error) {
+      console.log('ℹ️  No changes to commit (files already up to date)');
+    }
     
     // Push to remote
     console.log('🚀 Pushing to remote data branch...');
