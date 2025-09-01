@@ -4,14 +4,17 @@
  * This will be the single source of truth for all course data across all departments.
  * 
  * Usage:
- *   node scripts/buildMasterAllDepartments.js --term 1258
- *   node scripts/buildMasterAllDepartments.js --term 1258 --departments MATH,CS,PHYS,ECON
+ *   node scripts/databuilder.js --subject=PHYS --term=1258
+ *   node scripts/databuilder.js --all --term=1258
+ *   node scripts/databuilder.js --all --push-to-data --term=1258
+ *   node scripts/databuilder.js --subject=CS --term=1258 --push-to-data
  */
 
 const { chromium } = require('playwright');
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const { spawn } = require('child_process');
 
 function getArg(name, defaultValue = undefined) {
   // Check for --name=value format first
@@ -264,10 +267,52 @@ async function fetchAllPages(term, subject) {
   return allClasses;
 }
 
+async function pushToDataBranch() {
+  console.log('\n🚀 Pushing data to data branch...');
+  
+  try {
+    // Get current branch
+    const currentBranch = execSync('git branch --show-current', { encoding: 'utf8' }).trim();
+    console.log(`📍 Current branch: ${currentBranch}`);
+    
+    // Switch to data branch
+    console.log('📁 Switching to data branch...');
+    execSync('git checkout data', { stdio: 'inherit' });
+    
+    // Copy data files from main branch
+    console.log('📋 Copying data files from main branch...');
+    execSync('git checkout main -- data/', { stdio: 'inherit' });
+    
+    // Add and commit changes
+    console.log('💾 Committing changes...');
+    execSync('git add data/', { stdio: 'inherit' });
+    
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const commitMessage = `Auto-update data files - ${timestamp}`;
+    execSync(`git commit -m "${commitMessage}"`, { stdio: 'inherit' });
+    
+    // Push to remote
+    console.log('🚀 Pushing to remote data branch...');
+    execSync('git push origin data', { stdio: 'inherit' });
+    
+    // Switch back to main branch
+    console.log('🏠 Switching back to main branch...');
+    execSync(`git checkout ${currentBranch}`, { stdio: 'inherit' });
+    
+    console.log('✅ Successfully pushed data to data branch!');
+    
+  } catch (error) {
+    console.error('❌ Error pushing to data branch:', error.message);
+    console.error('💡 Make sure you have the data branch set up and have proper git permissions');
+    process.exit(1);
+  }
+}
+
 async function main() {
   const term = getArg('term', '1258');
   const subject = getArg('subject', 'MATH');
   const updateAll = process.argv.includes('--all');
+  const pushToData = process.argv.includes('--push-to-data');
   
   if (!term) {
     console.error('Missing required argument: --term');
@@ -276,6 +321,12 @@ async function main() {
   
   if (updateAll) {
     await updateAllDepartments(term);
+    
+    // Push to data branch if flag is set
+    if (pushToData) {
+      await pushToDataBranch();
+    }
+    
     return;
   }
   
@@ -372,6 +423,11 @@ async function main() {
     const jsonPath = path.join(dataDir, jsonFilename);
     fs.writeFileSync(jsonPath, JSON.stringify(allClasses, null, 2));
     console.log(`📄 JSON backup updated: ${jsonPath}`);
+    
+    // Push to data branch if flag is set
+    if (pushToData) {
+      await pushToDataBranch();
+    }
     
   } catch (error) {
     console.error(`❌ Error building master SIS data: ${error.message}`);
