@@ -77,9 +77,9 @@ jspm_packages/
 # macOS
 .DS_Store
 
-# Data files (can be regenerated)
-data/*.json
-data/*.csv
+# Data files (can be regenerated) - REMOVED for dual-branch setup
+# data/*.json
+# data/*.csv
 
 # Output files
 output/

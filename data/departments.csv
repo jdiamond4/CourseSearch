@@ -1,0 +1,57 @@
+name,nemonic,id,category
+Computer Science,CS,31,quant
+Mathematics,MATH,16,quant
+Astronomy,ASTR,4,none
+Statistics,STAT,34,none
+Buddhism,RELB,26,none
+Spanish,SPAN,33,romance
+Italian,ITAL,33,romance
+Portuguese,PORT,33,romance
+African-American & African Studies,AAS,49,none
+American Studies,AMST,50,none
+Anthropology,ANTH,2,none
+Art,ARTH,3,art
+Biology,BIOL,5,none
+Chemistry,CHEM,6,none
+Classics,CLAS,7,classics
+Greek,GREE,7,classics
+Latin,LATI,7,classics
+Drama,DRAM,8,none
+Chinese,CHIN,9,east_asian
+Japanese,JAPN,9,east_asian
+Korean,KOR,9,east_asian
+"East Asian Languages",EALC,9,east_asian
+Economics,ECON,10,none
+English,ENGL,11,none
+Environmental Sciences,EVSC,12,none
+French,FREN,13,none
+German,GERM,14,none
+History,HIST,15,history
+African History,HIAF,15,history
+European History,HIEU,15,history
+Latin American History,HILA,15,history
+Middle Eastern History,HIME,15,history
+United States History,HIUS,15,history
+Media Studies,MDST,17,none
+Arabic,ARAB,18,mesalc
+Hindi,HIND,18,mesalc
+Persian,PERS,18,mesalc
+Sanskrit,SANS,18,mesalc
+Urdu,URDU,18,mesalc
+Music,MUSI,19,none
+Philosophy,PHIL,19,none
+Physics,PHYS,21,none
+American Politics,PLAP,x,politics
+Political & Social Thought,PST,63,politics
+Comparative Politics,PLCP,23,politics
+International Relations,PLIR,23,politics
+Political Theory,PLPT,23,politics
+Public Health Sciences,PHS,24,none
+Psychology,PSYC,25,none
+African Religions,RELA,26,religious
+Christianity,RELC,26,religious
+Religious Studies,RELG,26,religious
+Slavic Languages,SLAV,29,slavic
+Russian,RUSS,29,slavic
+"Women, Gender, and Sexuality",WGS,66,none
+Neuroscience,NESC,62,none

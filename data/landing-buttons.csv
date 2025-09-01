@@ -1,0 +1,33 @@
+school,displayName,type,filter
+AS,African-American & African Studies,department,AAS
+AS,American Studies,department,AMST
+AS,Anthropology,department,ANTH
+AS,Art,category,art
+AS,Astronomy,department,ASTR
+AS,Biology,department,BIOL
+AS,Chemistry,department,CHEM
+AS,Classics,category,classics
+AS,Drama,department,DRAM
+AS,"East Asia",category,east_asian
+AS,Economics,department,ECON
+AS,English,department,ENGL
+AS,Environmental Sciences,department,EVSC
+AS,French Language & Literature,department,FREN
+AS,German Languages & Literatures,department,GERM
+AS,History,category,history
+AS,Mathematics,department,MATH
+AS,Media Studies,department,MDST
+AS,"Middle East and South Asia",category,mesalc
+AS,Music,department,MUSI
+AS,Philosophy,department,PHIL
+AS,Physics,department,PHYS
+AS,Politics,category,politics
+AS,Public Health Sciences,department,PHS
+AS,Psychology,department,PSYC
+AS,Religious Studies,category,religious
+AS,Slavic Languages & Literatures,category,slavic
+AS,"Spanish, Italian & Portuguese",category,romance
+AS,Statistics,department,STAT
+AS,"Women, Gender, and Sexuality",department,WGS
+ENG,Computer Science,department,CS
+ENG,Quantitative Sciences,category,quant 
