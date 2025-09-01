@@ -279,9 +279,22 @@ async function pushToDataBranch() {
     console.log('📁 Switching to data branch...');
     execSync('git checkout data', { stdio: 'inherit' });
     
-    // Copy data files from main branch
+    // Copy only data files from main branch (not everything)
     console.log('📋 Copying data files from main branch...');
     execSync('git checkout main -- data/', { stdio: 'inherit' });
+    
+    // Clean up any non-data files that might have been copied
+    console.log('🧹 Cleaning up non-data files...');
+    const filesToRemove = ['node_modules', '.DS_Store', 'package.json', 'package-lock.json', 'server.js', 'scripts', 'views', 'models', 'utils', 'config'];
+    for (const file of filesToRemove) {
+      try {
+        if (fs.existsSync(file)) {
+          execSync(`rm -rf ${file}`, { stdio: 'inherit' });
+        }
+      } catch (error) {
+        // Ignore errors if file doesn't exist
+      }
+    }
     
     // Add and commit changes
     console.log('💾 Committing changes...');
