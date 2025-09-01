@@ -275,9 +275,9 @@ async function pushToDataBranch() {
     const currentBranch = execSync('git branch --show-current', { encoding: 'utf8' }).trim();
     console.log(`📍 Current branch: ${currentBranch}`);
     
-    // Switch to data branch
+    // Switch to data branch (disambiguate from data/ directory)
     console.log('📁 Switching to data branch...');
-    execSync('git checkout data', { stdio: 'inherit' });
+    execSync('git checkout -B data origin/data', { stdio: 'inherit' });
     
     // Copy only data files from main branch
     console.log('📋 Copying data files from main branch...');
