@@ -54,33 +54,18 @@ jobs:
         # Switch to data branch
         git checkout -B data origin/data
         
-        # Reset the data branch to clean state (remove any local modifications)
-        git reset --hard origin/data
-        
-        # Get the current data files hash for comparison
-        CURRENT_HASH=$(find data/ -type f -exec sha256sum {} \; 2>/dev/null | sort | sha256sum || echo "no_files")
-        echo "Current data files hash: $CURRENT_HASH"
-        
-        # Copy data files from main branch
+        # Copy fresh data files from main branch (overwrite existing)
         git checkout main -- data/
         
         # Remove node_modules if it was copied
         rm -rf node_modules/
         
-        # Get the new data files hash
-        NEW_HASH=$(find data/ -type f -exec sha256sum {} \; 2>/dev/null | sort | sha256sum || echo "no_files")
-        echo "New data files hash: $NEW_HASH"
-        
-        # Compare hashes to detect changes
-        if [ "$CURRENT_HASH" != "$NEW_HASH" ]; then
-          echo "Changes detected (hashes differ), committing..."
-          git add data/
-          git commit -m "Auto-update course data - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
-          git push origin data
-          echo "✅ Data updated successfully"
-        else
-          echo "ℹ️  No changes detected (hashes match)"
-        fi
+        # Always commit and push (we know the data is fresh)
+        echo "Committing fresh data files..."
+        git add data/
+        git commit -m "Auto-update course data - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+        git push origin data
+        echo "✅ Data updated and pushed successfully"
         
         # Switch back to main
         git checkout main 
