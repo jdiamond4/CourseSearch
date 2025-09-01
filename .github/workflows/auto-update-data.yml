@@ -70,7 +70,7 @@ jobs:
         git status
         
         # Force commit even if git thinks there's nothing to commit
-        git commit --allow-empty -m "Auto-update course data - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+        git commit --allow-empty -m "Auto-update course data: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
         git push origin data
         echo "✅ Data updated and pushed successfully"
         
