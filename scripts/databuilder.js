@@ -300,7 +300,7 @@ async function pushToDataBranch() {
     
     // Switch to data branch and pull latest changes
     console.log('📁 Switching to data branch...');
-    execSync('git checkout data', { stdio: 'inherit' });
+    execSync('git checkout data --', { stdio: 'inherit' });
     
     try {
       execSync('git pull origin data', { stdio: 'inherit' });
