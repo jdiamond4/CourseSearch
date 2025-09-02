@@ -12,10 +12,5 @@
       "dest": "/server.js"
     }
   ],
-  "git": {
-    "deploymentEnabled": {
-      "main": true,
-      "data": false
-    }
-  }
+  "ignoreCommand": "if [ \"$VERCEL_GIT_COMMIT_REF\" = \"data\" ]; then echo 'Skipping deployment for data branch'; exit 0; else echo 'Proceeding with deployment'; exit 1; fi"
 } 
