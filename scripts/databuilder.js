@@ -315,7 +315,7 @@ async function pushToDataBranch() {
     
     // Copy fresh data files from main branch
     console.log('📋 Copying fresh data files from main branch...');
-    execSync('git checkout main -- data/', { stdio: 'inherit' });
+    execSync('git archive main data/ | tar -x', { stdio: 'inherit' });
     
     // Check what files we have now
     console.log('📁 Files in data branch:');
