@@ -307,13 +307,18 @@ async function pushToDataBranch() {
       console.log('ℹ️  No remote changes to pull or pull failed, continuing...');
     }
     
-    // Clean the data branch - remove data directory and any other files except .git and .vercelignore
+    // Clean the data branch - only remove data directory
     console.log('🧹 Cleaning data branch...');
     if (fs.existsSync('data')) {
       execSync('rm -rf data/', { stdio: 'inherit' });
     }
-    // Remove any other files that might have been copied
-    execSync('find . -maxdepth 1 -not -path "./.git*" -not -name "." -not -name ".vercelignore" -delete', { stdio: 'inherit' });
+    // Only remove specific files that shouldn't be in data branch
+    const filesToRemove = ['package.json', 'package-lock.json', 'server.js', 'README.md', 'vercel.json'];
+    filesToRemove.forEach(file => {
+      if (fs.existsSync(file)) {
+        execSync(`rm -f ${file}`, { stdio: 'inherit' });
+      }
+    });
     
     // Copy fresh data files from main branch
     console.log('📋 Copying fresh data files from main branch...');
