@@ -8,6 +8,7 @@
  *   node scripts/databuilder.js --all --term=1258
  *   node scripts/databuilder.js --all --push-to-data --term=1258
  *   node scripts/databuilder.js --subject=CS --term=1258 --push-to-data
+ *   node scripts/databuilder.js --subject=CS --term=1258 --push-to-data --reinstall
  */
 
 const { chromium } = require('playwright');
@@ -368,6 +369,16 @@ async function pushToDataBranch() {
     console.log(`📍 After switch - Current working directory: ${process.cwd()}`);
     console.log(`📍 After switch - Node modules exist: ${fs.existsSync('node_modules')}`);
     
+    // Restore node_modules if they don't exist and --reinstall flag is set
+    const shouldReinstall = process.argv.includes('--reinstall');
+    if (shouldReinstall && !fs.existsSync('node_modules')) {
+      console.log('📦 Node modules missing, reinstalling dependencies...');
+      execSync('npm install', { stdio: 'inherit' });
+      console.log('✅ Dependencies restored');
+    } else if (!shouldReinstall && !fs.existsSync('node_modules')) {
+      console.log('📦 Node modules removed (use --reinstall flag to restore them)');
+    }
+    
     console.log('✅ Data push completed successfully');
     
   } catch (error) {
@@ -379,6 +390,16 @@ async function pushToDataBranch() {
         console.log(`🔄 Attempting to rollback to ${originalBranch}...`);
         execSync(`git checkout ${originalBranch}`, { stdio: 'inherit' });
         console.log('✅ Rollback successful');
+        
+        // Restore node_modules if they don't exist and --reinstall flag is set
+        const shouldReinstall = process.argv.includes('--reinstall');
+        if (shouldReinstall && !fs.existsSync('node_modules')) {
+          console.log('📦 Node modules missing, reinstalling dependencies...');
+          execSync('npm install', { stdio: 'inherit' });
+          console.log('✅ Dependencies restored');
+        } else if (!shouldReinstall && !fs.existsSync('node_modules')) {
+          console.log('📦 Node modules removed (use --reinstall flag to restore them)');
+        }
       } catch (rollbackError) {
         console.error(`❌ Rollback failed: ${rollbackError.message}`);
         console.log('⚠️  You may need to manually switch branches');

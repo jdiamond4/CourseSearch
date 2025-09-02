@@ -81,6 +81,19 @@ node scripts/databuilder.js --subject=CS --term=1258
 node scripts/scrapeCourseForum.js --departmentId=16 --subject=CS --term=1258
 ```
 
+## Data Branch Management
+
+```bash
+# Push data to data branch (keeps node_modules deleted for CI/CD)
+node scripts/databuilder.js --subject=CS --term=1258 --push-to-data
+
+# Push data to data branch and restore node_modules
+node scripts/databuilder.js --subject=CS --term=1258 --push-to-data --reinstall
+
+# If node_modules get deleted manually, restore them:
+npm install
+```
+
 ## Workflow
 
 ```bash

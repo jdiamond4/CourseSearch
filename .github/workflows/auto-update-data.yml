@@ -39,40 +39,30 @@ jobs:
       run: |
         git fetch --all
         git branch -a
+        
+    - name: Ensure data branch exists
+      run: |
+        # Create data branch if it doesn't exist
+        if ! git show-ref --verify --quiet refs/remotes/origin/data; then
+          echo "Creating data branch..."
+          git checkout -b data
+          echo "# Data Branch" > README.md
+          git add README.md
+          git commit -m "Initial data branch"
+          git push origin data
+          git checkout main
+        else
+          echo "Data branch already exists"
+        fi
       
     - name: Install Playwright browsers
       run: npx playwright install --with-deps chromium
       
-    - name: Run data builder
-      run: node scripts/databuilder.js --all --term=1258
+    - name: Run data builder and push to data branch
+      run: |
+        echo "🚀 Starting data update process..."
+        node scripts/databuilder.js --all --term=1258 --push-to-data
+        echo "✅ Data update completed successfully"
       env:
         # Add any environment variables your script might need
-        NODE_ENV: production
-        
-    - name: Switch to data branch and commit changes
-      run: |
-        # Switch to data branch
-        git checkout -B data origin/data
-        
-        # Copy fresh data files from main branch (overwrite existing)
-        git checkout main -- data/
-        
-        # Remove node_modules if it was copied
-        rm -rf node_modules/
-        
-        # Check git status to see what's happening
-        echo "Git status before staging:"
-        git status
-        
-        # Always commit and push (we know the data is fresh)
-        echo "Staging and committing fresh data files..."
-        git add -A
-        git status
-        
-        # Force commit even if git thinks there's nothing to commit
-        git commit --allow-empty -m "Auto-update course data: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
-        git push origin data
-        echo "✅ Data updated and pushed successfully"
-        
-        # Switch back to main
-        git checkout main 
+        NODE_ENV: production 
