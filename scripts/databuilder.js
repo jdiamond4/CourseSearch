@@ -277,6 +277,8 @@ async function pushToDataBranch() {
     // Get current branch and check for uncommitted changes
     originalBranch = execSync('git branch --show-current', { encoding: 'utf8' }).trim();
     console.log(`📍 Current branch: ${originalBranch}`);
+    console.log(`📍 Current working directory: ${process.cwd()}`);
+    console.log(`📍 Node modules exist: ${fs.existsSync('node_modules')}`);
     
     // Check for uncommitted changes
     try {
@@ -352,6 +354,9 @@ async function pushToDataBranch() {
     // Switch back to original branch
     console.log(`🔄 Switching back to ${originalBranch}...`);
     execSync(`git checkout ${originalBranch}`, { stdio: 'inherit' });
+    
+    console.log(`📍 After switch - Current working directory: ${process.cwd()}`);
+    console.log(`📍 After switch - Node modules exist: ${fs.existsSync('node_modules')}`);
     
     console.log('✅ Data push completed successfully');
     
