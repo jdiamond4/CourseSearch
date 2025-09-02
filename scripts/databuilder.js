@@ -312,13 +312,18 @@ async function pushToDataBranch() {
     if (fs.existsSync('data')) {
       execSync('rm -rf data/', { stdio: 'inherit' });
     }
-    // Only remove specific files that shouldn't be in data branch
+    // Only remove specific files and directories that shouldn't be in data branch
     const filesToRemove = ['package.json', 'package-lock.json', 'server.js', 'README.md', 'vercel.json'];
     filesToRemove.forEach(file => {
       if (fs.existsSync(file)) {
         execSync(`rm -f ${file}`, { stdio: 'inherit' });
       }
     });
+    
+    // Remove node_modules directory if it exists
+    if (fs.existsSync('node_modules')) {
+      execSync('rm -rf node_modules/', { stdio: 'inherit' });
+    }
     
     // Copy fresh data files from main branch
     console.log('📋 Copying fresh data files from main branch...');
