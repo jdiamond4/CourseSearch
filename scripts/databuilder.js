@@ -330,6 +330,17 @@ async function pushToDataBranch() {
     console.log('📋 Copying fresh data files from main branch...');
     execSync('git archive main data/ | tar -x', { stdio: 'inherit' });
     
+    // Create vercel.json to disable deployment for data branch
+    console.log('📋 Creating vercel.json to disable deployment...');
+    const vercelConfig = {
+      "git": {
+        "deploymentEnabled": {
+          "data": false
+        }
+      }
+    };
+    fs.writeFileSync('vercel.json', JSON.stringify(vercelConfig, null, 2));
+    
     // Check what files we have now
     console.log('📁 Files in data branch:');
     execSync('ls -la', { stdio: 'inherit' });
