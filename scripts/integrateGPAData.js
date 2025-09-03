@@ -11,7 +11,7 @@ class GPADataIntegrator {
   // Load GPA data from master CSV
   loadGPAData() {
     try {
-      const csvPath = path.join(__dirname, '../data/master-gpa-data.csv');
+      const csvPath = path.join(__dirname, '../localdata/master-gpa-data.csv');
       if (!fs.existsSync(csvPath)) {
         console.error('❌ Master GPA CSV not found. Please run scrapeCourseForum.js first to create it.');
         return false;
@@ -50,7 +50,7 @@ class GPADataIntegrator {
       const term = process.argv[3] || '1258';
       const page = process.argv[4] || '1';
       
-      const sisPath = path.join(__dirname, `../data/organized-term-${term}-subject-${department}-page-${page}.json`);
+      const sisPath = path.join(__dirname, `../localdata/organized-term-${term}-subject-${department}-page-${page}.json`);
       
       if (!fs.existsSync(sisPath)) {
         console.error(`❌ SIS data file not found: ${sisPath}`);
@@ -162,7 +162,7 @@ class GPADataIntegrator {
       const term = process.argv[3] || '1258';
       const page = process.argv[4] || '1';
       
-      const outputPath = path.join(__dirname, `../data/integrated-term-${term}-subject-${department}-page-${page}.json`);
+      const outputPath = path.join(__dirname, `../localdata/integrated-term-${term}-subject-${department}-page-${page}.json`);
       
       // Ensure data directory exists
       const dataDir = path.dirname(outputPath);

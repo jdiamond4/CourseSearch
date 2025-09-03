@@ -326,9 +326,13 @@ async function pushToDataBranch() {
       execSync('rm -rf node_modules/', { stdio: 'inherit' });
     }
     
-    // Copy fresh data files from main branch
+    // Copy fresh data files from main branch localdata to data/ on data branch
     console.log('📋 Copying fresh data files from main branch...');
-    execSync('git archive main data/ | tar -x', { stdio: 'inherit' });
+    execSync('git archive main localdata/ | tar -x', { stdio: 'inherit' });
+    // Rename localdata to data on the data branch
+    if (fs.existsSync('localdata')) {
+      execSync('mv localdata data', { stdio: 'inherit' });
+    }
     
     // Check what files we have now
     console.log('📁 Files in data branch:');
@@ -453,7 +457,7 @@ async function main() {
     console.log(`Found ${newClasses.length} classes for ${subject}`);
     
     // Load existing master data if it exists
-    const masterPath = path.join(process.cwd(), 'data', `master-sis-data-${term}.csv`);
+    const masterPath = path.join(process.cwd(), 'localdata', `master-sis-data-${term}.csv`);
     let existingData = [];
     let allHeaders = getCSVHeaders();
     
@@ -491,7 +495,7 @@ async function main() {
     const csvContent = arrayToCSV(allClasses, allHeaders);
     
     // Save to master CSV
-    const dataDir = path.join(process.cwd(), 'data');
+    const dataDir = path.join(process.cwd(), 'localdata');
     if (!fs.existsSync(dataDir)) {
       fs.mkdirSync(dataDir, { recursive: true });
     }
@@ -540,7 +544,7 @@ async function main() {
 }
 
 async function updateAllDepartments(term) {
-  const departmentsPath = path.join(process.cwd(), 'data', 'departments.csv');
+  const departmentsPath = path.join(process.cwd(), 'localdata', 'departments.csv');
   
   if (!fs.existsSync(departmentsPath)) {
     console.error(`❌ Departments file not found: ${departmentsPath}`);

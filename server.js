@@ -315,12 +315,13 @@ function parseCSVLine(line) {
     return result.map(field => field.replace(/^"|"$/g, ''));
 }
 
-// Load department categories and landing buttons from GitHub data branch
+// Load department categories and landing buttons from local files
 async function loadDepartmentCategories() {
     try {
-        // Load department categories from GitHub
-        try {
-            const csvContent = await fetchDataFromGitHub('data/departments.csv');
+        // Load department categories from local file
+        const departmentsPath = path.join(process.cwd(), 'localdata', 'departments.csv');
+        if (fsSync.existsSync(departmentsPath)) {
+            const csvContent = fsSync.readFileSync(departmentsPath, 'utf8');
             const lines = csvContent.trim().split('\n');
             const headers = parseCSVLine(lines[0]);
             
@@ -342,52 +343,25 @@ async function loadDepartmentCategories() {
                         departmentCategories[category].push(nemonic);
                     }
                 }
-                console.log(`📚 Loaded ${Object.keys(departmentCategories).length} department categories from GitHub`);
+                console.log(`📚 Loaded ${Object.keys(departmentCategories).length} department categories from local file`);
             }
-        } catch (error) {
-            console.log('⚠️  Could not load departments from GitHub, using fallback');
-            // Fallback to local file if GitHub fails
-            const departmentsPath = path.join(process.cwd(), 'data', 'departments.csv');
-            if (fsSync.existsSync(departmentsPath)) {
-                const csvContent = fsSync.readFileSync(departmentsPath, 'utf8');
-                const lines = csvContent.trim().split('\n');
-                const headers = parseCSVLine(lines[0]);
-                
-                const categoryIndex = headers.indexOf('category');
-                const nemonicIndex = headers.indexOf('nemonic');
-                
-                if (categoryIndex !== -1 && nemonicIndex !== -1) {
-                    for (let i = 1; i < lines.length; i++) {
-                        const values = parseCSVLine(lines[i]);
-                        const category = values[categoryIndex];
-                        const nemonic = values[nemonicIndex];
-                        
-                        if (category && category !== 'none' && nemonic) {
-                            if (!departmentCategories[category]) {
-                                departmentCategories[category] = [];
-                            }
-                            departmentCategories[category].push(nemonic);
-                        }
-                    }
-                    console.log(`📚 Loaded ${Object.keys(departmentCategories).length} department categories from local file`);
-                }
-            }
+        } else {
+            console.log('⚠️  Departments file not found at:', departmentsPath);
         }
 
-        // Load landing page buttons from GitHub
-        try {
-            const csvContent = await fetchDataFromGitHub('data/landing-buttons.csv');
+        // Load landing page buttons from local file
+        const landingButtonsPath = path.join(process.cwd(), 'localdata', 'landing-buttons.csv');
+        if (fsSync.existsSync(landingButtonsPath)) {
+            const csvContent = fsSync.readFileSync(landingButtonsPath, 'utf8');
             const lines = csvContent.trim().split('\n');
             const headers = parseCSVLine(lines[0]);
             
-            // Find column indices
             const schoolIndex = headers.indexOf('school');
             const displayNameIndex = headers.indexOf('displayName');
             const typeIndex = headers.indexOf('type');
             const filterIndex = headers.indexOf('filter');
             
             if (schoolIndex !== -1 && displayNameIndex !== -1 && typeIndex !== -1 && filterIndex !== -1) {
-                // Group buttons by school
                 for (let i = 1; i < lines.length; i++) {
                     const values = parseCSVLine(lines[i]);
                     const school = values[schoolIndex];
@@ -406,44 +380,10 @@ async function loadDepartmentCategories() {
                         });
                     }
                 }
-                console.log(`🏠 Loaded landing buttons from GitHub`);
+                console.log(`🏠 Loaded landing buttons from local file`);
             }
-        } catch (error) {
-            console.log('⚠️  Could not load landing buttons from GitHub, using fallback');
-            // Fallback to local file if GitHub fails
-            const landingButtonsPath = path.join(process.cwd(), 'data', 'landing-buttons.csv');
-            if (fsSync.existsSync(landingButtonsPath)) {
-                const csvContent = fsSync.readFileSync(landingButtonsPath, 'utf8');
-                const lines = csvContent.trim().split('\n');
-                const headers = parseCSVLine(lines[0]);
-                
-                const schoolIndex = headers.indexOf('school');
-                const displayNameIndex = headers.indexOf('displayName');
-                const typeIndex = headers.indexOf('type');
-                const filterIndex = headers.indexOf('filter');
-                
-                if (schoolIndex !== -1 && displayNameIndex !== -1 && typeIndex !== -1 && filterIndex !== -1) {
-                    for (let i = 1; i < lines.length; i++) {
-                        const values = parseCSVLine(lines[i]);
-                        const school = values[schoolIndex];
-                        const displayName = values[displayNameIndex];
-                        const type = values[typeIndex];
-                        const filter = values[filterIndex];
-                        
-                        if (school && displayName && type && filter) {
-                            if (!landingButtons[school]) {
-                                landingButtons[school] = [];
-                            }
-                            landingButtons[school].push({
-                                displayName,
-                                type,
-                                filter
-                            });
-                        }
-                    }
-                    console.log(`🏠 Loaded landing buttons from local file`);
-                }
-            }
+        } else {
+            console.log('⚠️  Landing buttons file not found at:', landingButtonsPath);
         }
     } catch (error) {
         console.error('❌ Error loading CSV data:', error);
