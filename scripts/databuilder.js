@@ -327,12 +327,12 @@ async function pushToDataBranch() {
       execSync('git checkout main', { stdio: 'inherit' });
     }
     
-    // Check for uncommitted changes and commit them
+    // Check for uncommitted changes (but don't commit to main)
     const status = execSync('git status --porcelain', { encoding: 'utf8' });
     if (status.trim()) {
-      console.log('💾 Committing current changes...');
-      execSync('git add .', { stdio: 'inherit' });
-      execSync('git commit -m "Update data before pushing to data branch"', { stdio: 'inherit' });
+      console.log('⚠️  Warning: You have uncommitted changes in main branch');
+      console.log('   These changes will be included in the data branch push');
+      console.log('   Consider committing them separately if needed');
     }
     
     // Fetch latest changes
