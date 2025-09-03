@@ -350,9 +350,9 @@ async function pushToDataBranch() {
       console.log('ℹ️  No remote changes to pull, continuing...');
     }
     
-    // Clean data branch - remove everything except .git
+    // Clean data branch - remove everything except essential files
     console.log('🧹 Cleaning data branch...');
-    const filesToKeep = ['.git', '.gitignore'];
+    const filesToKeep = ['.git', '.gitignore', 'vercel.json', '.vercelignore'];
     const allFiles = fs.readdirSync('.');
     
     allFiles.forEach(file => {
@@ -372,6 +372,36 @@ async function pushToDataBranch() {
     // Rename localdata to data
     if (fs.existsSync('localdata')) {
       execSync('mv localdata data', { stdio: 'inherit' });
+    }
+    
+    // Ensure vercel.json exists with ignore command for data branch
+    if (!fs.existsSync('vercel.json')) {
+      console.log('📝 Creating vercel.json to prevent data branch deployments...');
+      const vercelConfig = {
+        "version": 2,
+        "builds": [
+          {
+            "src": "server.js",
+            "use": "@vercel/node"
+          }
+        ],
+        "routes": [
+          {
+            "src": "/favicon.ico",
+            "dest": "/public/favicon.ico"
+          },
+          {
+            "src": "/(.+\\.(png|jpg|jpeg|gif|svg|ico|css|js))",
+            "dest": "/public/$1"
+          },
+          {
+            "src": "/(.*)",
+            "dest": "/server.js"
+          }
+        ],
+        "ignoreCommand": "if [ \"$VERCEL_GIT_COMMIT_REF\" = \"data\" ]; then echo 'Skipping deployment for data branch'; exit 0; else echo 'Proceeding with deployment'; exit 1; fi"
+      };
+      fs.writeFileSync('vercel.json', JSON.stringify(vercelConfig, null, 2));
     }
     
     // Add all changes
