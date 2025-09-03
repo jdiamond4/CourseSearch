@@ -312,7 +312,7 @@ async function fetchAllPages(term, subject) {
 }
 
 async function pushToDataBranch() {
-  console.log('\n🚀 Pushing data to data branch...');
+  console.log('\n🚀 Pushing SIS data to data branch...');
   
   let originalBranch = null;
   
@@ -327,17 +327,18 @@ async function pushToDataBranch() {
       execSync('git checkout main', { stdio: 'inherit' });
     }
     
-    // Check for uncommitted changes (but don't commit to main)
-    const status = execSync('git status --porcelain', { encoding: 'utf8' });
-    if (status.trim()) {
-      console.log('⚠️  Warning: You have uncommitted changes in main branch');
-      console.log('   These changes will be included in the data branch push');
-      console.log('   Consider committing them separately if needed');
+    // Check if SIS data files exist
+    const csvFile = 'localdata/master-sis-data-1258.csv';
+    const jsonFile = 'localdata/master-sis-data-1258.json';
+    
+    if (!fs.existsSync(csvFile) || !fs.existsSync(jsonFile)) {
+      console.error('❌ SIS data files not found. Run --all first to generate them.');
+      process.exit(1);
     }
     
-    // Fetch latest changes
-    console.log('📡 Fetching latest changes...');
-    execSync('git fetch --all', { stdio: 'inherit' });
+    // Stash the localdata changes to avoid committing to main
+    console.log('📦 Stashing localdata changes...');
+    execSync('git stash push -m "temp stash for data push" localdata/', { stdio: 'inherit' });
     
     // Switch to data branch
     console.log('📁 Switching to data branch...');
@@ -350,98 +351,74 @@ async function pushToDataBranch() {
       console.log('ℹ️  No remote changes to pull, continuing...');
     }
     
-    // Clean data branch - remove everything except essential files
-    console.log('🧹 Cleaning data branch...');
-    const filesToKeep = ['.git', '.gitignore', 'vercel.json', '.vercelignore'];
-    const allFiles = fs.readdirSync('.');
+    // Copy the 2 SIS files from main branch (before stash)
+    console.log('📋 Copying SIS data files...');
+    execSync('git checkout main -- localdata/master-sis-data-1258.csv', { stdio: 'inherit' });
+    execSync('git checkout main -- localdata/master-sis-data-1258.json', { stdio: 'inherit' });
     
-    allFiles.forEach(file => {
-      if (!filesToKeep.includes(file)) {
-        if (fs.statSync(file).isDirectory()) {
-          execSync(`rm -rf ${file}`, { stdio: 'inherit' });
-        } else {
-          execSync(`rm -f ${file}`, { stdio: 'inherit' });
-        }
-      }
-    });
-    
-    // Copy data files from main branch
-    console.log('📋 Copying data files from main branch...');
-    execSync('git checkout main -- localdata/', { stdio: 'inherit' });
-    
-    // Rename localdata to data
-    if (fs.existsSync('localdata')) {
-      execSync('mv localdata data', { stdio: 'inherit' });
+    // Move them to data/ folder
+    if (fs.existsSync('localdata/master-sis-data-1258.csv')) {
+      execSync('mv localdata/master-sis-data-1258.csv data/', { stdio: 'inherit' });
+    }
+    if (fs.existsSync('localdata/master-sis-data-1258.json')) {
+      execSync('mv localdata/master-sis-data-1258.json data/', { stdio: 'inherit' });
     }
     
-    // Ensure vercel.json exists with ignore command for data branch
-    if (!fs.existsSync('vercel.json')) {
-      console.log('📝 Creating vercel.json to prevent data branch deployments...');
-      const vercelConfig = {
-        "version": 2,
-        "builds": [
-          {
-            "src": "server.js",
-            "use": "@vercel/node"
-          }
-        ],
-        "routes": [
-          {
-            "src": "/favicon.ico",
-            "dest": "/public/favicon.ico"
-          },
-          {
-            "src": "/(.+\\.(png|jpg|jpeg|gif|svg|ico|css|js))",
-            "dest": "/public/$1"
-          },
-          {
-            "src": "/(.*)",
-            "dest": "/server.js"
-          }
-        ],
-        "ignoreCommand": "if [ \"$VERCEL_GIT_COMMIT_REF\" = \"data\" ]; then echo 'Skipping deployment for data branch'; exit 0; else echo 'Proceeding with deployment'; exit 1; fi"
-      };
-      fs.writeFileSync('vercel.json', JSON.stringify(vercelConfig, null, 2));
+    // Clean up localdata folder if empty
+    if (fs.existsSync('localdata') && fs.readdirSync('localdata').length === 0) {
+      execSync('rmdir localdata', { stdio: 'inherit' });
     }
     
-    // Add all changes
-    console.log('💾 Staging changes...');
-    execSync('git add .', { stdio: 'inherit' });
+    // Add the SIS data files
+    console.log('💾 Staging SIS data files...');
+    execSync('git add data/master-sis-data-1258.csv data/master-sis-data-1258.json', { stdio: 'inherit' });
     
     // Check if there are changes to commit
     const dataStatus = execSync('git status --porcelain', { encoding: 'utf8' });
     if (!dataStatus.trim()) {
-      console.log('ℹ️  No changes to commit, data is already up to date');
+      console.log('ℹ️  No changes to commit, SIS data is already up to date');
     } else {
       // Commit changes
       const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-      const commitMessage = `Update all department data - ${timestamp}`;
+      const commitMessage = `Update SIS data - ${timestamp}`;
       
-      console.log('💾 Committing changes...');
+      console.log('💾 Committing SIS data changes...');
       execSync(`git commit -m "${commitMessage}"`, { stdio: 'inherit' });
-      console.log('✅ Changes committed successfully');
+      console.log('✅ SIS data committed successfully');
       
       // Push to remote
       console.log('🚀 Pushing to remote data branch...');
       execSync('git push origin data', { stdio: 'inherit' });
-      console.log('✅ Data pushed to data branch successfully');
+      console.log('✅ SIS data pushed to data branch successfully');
     }
     
     // Switch back to main branch
     console.log(`🔄 Switching back to main...`);
     execSync('git checkout main', { stdio: 'inherit' });
     
+    // Restore the stashed changes
+    console.log('📦 Restoring stashed changes...');
+    execSync('git stash pop', { stdio: 'inherit' });
+    
     console.log('✅ Data push completed successfully');
     
   } catch (error) {
     console.error(`❌ Error pushing to data branch: ${error.message}`);
     
-    // Attempt to rollback to main branch
+    // Attempt to rollback to main branch and restore stash
     if (originalBranch) {
       try {
         console.log(`🔄 Attempting to rollback to main...`);
         execSync('git checkout main', { stdio: 'inherit' });
         console.log('✅ Rollback successful');
+        
+        // Try to restore stash if it exists
+        try {
+          execSync('git stash pop', { stdio: 'inherit' });
+          console.log('✅ Stashed changes restored');
+        } catch (stashError) {
+          console.log('ℹ️  No stashed changes to restore');
+        }
       } catch (rollbackError) {
         console.error(`❌ Rollback failed: ${rollbackError.message}`);
         console.log('⚠️  You may need to manually switch to main branch');
