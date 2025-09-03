@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/favicon.ico",
+      "dest": "/public/favicon.ico"
+    },
+    {
+      "src": "/(.+\\.(png|jpg|jpeg|gif|svg|ico|css|js))",
+      "dest": "/public/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/server.js"
+    }
+  ],
+  "ignoreCommand": "if [ \"$VERCEL_GIT_COMMIT_REF\" = \"data\" ]; then echo 'Skipping deployment for data branch'; exit 0; else echo 'Proceeding with deployment'; exit 1; fi"
+} 
