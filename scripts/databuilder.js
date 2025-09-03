@@ -139,27 +139,73 @@ function flattenClassData(classItem) {
   };
 }
 
-// Helper function to parse CSV
+// Helper function to parse CSV with proper handling of quoted fields
 function parseCSV(filePath) {
   try {
     const csvContent = fs.readFileSync(filePath, 'utf8');
     const lines = csvContent.trim().split('\n');
-    const headers = lines[0].split(',').map(h => h.trim());
+    
+    if (lines.length === 0) {
+      return [];
+    }
+    
+    // Parse headers with proper CSV handling
+    const headers = parseCSVLine(lines[0]);
     
     const data = [];
     for (let i = 1; i < lines.length; i++) {
-      const values = lines[i].split(',').map(v => v.trim());
-      const row = {};
-      headers.forEach((header, index) => {
-        row[header] = values[index] || '';
-      });
-      data.push(row);
+      if (lines[i].trim()) { // Skip empty lines
+        const values = parseCSVLine(lines[i]);
+        const row = {};
+        headers.forEach((header, index) => {
+          row[header] = values[index] || '';
+        });
+        data.push(row);
+      }
     }
     return data;
   } catch (error) {
     console.error(`Error parsing CSV ${filePath}:`, error);
     return [];
   }
+}
+
+// Helper function to parse a single CSV line with proper quote handling
+function parseCSVLine(line) {
+  const result = [];
+  let current = '';
+  let inQuotes = false;
+  let i = 0;
+  
+  while (i < line.length) {
+    const char = line[i];
+    const nextChar = line[i + 1];
+    
+    if (char === '"') {
+      if (inQuotes && nextChar === '"') {
+        // Escaped quote
+        current += '"';
+        i += 2;
+      } else {
+        // Toggle quote state
+        inQuotes = !inQuotes;
+        i++;
+      }
+    } else if (char === ',' && !inQuotes) {
+      // Field separator
+      result.push(current.trim());
+      current = '';
+      i++;
+    } else {
+      current += char;
+      i++;
+    }
+  }
+  
+  // Add the last field
+  result.push(current.trim());
+  
+  return result;
 }
 
 function getCSVHeaders() {
@@ -185,19 +231,16 @@ function arrayToCSV(data, headers) {
     const values = headers.map(header => {
       const value = row[header] || '';
       
-      // Check for extremely long strings that might cause issues
-      if (typeof value === 'string' && value.length > 1000) {
-        console.warn(`⚠️  Very long string found in row ${i}, header ${header}: ${value.length} characters`);
-        // Truncate extremely long strings more aggressively
-        const truncated = value.substring(0, 1000);
-        return `"${truncated.replace(/"/g, '""')}"`;
-      }
+      // Truncate extremely long strings silently (no warnings)
+      const processedValue = typeof value === 'string' && value.length > 1000 
+        ? value.substring(0, 1000) 
+        : value;
       
       // Escape commas and quotes in CSV
-      if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
-        return `"${value.replace(/"/g, '""')}"`;
+      if (typeof processedValue === 'string' && (processedValue.includes(',') || processedValue.includes('"'))) {
+        return `"${processedValue.replace(/"/g, '""')}"`;
       }
-      return value;
+      return processedValue;
     });
     csvRows.push(values.join(','));
   }
@@ -272,146 +315,109 @@ async function pushToDataBranch() {
   console.log('\n🚀 Pushing data to data branch...');
   
   let originalBranch = null;
-  let hasChanges = false;
   
   try {
-    // Get current branch and check for uncommitted changes
+    // Get current branch
     originalBranch = execSync('git branch --show-current', { encoding: 'utf8' }).trim();
     console.log(`📍 Current branch: ${originalBranch}`);
-    console.log(`📍 Current working directory: ${process.cwd()}`);
-    console.log(`📍 Node modules exist: ${fs.existsSync('node_modules')}`);
     
-    // Check for uncommitted changes
-    try {
-      const status = execSync('git status --porcelain', { encoding: 'utf8' });
-      if (status.trim()) {
-        console.log('⚠️  Warning: You have uncommitted changes. Committing them first...');
-        execSync('git add .', { stdio: 'inherit' });
-        execSync('git commit -m "Auto-commit before data push"', { stdio: 'inherit' });
-        hasChanges = true;
-      }
-    } catch (statusError) {
-      console.log('ℹ️  No uncommitted changes detected');
+    // Ensure we're on main branch
+    if (originalBranch !== 'main') {
+      console.log('🔄 Switching to main branch...');
+      execSync('git checkout main', { stdio: 'inherit' });
     }
     
-    // Fetch latest changes from remote
+    // Check for uncommitted changes and commit them
+    const status = execSync('git status --porcelain', { encoding: 'utf8' });
+    if (status.trim()) {
+      console.log('💾 Committing current changes...');
+      execSync('git add .', { stdio: 'inherit' });
+      execSync('git commit -m "Update data before pushing to data branch"', { stdio: 'inherit' });
+    }
+    
+    // Fetch latest changes
     console.log('📡 Fetching latest changes...');
     execSync('git fetch --all', { stdio: 'inherit' });
     
-    // Switch to data branch and pull latest changes
+    // Switch to data branch
     console.log('📁 Switching to data branch...');
-    execSync('git checkout data --', { stdio: 'inherit' });
+    execSync('git checkout data', { stdio: 'inherit' });
     
+    // Pull latest changes from remote data branch
     try {
       execSync('git pull origin data', { stdio: 'inherit' });
     } catch (pullError) {
-      console.log('ℹ️  No remote changes to pull or pull failed, continuing...');
+      console.log('ℹ️  No remote changes to pull, continuing...');
     }
     
-    // Clean the data branch - only remove data directory
+    // Clean data branch - remove everything except .git
     console.log('🧹 Cleaning data branch...');
-    if (fs.existsSync('data')) {
-      execSync('rm -rf data/', { stdio: 'inherit' });
-    }
-    // Only remove specific files and directories that shouldn't be in data branch
-    const filesToRemove = ['package.json', 'package-lock.json', 'server.js', 'README.md', 'vercel.json'];
-    filesToRemove.forEach(file => {
-      if (fs.existsSync(file)) {
-        execSync(`rm -f ${file}`, { stdio: 'inherit' });
+    const filesToKeep = ['.git', '.gitignore'];
+    const allFiles = fs.readdirSync('.');
+    
+    allFiles.forEach(file => {
+      if (!filesToKeep.includes(file)) {
+        if (fs.statSync(file).isDirectory()) {
+          execSync(`rm -rf ${file}`, { stdio: 'inherit' });
+        } else {
+          execSync(`rm -f ${file}`, { stdio: 'inherit' });
+        }
       }
     });
     
-    // Remove node_modules directory if it exists
-    if (fs.existsSync('node_modules')) {
-      execSync('rm -rf node_modules/', { stdio: 'inherit' });
-    }
+    // Copy data files from main branch
+    console.log('📋 Copying data files from main branch...');
+    execSync('git checkout main -- localdata/', { stdio: 'inherit' });
     
-    // Copy fresh data files from main branch localdata to data/ on data branch
-    console.log('📋 Copying fresh data files from main branch...');
-    execSync('git archive main localdata/ | tar -x', { stdio: 'inherit' });
-    // Rename localdata to data on the data branch
+    // Rename localdata to data
     if (fs.existsSync('localdata')) {
       execSync('mv localdata data', { stdio: 'inherit' });
     }
     
-    // Check what files we have now
-    console.log('📁 Files in data branch:');
-    execSync('ls -la', { stdio: 'inherit' });
-    
-    // Add all files (should only be data files now)
+    // Add all changes
     console.log('💾 Staging changes...');
     execSync('git add .', { stdio: 'inherit' });
     
-    // Check git status
-    console.log('📊 Git status:');
-    execSync('git status', { stdio: 'inherit' });
-    
-    // Check if there are actually changes to commit
-    const status = execSync('git status --porcelain', { encoding: 'utf8' });
-    if (!status.trim()) {
+    // Check if there are changes to commit
+    const dataStatus = execSync('git status --porcelain', { encoding: 'utf8' });
+    if (!dataStatus.trim()) {
       console.log('ℹ️  No changes to commit, data is already up to date');
-      return;
+    } else {
+      // Commit changes
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      const commitMessage = `Update all department data - ${timestamp}`;
+      
+      console.log('💾 Committing changes...');
+      execSync(`git commit -m "${commitMessage}"`, { stdio: 'inherit' });
+      console.log('✅ Changes committed successfully');
+      
+      // Push to remote
+      console.log('🚀 Pushing to remote data branch...');
+      execSync('git push origin data', { stdio: 'inherit' });
+      console.log('✅ Data pushed to data branch successfully');
     }
     
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const commitMessage = `Auto-update data files - ${timestamp}`;
-    
-    // Commit changes
-    console.log('💾 Committing changes...');
-    execSync(`git commit -m "${commitMessage}"`, { stdio: 'inherit' });
-    console.log('✅ Changes committed successfully');
-    
-    // Push to remote data branch
-    console.log('🚀 Pushing to remote data branch...');
-    execSync('git push origin data', { stdio: 'inherit' });
-    console.log('✅ Data pushed to data branch successfully');
-    
-    // Switch back to original branch
-    console.log(`🔄 Switching back to ${originalBranch}...`);
-    execSync(`git checkout ${originalBranch}`, { stdio: 'inherit' });
-    
-    console.log(`📍 After switch - Current working directory: ${process.cwd()}`);
-    console.log(`📍 After switch - Node modules exist: ${fs.existsSync('node_modules')}`);
-    
-    // Restore node_modules if they don't exist and --reinstall flag is set
-    const shouldReinstall = process.argv.includes('--reinstall');
-    if (shouldReinstall && !fs.existsSync('node_modules')) {
-      console.log('📦 Node modules missing, reinstalling dependencies...');
-      execSync('npm install', { stdio: 'inherit' });
-      console.log('✅ Dependencies restored');
-    } else if (!shouldReinstall && !fs.existsSync('node_modules')) {
-      console.log('📦 Node modules removed (use --reinstall flag to restore them)');
-    }
+    // Switch back to main branch
+    console.log(`🔄 Switching back to main...`);
+    execSync('git checkout main', { stdio: 'inherit' });
     
     console.log('✅ Data push completed successfully');
     
   } catch (error) {
     console.error(`❌ Error pushing to data branch: ${error.message}`);
     
-    // Attempt to rollback to original branch
+    // Attempt to rollback to main branch
     if (originalBranch) {
       try {
-        console.log(`🔄 Attempting to rollback to ${originalBranch}...`);
-        execSync(`git checkout ${originalBranch}`, { stdio: 'inherit' });
+        console.log(`🔄 Attempting to rollback to main...`);
+        execSync('git checkout main', { stdio: 'inherit' });
         console.log('✅ Rollback successful');
-        
-        // Restore node_modules if they don't exist and --reinstall flag is set
-        const shouldReinstall = process.argv.includes('--reinstall');
-        if (shouldReinstall && !fs.existsSync('node_modules')) {
-          console.log('📦 Node modules missing, reinstalling dependencies...');
-          execSync('npm install', { stdio: 'inherit' });
-          console.log('✅ Dependencies restored');
-        } else if (!shouldReinstall && !fs.existsSync('node_modules')) {
-          console.log('📦 Node modules removed (use --reinstall flag to restore them)');
-        }
       } catch (rollbackError) {
         console.error(`❌ Rollback failed: ${rollbackError.message}`);
-        console.log('⚠️  You may need to manually switch branches');
+        console.log('⚠️  You may need to manually switch to main branch');
       }
     }
     
-    console.log('💡 Make sure you have the data branch set up and have proper git permissions');
-    console.log('💡 Check that you have uncommitted changes committed before running this command');
     process.exit(1);
   }
 }
@@ -478,18 +484,7 @@ async function main() {
     const allClasses = [...existingData, ...newClasses];
     console.log(`Total records after merge: ${allClasses.length}`);
     
-    // Debug: Check for problematic data
-    console.log(`🔍 Checking data for CSV issues...`);
-    for (let i = 0; i < allClasses.length; i++) {
-      const row = allClasses[i];
-      for (const header of allHeaders) {
-        const value = row[header];
-        if (typeof value === 'string' && value.length > 5000) {
-          console.warn(`⚠️  Long string in row ${i}, ${header}: ${value.length} chars`);
-          console.warn(`   Preview: ${value.substring(0, 100)}...`);
-        }
-      }
-    }
+    // Data is ready for CSV generation
     
     // Create CSV
     const csvContent = arrayToCSV(allClasses, allHeaders);
@@ -501,26 +496,7 @@ async function main() {
     }
     
     console.log(`💾 Writing CSV file...`);
-    try {
-      fs.writeFileSync(masterPath, csvContent);
-    } catch (writeError) {
-      console.error(`❌ CSV write error: ${writeError.message}`);
-      console.error(`❌ Error details:`, writeError);
-      
-      // Try to identify the problematic row
-      console.log(`🔍 Attempting to identify problematic data...`);
-      for (let i = 0; i < allClasses.length; i++) {
-        const row = allClasses[i];
-        for (const header of allHeaders) {
-          const value = row[header];
-          if (typeof value === 'string' && value.length > 100000) {
-            console.error(`🚨 Extremely long string in row ${i}, ${header}: ${value.length} chars`);
-            console.error(`   First 200 chars: ${value.substring(0, 200)}`);
-          }
-        }
-      }
-      throw writeError;
-    }
+    fs.writeFileSync(masterPath, csvContent);
     console.log(`✅ Master SIS data updated: ${masterPath}`);
     console.log(`📊 Total records: ${allClasses.length}`);
     console.log(`📋 Fields captured: ${allHeaders.length}`);
