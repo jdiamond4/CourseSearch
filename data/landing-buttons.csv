@@ -31,6 +31,6 @@ AS,Statistics,department,STAT
 AS,"Women, Gender, and Sexuality",department,WGS
 ENG,Computer Science,department,CS
 ENG,Quantitative Sciences,category,quant 
-MS, Commerce, department, COMM
-MS, Gen. Business, department, CGBM
-MS, Graduate Comm, GCOM
+MS,Commerce,department,COMM
+MS,Gen. Business,department,CGBM
+MS,Graduate Comm,department,GCOM
