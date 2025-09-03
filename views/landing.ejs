@@ -177,13 +177,22 @@
                     <h3 class="text-xl font-bold text-purple-800">McIntire School of Commerce</h3>
                 </div>
             </div>
-            <div class="p-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <% if (landingButtons && landingButtons.MC) { %>
+                    <% landingButtons.MC.forEach(function(button) { %>
+                        <a href="/catalog?<%= button.type === 'department' ? 'subject=' + button.filter : 'category=' + button.filter %>" 
+                           class="department-link p-3 rounded-lg border border-gray-200 hover:border-purple-300">
+                            <span class="text-purple-600 font-medium"><%= button.displayName %></span>
+                        </a>
+                    <% }); %>
+                <% } else { %>
                     <a href="#" class="department-link p-3 rounded-lg border border-gray-200 hover:border-purple-300">
                         <span class="text-gray-600">Departments coming soon...</span>
                     </a>
-                </div>
+                <% } %>
             </div>
+        </div>
         </div>
 
         <!-- Batten School of Leadership and Public Policy -->
