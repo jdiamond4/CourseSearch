@@ -336,6 +336,11 @@ async function pushToDataBranch() {
       process.exit(1);
     }
     
+    // Read the SIS files BEFORE stashing them
+    console.log('📋 Reading SIS data files...');
+    const csvContent = fs.readFileSync(csvFile, 'utf8');
+    const jsonContent = fs.readFileSync(jsonFile, 'utf8');
+    
     // Stash the localdata changes to avoid committing to main
     console.log('📦 Stashing localdata changes...');
     execSync('git stash push -m "temp stash for data push" localdata/', { stdio: 'inherit' });
@@ -351,14 +356,8 @@ async function pushToDataBranch() {
       console.log('ℹ️  No remote changes to pull, continuing...');
     }
     
-    // Read the SIS files from main branch (before stash) and write them directly to data/ folder
-    console.log('📋 Copying SIS data files...');
-    
-    // Get the file contents from main branch
-    const csvContent = execSync('git show main:localdata/master-sis-data-1258.csv', { encoding: 'utf8' });
-    const jsonContent = execSync('git show main:localdata/master-sis-data-1258.json', { encoding: 'utf8' });
-    
-    // Write them directly to data/ folder
+    // Write the SIS files directly to data/ folder
+    console.log('📋 Writing SIS data files to data branch...');
     fs.writeFileSync('data/master-sis-data-1258.csv', csvContent);
     fs.writeFileSync('data/master-sis-data-1258.json', jsonContent);
     
