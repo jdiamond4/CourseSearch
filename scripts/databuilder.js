@@ -351,23 +351,16 @@ async function pushToDataBranch() {
       console.log('ℹ️  No remote changes to pull, continuing...');
     }
     
-    // Copy the 2 SIS files from main branch (before stash)
+    // Read the SIS files from main branch (before stash) and write them directly to data/ folder
     console.log('📋 Copying SIS data files...');
-    execSync('git checkout main -- localdata/master-sis-data-1258.csv', { stdio: 'inherit' });
-    execSync('git checkout main -- localdata/master-sis-data-1258.json', { stdio: 'inherit' });
     
-    // Move them to data/ folder
-    if (fs.existsSync('localdata/master-sis-data-1258.csv')) {
-      execSync('mv localdata/master-sis-data-1258.csv data/', { stdio: 'inherit' });
-    }
-    if (fs.existsSync('localdata/master-sis-data-1258.json')) {
-      execSync('mv localdata/master-sis-data-1258.json data/', { stdio: 'inherit' });
-    }
+    // Get the file contents from main branch
+    const csvContent = execSync('git show main:localdata/master-sis-data-1258.csv', { encoding: 'utf8' });
+    const jsonContent = execSync('git show main:localdata/master-sis-data-1258.json', { encoding: 'utf8' });
     
-    // Clean up localdata folder if empty
-    if (fs.existsSync('localdata') && fs.readdirSync('localdata').length === 0) {
-      execSync('rmdir localdata', { stdio: 'inherit' });
-    }
+    // Write them directly to data/ folder
+    fs.writeFileSync('data/master-sis-data-1258.csv', csvContent);
+    fs.writeFileSync('data/master-sis-data-1258.json', jsonContent);
     
     // Add the SIS data files
     console.log('💾 Staging SIS data files...');
