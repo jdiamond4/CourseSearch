@@ -181,7 +181,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <% if (landingButtons && landingButtons.MC) { %>
                     <% landingButtons.MC.forEach(function(button) { %>
-                        <a href="/catalog?<%= button.type === 'department' ? 'subject=' + button.filter : 'category=' + button.filter %>" 
+                        <a href="/catalog?<%= button.type === 'department' ? 'department=' + button.filter : 'category=' + button.filter %>" 
                            class="department-link p-3 rounded-lg border border-gray-200 hover:border-purple-300">
                             <span class="text-purple-600 font-medium"><%= button.displayName %></span>
                         </a>
