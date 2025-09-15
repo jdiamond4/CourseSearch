@@ -2,8 +2,8 @@ name: Auto Update Course Data
 
 on:
   schedule:
-    # Run every 5 hours (at minute 0 of hours 0, 5, 10, 15, 20)
-    - cron: '0 */5 * * *'
+    # Run every 12 hours (at minute 0 of hours 0 and 12)
+    - cron: '0 */12 * * *'
   workflow_dispatch: # Allow manual triggering
 
 jobs:
