@@ -1,9 +1,10 @@
 name: Auto Update Course Data
 
 on:
-  schedule:
-    # Run every 12 hours (at minute 0 of hours 0 and 12)
-    - cron: '0 */12 * * *'
+  # Temporarily disabled due to API location data issues
+  # schedule:
+  #   # Run every 12 hours (at minute 0 of hours 0 and 12)
+  #   - cron: '0 */12 * * *'
   workflow_dispatch: # Allow manual triggering
 
 jobs:
