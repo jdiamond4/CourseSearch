@@ -105,6 +105,18 @@ function mongoToCourse(mongoData) {
     });
   }
   
+  // Add hasGPAOver method to course
+  course.hasGPAOver = function(minGPA) {
+    const allSections = [...this.sections, ...this.discussions];
+    return allSections.some(section => {
+      if (section.instructorGPA && section.instructorGPA !== 'N/A' && section.instructorGPA !== '—') {
+        const gpa = parseFloat(section.instructorGPA);
+        return !isNaN(gpa) && gpa >= minGPA;
+      }
+      return false;
+    });
+  };
+  
   return course;
 }
 

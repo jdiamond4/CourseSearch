@@ -1,11 +1,18 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const fs = require('fs').promises;
 const fsSync = require('fs');
 const https = require('https');
+const connectDB = require('./config/database');
+const MongoCourse = require('./models/MongoCourse');
+const { mongoToCourse } = require('./utils/mongoHelpers');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// MongoDB connection flag
+let mongoConnected = false;
 
 // View engine setup
 app.set('view engine', 'ejs');
@@ -422,112 +429,157 @@ app.get('/', (req, res) => {
 app.get('/catalog', async (req, res) => {
     try {
         const { category, department, search, level, status, gpa, filters, page = 1, perPage = 15 } = req.query;
+        const term = req.query.term || '1262'; // Default to Spring 2026
         
         let courses = [];
         
         try {
-            // Load from unified master SIS data file from GitHub
-            let allSisData = [];
-            
-            try {
-                // Try to load from GitHub first
-                const csvContent = await fetchDataFromGitHub('data/master-sis-data-1258.csv');
-                const lines = csvContent.trim().split('\n');
-                const headers = parseCSVLine(lines[0]);
+            // Try MongoDB first
+            if (mongoConnected) {
+                console.log('📊 Loading courses from MongoDB...');
                 
-                for (let i = 1; i < lines.length; i++) {
-                    const values = parseCSVLine(lines[i]);
-                    const row = {};
-                    headers.forEach((header, index) => {
-                        row[header] = values[index] || '';
-                    });
-                    allSisData.push(row);
-                }
-            
-            } catch (error) {
-                console.log('⚠️  Could not load SIS data from GitHub, using fallback');
-                // Fallback to local file
-                const masterPath = path.join(__dirname, 'data', `master-sis-data-1258.csv`);
+                // Build MongoDB query
+                const query = { term };
                 
-                if (await fs.access(masterPath).then(() => true).catch(() => false)) {
-                    // Parse master SIS data
-                    allSisData = await parseCSV(masterPath);
-                }
-            }
-            
-            if (allSisData.length > 0) {
-                
-                // Apply search filters
-                let filteredData = allSisData;
-                
-                // Filter by category if specified (overrides department filter)
+                // Filter by category (multiple subjects)
                 if (category && departmentCategories[category]) {
                     const categoryDepartments = departmentCategories[category];
-                    filteredData = filteredData.filter(row => categoryDepartments.includes(row.subject));
-
+                    query.subject = { $in: categoryDepartments };
                 }
-                // Filter by department if specified (only if no category)
+                // Filter by department (single subject)
                 else if (department) {
-                    filteredData = filteredData.filter(row => row.subject.toLowerCase() === department.toLowerCase());
-
+                    query.subject = department.toUpperCase();
                 }
                 
-                // Filter by search term if specified
+                // Filter by search term
                 if (search) {
-                    const searchLower = search.toLowerCase();
-                    filteredData = filteredData.filter(row => {
-                        return (
-                            (row.course_title && row.course_title.toLowerCase().includes(searchLower)) ||
-                            (row.catalog_nbr && row.catalog_nbr.toString().includes(search)) ||
-                            (row.subject && row.subject.toLowerCase().includes(searchLower))
-                        );
-                    });
-
+                    const searchRegex = new RegExp(search, 'i');
+                    query.$or = [
+                        { title: searchRegex },
+                        { catalog_nbr: searchRegex },
+                        { subject: searchRegex }
+                    ];
                 }
                 
-                // Filter by course level if specified
+                // Filter by course level
                 if (level) {
                     const levelNum = parseInt(level);
-                    filteredData = filteredData.filter(row => {
-                        if (row.catalog_nbr) {
-                            const courseNum = parseInt(row.catalog_nbr);
-                            return courseNum >= levelNum && courseNum < levelNum + 1000;
-                        }
-                        return false;
-                    });
-
+                    // Use regex to match course numbers starting with the level digit
+                    query.catalog_nbr = new RegExp(`^${levelNum.toString().charAt(0)}`);
                 }
                 
-                // Filter by enrollment status if specified
+                // Fetch courses from MongoDB
+                const mongoCourses = await MongoCourse.find(query)
+                    .sort({ subject: 1, catalog_nbr: 1 })
+                    .lean();
+                
+                console.log(`✅ Loaded ${mongoCourses.length} courses from MongoDB`);
+                
+                // Convert MongoDB documents to course model instances
+                courses = mongoCourses.map(mongoToCourse);
+                
+                // Filter by enrollment status (in-memory, after conversion)
                 if (status) {
-                    filteredData = filteredData.filter(row => {
-                        const enrollmentStatus = getEnrollmentStatus(row.enrollment_available, row.enrl_stat);
-                        return enrollmentStatus.toLowerCase() === status.toLowerCase();
+                    courses = courses.filter(course => {
+                        return course.sections.some(section => 
+                            section.status.toLowerCase() === status.toLowerCase()
+                        );
                     });
-
                 }
                 
-                // Load GPA data
-                const gpaData = await loadGPAData();
-
-                
-                // Transform filtered data into course objects
-                courses = transformSISDataToCourses(filteredData, gpaData);
-
-                
-                // Filter by GPA if specified (after object creation)
+                // Filter by GPA (in-memory, after conversion)
                 if (gpa) {
                     const minGPA = parseFloat(gpa);
                     if (!isNaN(minGPA)) {
-                        const beforeCount = courses.length;
                         courses = courses.filter(course => course.hasGPAOver(minGPA));
                     }
                 }
                 
             } else {
-                courses = [];
+                // Fallback to CSV if MongoDB not connected
+                console.log('⚠️  MongoDB not connected, falling back to CSV...');
+                let allSisData = [];
+                
+                try {
+                    // Try to load from GitHub first
+                    const csvContent = await fetchDataFromGitHub('data/master-sis-data-1258.csv');
+                    const lines = csvContent.trim().split('\n');
+                    const headers = parseCSVLine(lines[0]);
+                    
+                    for (let i = 1; i < lines.length; i++) {
+                        const values = parseCSVLine(lines[i]);
+                        const row = {};
+                        headers.forEach((header, index) => {
+                            row[header] = values[index] || '';
+                        });
+                        allSisData.push(row);
+                    }
+                
+                } catch (error) {
+                    console.log('⚠️  Could not load SIS data from GitHub, using local fallback');
+                    const masterPath = path.join(__dirname, 'data', `master-sis-data-1258.csv`);
+                    
+                    if (await fs.access(masterPath).then(() => true).catch(() => false)) {
+                        allSisData = await parseCSV(masterPath);
+                    }
+                }
+                
+                if (allSisData.length > 0) {
+                    // Apply filters
+                    let filteredData = allSisData;
+                    
+                    if (category && departmentCategories[category]) {
+                        const categoryDepartments = departmentCategories[category];
+                        filteredData = filteredData.filter(row => categoryDepartments.includes(row.subject));
+                    }
+                    else if (department) {
+                        filteredData = filteredData.filter(row => row.subject.toLowerCase() === department.toLowerCase());
+                    }
+                    
+                    if (search) {
+                        const searchLower = search.toLowerCase();
+                        filteredData = filteredData.filter(row => {
+                            return (
+                                (row.course_title && row.course_title.toLowerCase().includes(searchLower)) ||
+                                (row.catalog_nbr && row.catalog_nbr.toString().includes(search)) ||
+                                (row.subject && row.subject.toLowerCase().includes(searchLower))
+                            );
+                        });
+                    }
+                    
+                    if (level) {
+                        const levelNum = parseInt(level);
+                        filteredData = filteredData.filter(row => {
+                            if (row.catalog_nbr) {
+                                const courseNum = parseInt(row.catalog_nbr);
+                                return courseNum >= levelNum && courseNum < levelNum + 1000;
+                            }
+                            return false;
+                        });
+                    }
+                    
+                    if (status) {
+                        filteredData = filteredData.filter(row => {
+                            const enrollmentStatus = getEnrollmentStatus(row.enrollment_available, row.enrl_stat);
+                            return enrollmentStatus.toLowerCase() === status.toLowerCase();
+                        });
+                    }
+                    
+                    const gpaData = await loadGPAData();
+                    courses = transformSISDataToCourses(filteredData, gpaData);
+                    
+                    if (gpa) {
+                        const minGPA = parseFloat(gpa);
+                        if (!isNaN(minGPA)) {
+                            courses = courses.filter(course => course.hasGPAOver(minGPA));
+                        }
+                    }
+                } else {
+                    courses = [];
+                }
             }
-        } catch (fileError) {
+        } catch (error) {
+            console.error('Error loading courses:', error);
             courses = [];
         }
         
@@ -642,13 +694,25 @@ app.get('/api/search', (req, res) => {
 // Load department categories and start server
 async function startServer() {
   try {
+    // Try to connect to MongoDB
+    try {
+      await connectDB();
+      mongoConnected = true;
+      console.log('✅ MongoDB connected - using MongoDB for course data');
+    } catch (error) {
+      console.warn('⚠️  MongoDB connection failed - will use CSV fallback');
+      console.warn('   Error:', error.message);
+      mongoConnected = false;
+    }
+    
     await loadDepartmentCategories();
     
     // Start server
     app.listen(PORT, () => {
-      console.log(`🚀 Server running on http://localhost:${PORT}`);
-      console.log(`📚 Course catalog: http://localhost:${PORT}/courses/CS/1258`);
-      console.log(`🔍 API endpoint: http://localhost:${PORT}/api/courses/CS/1258`);
+      console.log(`\n🚀 Server running on http://localhost:${PORT}`);
+      console.log(`📚 Course catalog: http://localhost:${PORT}/catalog?department=CS`);
+      console.log(`🏠 Landing page: http://localhost:${PORT}/`);
+      console.log(`\n💾 Data source: ${mongoConnected ? 'MongoDB' : 'CSV (fallback)'}`);
     });
   } catch (error) {
     console.error('❌ Failed to start server:', error);
