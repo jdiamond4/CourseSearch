@@ -105,35 +105,19 @@ async function parseCSV(filePath) {
   }
 }
 
-// Helper function to load GPA data from GitHub
+// Helper function to load GPA data from local CSV
 async function loadGPAData() {
   try {
-    // Try to load from GitHub first
-    try {
-      const csvContent = await fetchDataFromGitHub('data/master-gpa-data.csv');
-      const lines = csvContent.trim().split('\n');
-      const headers = parseCSVLine(lines[0]);
-      
-      const data = [];
-      for (let i = 1; i < lines.length; i++) {
-        const values = parseCSVLine(lines[i]);
-        const row = {};
-        headers.forEach((header, index) => {
-          row[header] = values[index] || '';
-        });
-        data.push(row);
-      }
-  
+    // Load from local file
+    const gpaPath = path.join(__dirname, 'localdata', 'master-gpa-data.csv');
+    if (await fs.access(gpaPath).then(() => true).catch(() => false)) {
+      const data = await parseCSV(gpaPath);
+      console.log(`📊 Loaded ${data.length} GPA records from local CSV`);
       return data;
-    } catch (error) {
-      console.log('⚠️  Could not load GPA data from GitHub, using fallback');
-      // Fallback to local file
-      const gpaPath = path.join(__dirname, 'data', 'master-gpa-data.csv');
-      if (await fs.access(gpaPath).then(() => true).catch(() => false)) {
-        return await parseCSV(gpaPath);
-      }
-      return [];
     }
+    
+    console.log('⚠️  No GPA data file found');
+    return [];
   } catch (error) {
     console.error('Error loading GPA data:', error);
     return [];
@@ -475,8 +459,41 @@ app.get('/catalog', async (req, res) => {
                 
                 console.log(`✅ Loaded ${mongoCourses.length} courses from MongoDB`);
                 
-                // Convert MongoDB documents to course model instances
-                courses = mongoCourses.map(mongoToCourse);
+                // Load GPA data from local CSV
+                const gpaData = await loadGPAData();
+                
+                // Convert MongoDB documents to course model instances and merge GPA data
+                courses = mongoCourses.map(mongoCourse => {
+                    const course = mongoToCourse(mongoCourse);
+                    
+                    // Merge GPA data into sections
+                    course.sections.forEach(section => {
+                        if (section.teacherName && section.teacherName !== 'TBA') {
+                            const gpaMatch = findMatchingGPA(gpaData, mongoCourse.subject, mongoCourse.catalog_nbr, section.teacherName);
+                            if (gpaMatch) {
+                                section.instructorGPA = gpaMatch.instructorGPA || 'N/A';
+                                section.instructorRating = gpaMatch.instructorRating || 'N/A';
+                                section.instructorDifficulty = gpaMatch.instructorDifficulty || 'N/A';
+                                section.instructorLastTaught = gpaMatch.instructorLastTaught || 'N/A';
+                            }
+                        }
+                    });
+                    
+                    // Merge GPA data into discussions
+                    course.discussions.forEach(discussion => {
+                        if (discussion.teacherName && discussion.teacherName !== 'TBA') {
+                            const gpaMatch = findMatchingGPA(gpaData, mongoCourse.subject, mongoCourse.catalog_nbr, discussion.teacherName);
+                            if (gpaMatch) {
+                                discussion.instructorGPA = gpaMatch.instructorGPA || 'N/A';
+                                discussion.instructorRating = gpaMatch.instructorRating || 'N/A';
+                                discussion.instructorDifficulty = gpaMatch.instructorDifficulty || 'N/A';
+                                discussion.instructorLastTaught = gpaMatch.instructorLastTaught || 'N/A';
+                            }
+                        }
+                    });
+                    
+                    return course;
+                });
                 
                 // Filter by enrollment status (in-memory, after conversion)
                 if (status) {

@@ -30,12 +30,17 @@ node scripts/viewMongoCourses.js 1262
 
 ### GPA Data Integration
 
+GPA data is stored locally in `localdata/master-gpa-data.csv` and loaded by the server automatically.
+
 ```bash
-# Scrape GPA data for a department
+# Scrape GPA data for a department (updates local CSV)
 node scripts/scrapeCourseForum.js --departmentId=31 --subject=CS --term=1262
 
 # Scrape GPA data for all departments
 node scripts/scrapeCourseForum.js --all --term=1262
+
+# GPA data is automatically merged with course data when displaying
+# The server loads from localdata/master-gpa-data.csv on each page load
 ```
 
 ## Term Codes
