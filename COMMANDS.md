@@ -33,11 +33,19 @@ node scripts/viewMongoCourses.js 1262
 GPA data is stored locally in `localdata/master-gpa-data.csv` and loaded by the server automatically.
 
 ```bash
-# Scrape GPA data for a department (updates local CSV)
+# Scrape GPA data for a single department (updates local CSV)
 node scripts/scrapeCourseForum.js --departmentId=31 --subject=CS --term=1262
 
-# Scrape GPA data for all departments
+# Scrape GPA data for all departments (takes ~30 minutes)
 node scripts/scrapeCourseForum.js --all --term=1262
+
+# Scrape GPA data in ranges (recommended for better control)
+node scripts/scrapeCourseForum.js --range=1-10 --term=1262
+node scripts/scrapeCourseForum.js --range=11-20 --term=1262
+node scripts/scrapeCourseForum.js --range=21-30 --term=1262
+node scripts/scrapeCourseForum.js --range=31-40 --term=1262
+node scripts/scrapeCourseForum.js --range=41-50 --term=1262
+node scripts/scrapeCourseForum.js --range=51-61 --term=1262
 
 # GPA data is automatically merged with course data when displaying
 # The server loads from localdata/master-gpa-data.csv on each page load
@@ -105,8 +113,13 @@ MONGODB_URI=mongodb+srv://...
 # 1. Fetch all course data for new semester (Spring 2026)
 node scripts/sisToMongo.js --term=1262 --all
 
-# 2. Scrape GPA data for all departments
-node scripts/scrapeCourseForum.js --all --term=1262
+# 2. Scrape GPA data for all departments (in batches recommended)
+node scripts/scrapeCourseForum.js --range=1-10 --term=1262
+node scripts/scrapeCourseForum.js --range=11-20 --term=1262
+node scripts/scrapeCourseForum.js --range=21-30 --term=1262
+node scripts/scrapeCourseForum.js --range=31-40 --term=1262
+node scripts/scrapeCourseForum.js --range=41-50 --term=1262
+node scripts/scrapeCourseForum.js --range=51-61 --term=1262
 
 # 3. Start server to view results
 npm start
