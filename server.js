@@ -112,7 +112,6 @@ async function loadGPAData() {
     const gpaPath = path.join(__dirname, 'localdata', 'master-gpa-data.csv');
     if (await fs.access(gpaPath).then(() => true).catch(() => false)) {
       const data = await parseCSV(gpaPath);
-      console.log(`📊 Loaded ${data.length} GPA records from local CSV`);
       return data;
     }
     
@@ -420,8 +419,6 @@ app.get('/catalog', async (req, res) => {
         try {
             // Try MongoDB first
             if (mongoConnected) {
-                console.log('📊 Loading courses from MongoDB...');
-                
                 // Build MongoDB query
                 const query = { term };
                 
@@ -456,8 +453,6 @@ app.get('/catalog', async (req, res) => {
                 const mongoCourses = await MongoCourse.find(query)
                     .sort({ subject: 1, catalog_nbr: 1 })
                     .lean();
-                
-                console.log(`✅ Loaded ${mongoCourses.length} courses from MongoDB`);
                 
                 // Load GPA data from local CSV
                 const gpaData = await loadGPAData();
