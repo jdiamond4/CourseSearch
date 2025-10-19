@@ -139,7 +139,8 @@ class CourseForumScraper {
   // Scrape instructor data from a specific course page
   async scrapeCoursePage(courseNumber) {
     try {
-      const courseUrl = `https://thecourseforum.com/course/${this.subject}/${courseNumber}/`;
+      // Use /all at the end of URL to show all semesters (faster than clicking button)
+      const courseUrl = `https://thecourseforum.com/course/${this.subject}/${courseNumber}/all`;
       console.log(`📖 Scraping ${this.subject} ${courseNumber}: ${courseUrl}`);
       
       await this.page.goto(courseUrl, {
@@ -148,7 +149,7 @@ class CourseForumScraper {
       });
       
       // Wait for the page to load
-      await new Promise(resolve => setTimeout(resolve, 3000));
+      await new Promise(resolve => setTimeout(resolve, 2000));
       
       // Extract instructor data from this course page
       const instructorData = await this.page.evaluate(() => {
@@ -178,8 +179,9 @@ class CourseForumScraper {
             const sections = sectionsElement ? sectionsElement.textContent.trim() : 'N/A';
             const lastTaught = lastTaughtElement ? lastTaughtElement.textContent.trim() : 'N/A';
             
-            // Only include instructors who taught in Fall 2025
-            if (lastTaught === 'Fall 2025') {
+            // Include instructors who taught in recent semesters (Fall 2024, Spring 2025, Summer 2025, Fall 2025, Spring 2026)
+            const recentSemesters = ['Fall 2024', 'Spring 2025', 'Summer 2025', 'Fall 2025', 'Spring 2026'];
+            if (recentSemesters.includes(lastTaught)) {
               instructors.push({
                 name,
                 rating,
@@ -199,7 +201,7 @@ class CourseForumScraper {
       });
 
       if (instructorData && instructorData.length > 0) {
-        console.log(`✅ Found ${instructorData.length} instructors for ${this.subject} ${courseNumber} (Fall 2025)`);
+        console.log(`✅ Found ${instructorData.length} instructors for ${this.subject} ${courseNumber} (recent semesters)`);
         
         // Add course context to each instructor record
         instructorData.forEach(instructor => {
@@ -217,7 +219,7 @@ class CourseForumScraper {
           });
         });
       } else {
-        console.log(`⚠️ No Fall 2025 instructors found for ${this.subject} ${courseNumber}`);
+        console.log(`⚠️ No recent instructors found for ${this.subject} ${courseNumber}`);
       }
       
       return instructorData;
@@ -388,10 +390,138 @@ class CourseForumScraper {
   }
 }
 
+// Load departments from CSV
+function loadDepartments() {
+  try {
+    const departmentsPath = path.join(__dirname, '..', 'localdata', 'departments.csv');
+    if (!fs.existsSync(departmentsPath)) {
+      console.error('❌ departments.csv not found');
+      return [];
+    }
+
+    const csvContent = fs.readFileSync(departmentsPath, 'utf8');
+    const lines = csvContent.trim().split('\n');
+    const headers = lines[0].split(',');
+    
+    const idIndex = headers.indexOf('id');
+    const nemonicIndex = headers.indexOf('nemonic');
+    
+    const departments = [];
+    for (let i = 1; i < lines.length; i++) {
+      const values = lines[i].split(',');
+      const id = values[idIndex]?.trim();
+      const nemonic = values[nemonicIndex]?.trim();
+      
+      if (id && nemonic && nemonic !== 'none') {
+        departments.push({ id, nemonic });
+      }
+    }
+
+    return departments;
+  } catch (error) {
+    console.error('❌ Error loading departments:', error.message);
+    return [];
+  }
+}
+
+// Scrape all departments (or a range)
+async function scrapeAllDepartments(term, rangeStart = null, rangeEnd = null) {
+  const allDepartments = loadDepartments();
+  
+  // Apply range if specified
+  let departments = allDepartments;
+  if (rangeStart !== null && rangeEnd !== null) {
+    const start = Math.max(0, rangeStart - 1); // Convert to 0-indexed
+    const end = Math.min(allDepartments.length, rangeEnd);
+    departments = allDepartments.slice(start, end);
+    console.log(`\n📋 Processing departments ${rangeStart}-${rangeEnd} (of ${allDepartments.length} total)`);
+  } else {
+    console.log(`\n📋 Found ${departments.length} departments to scrape`);
+  }
+  
+  console.log(`📦 Departments to process: ${departments.map(d => d.nemonic).join(', ')}\n`);
+  
+  let totalRecords = 0;
+  let successCount = 0;
+  let failCount = 0;
+
+  for (let i = 0; i < departments.length; i++) {
+    const dept = departments[i];
+    const actualIndex = rangeStart ? (rangeStart + i) : (i + 1);
+    console.log(`\n${'='.repeat(80)}`);
+    console.log(`📚 [${actualIndex}/${allDepartments.length}] Scraping ${dept.nemonic} (ID: ${dept.id})`);
+    console.log('='.repeat(80));
+
+    const scraper = new CourseForumScraper(dept.id, dept.nemonic, term);
+    
+    try {
+      await scraper.initialize();
+      const courses = await scraper.scrapeDepartment();
+      
+      console.log(`✅ ${dept.nemonic} complete: ${courses.length} instructor records`);
+      totalRecords += courses.length;
+      successCount++;
+      
+      await scraper.close();
+      
+      // Small delay between departments to avoid rate limiting
+      if (i < departments.length - 1) {
+        console.log('⏱️  Waiting 3 seconds before next department...');
+        await new Promise(resolve => setTimeout(resolve, 3000));
+      }
+      
+    } catch (error) {
+      console.error(`❌ ${dept.nemonic} failed:`, error.message);
+      failCount++;
+      await scraper.close();
+    }
+  }
+
+  console.log('\n\n' + '='.repeat(80));
+  console.log('📊 FINAL SUMMARY');
+  console.log('='.repeat(80));
+  console.log(`Total Departments: ${departments.length}`);
+  console.log(`Successful: ${successCount}`);
+  console.log(`Failed: ${failCount}`);
+  console.log(`Total Instructor Records: ${totalRecords}`);
+  console.log('='.repeat(80) + '\n');
+}
+
 async function main() {
   const departmentId = getArg('departmentId', '31'); // Default to CS department ID
   const subject = getArg('subject', 'CS'); // Default to CS
-  const term = getArg('term', '1258'); // Default to Fall 2025
+  const term = getArg('term', '1262'); // Default to Spring 2026
+  const all = process.argv.includes('--all');
+  const rangeArg = getArg('range', null);
+
+  // Parse range argument (e.g., --range=1-10)
+  let rangeStart = null;
+  let rangeEnd = null;
+  if (rangeArg) {
+    const rangeParts = rangeArg.split('-');
+    if (rangeParts.length === 2) {
+      rangeStart = parseInt(rangeParts[0]);
+      rangeEnd = parseInt(rangeParts[1]);
+      if (isNaN(rangeStart) || isNaN(rangeEnd)) {
+        console.error('❌ Invalid range format. Use: --range=1-10');
+        return;
+      }
+    } else {
+      console.error('❌ Invalid range format. Use: --range=1-10');
+      return;
+    }
+  }
+
+  if (all || rangeArg) {
+    if (rangeArg) {
+      console.log(`🚀 Scraping GPA data for departments ${rangeStart}-${rangeEnd}`);
+    } else {
+      console.log('🚀 Scraping GPA data for ALL departments');
+    }
+    console.log(`📅 Term: ${term}`);
+    await scrapeAllDepartments(term, rangeStart, rangeEnd);
+    return;
+  }
 
   console.log(`🔧 Parsed arguments:`);
   console.log(`   Department ID: ${departmentId}`);
