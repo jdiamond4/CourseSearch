@@ -21,29 +21,21 @@ My goal is to build a smarter, more modern course search solution that goes beyo
 
 ## Data Management
 
-This project uses a dual-branch approach for clean deployment:
+This project uses MongoDB Atlas for course data storage with local CSV files for GPA data:
 
-- **`main` branch**: Contains all application code (server, views, scripts)
-- **`data` branch**: Contains only data files (CSV files with course and GPA data)
+- **MongoDB Atlas**: Cloud-hosted database for course data (sections, discussions, enrollment)
+- **Local CSV Files**: GPA data stored in `localdata/master-gpa-data.csv`
+- **Hybrid Approach**: Course data in MongoDB, GPA data merged on server-side
 
 ### Benefits
-- **Clean Deployments**: Code changes don't trigger data updates
-- **Separate Data Updates**: Data can be updated hourly without affecting main codebase
-- **Production Ready**: Vercel deployments use main branch for code, data branch for data
+- **Real-time Updates**: MongoDB allows for instant course data updates
+- **Scalability**: Cloud database handles thousands of courses efficiently
+- **Flexibility**: CSV fallback system ensures reliability
+- **Fast Queries**: MongoDB indexing for quick filtering and searching
 
 ### Updating Data
-When you have new data files, use the provided script:
-```bash
-./update-data-branch.sh
-```
 
-This script will:
-1. Switch to the data branch
-2. Copy new data files from main
-3. Commit and push the updates
-4. Switch back to main branch
-
-The application automatically fetches data from the GitHub data branch with fallback to local files for development.
+See `COMMANDS.md` for detailed data management commands.
 - **Predictive Analytics**: Course difficulty predictions and success rate insights
 - **Personalized Experience**: Learning from your preferences to suggest better course combinations
 
@@ -89,26 +81,31 @@ The application automatically fetches data from the GitHub data branch with fall
 - [x] Create CSV-driven landing page configuration
 - [x] Add pagination for large course catalogs
 - [x] Apply official UVA branding (HoosList)
+- [x] Migrate from CSV to MongoDB Atlas for scalability
+- [x] Implement hybrid data storage (MongoDB + local GPA CSV)
 
 ### Medium Term
 - [ ] AI-powered course recommendations
 - [ ] Smart scheduling suggestions
 - [ ] Course comparison tools and visualizations
-- [ ] Automated data updates via GitHub Actions
+- [ ] Automated MongoDB data updates
 
 ### Long Term
 - [ ] Predictive course difficulty and success rates
 - [ ] Integration with degree planning tools
 - [ ] Personalized academic pathway recommendations
 
-## Technology
+## Technology Stack
 
-- **Real-time Data**: Live enrollment updates every few minutes
-- **Smart Caching**: Fast searches across thousands of course records
-- **Open Architecture**: Designed for easy integration with future AI services
+- **Backend**: Node.js with Express.js
+- **Database**: MongoDB Atlas (cloud-hosted)
+- **Data Storage**: Hybrid MongoDB + local CSV files
+- **Frontend**: EJS templating with Tailwind CSS
+- **Data Sources**: UVA SIS API + theCourseForum.com
+- **Scraping**: Playwright for automated GPA data collection
+- **Real-time Data**: Live enrollment updates from SIS API
+- **Smart Filtering**: MongoDB queries with server-side GPA merging
 - **Production Ready**: Built to handle thousands of users during enrollment season
-- **CSV Configuration**: Easy customization of departments and categories
-- **Modern UI**: Responsive design with Tailwind CSS
 
 ## Get Started
 
