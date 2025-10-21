@@ -10,7 +10,7 @@ AS,Classics,category,classics
 AS,Drama,department,DRAM
 AS,"East Asia",category,east_asian
 AS,Economics,department,ECON
-AS,English,department,ENGL
+AS,English,category,English
 AS,Environmental Sciences,department,EVSC
 AS,French Language & Literature,department,FREN
 AS,German Languages & Literatures,department,GERM

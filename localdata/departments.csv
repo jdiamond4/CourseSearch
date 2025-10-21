@@ -22,7 +22,8 @@ Japanese,JAPN,9,east_asian
 Korean,KOR,9,east_asian
 "East Asian Languages",EALC,9,east_asian
 Economics,ECON,10,none
-English,ENGL,11,none
+English,ENGL,11,English
+English Writing,ENWR,11,English
 Environmental Sciences,EVSC,12,none
 French,FREN,13,none
 German,GERM,14,none
