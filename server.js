@@ -109,7 +109,7 @@ async function parseCSV(filePath) {
 async function loadGPAData() {
   try {
     // Load from local file
-    const gpaPath = path.join(__dirname, 'localdata', 'master-gpa-data.csv');
+    const gpaPath = path.join(__dirname, 'data', 'master-gpa-data.csv');
     if (await fs.access(gpaPath).then(() => true).catch(() => false)) {
       const data = await parseCSV(gpaPath);
       console.log(`📊 Loaded ${data.length} GPA records from local CSV`);
