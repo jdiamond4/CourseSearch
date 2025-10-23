@@ -408,6 +408,9 @@ function buildPaginationUrl(page, perPage, currentQuery) {
     }
   }
   
+  // Add sorting parameter
+  if (currentQuery.sortBy) params.set('sortBy', currentQuery.sortBy);
+  
   // Add pagination parameters
   params.set('page', page.toString());
   params.set('perPage', perPage.toString());
@@ -518,7 +521,7 @@ app.get('/advanced-search', (req, res) => {
 
 app.get('/catalog', async (req, res) => {
     try {
-        const { category, department, search, level, status, gpa, filters, page = 1, perPage = 15, courseNumber, units, timeStart, timeEnd } = req.query;
+        const { category, department, search, level, status, gpa, filters, page = 1, perPage = 15, courseNumber, units, timeStart, timeEnd, sortBy = 'level' } = req.query;
         const term = req.query.term || '1262'; // Default to Spring 2026
         
         // Handle requirement parameter (can be array or single value)
@@ -790,6 +793,48 @@ app.get('/catalog', async (req, res) => {
             courses = [];
         }
         
+        // Apply sorting based on sortBy parameter
+        if (sortBy === 'department') {
+            // Sort by department (subject) A-Z, then by course number
+            courses.sort((a, b) => {
+                const deptCompare = a.mnemonic.localeCompare(b.mnemonic);
+                if (deptCompare !== 0) return deptCompare;
+                return a.number - b.number;
+            });
+        } else if (sortBy === 'gpa') {
+            // Sort by highest GPA (descending)
+            courses.sort((a, b) => {
+                // Get highest GPA for each course
+                const getHighestGPA = (course) => {
+                    const allSections = [...course.sections, ...course.discussions];
+                    const gpas = allSections
+                        .filter(s => s.instructorGPA && s.instructorGPA !== 'N/A' && s.instructorGPA !== '—')
+                        .map(s => parseFloat(s.instructorGPA))
+                        .filter(gpa => !isNaN(gpa));
+                    return gpas.length > 0 ? Math.max(...gpas) : -1;
+                };
+                
+                const gpaA = getHighestGPA(a);
+                const gpaB = getHighestGPA(b);
+                
+                // Sort by GPA descending (highest first)
+                if (gpaB !== gpaA) {
+                    return gpaB - gpaA;
+                }
+                // If GPAs are equal, sort by course number
+                return a.number - b.number;
+            });
+        } else {
+            // Default: sort by course level (number)
+            courses.sort((a, b) => {
+                // First sort by subject
+                const deptCompare = a.mnemonic.localeCompare(b.mnemonic);
+                if (deptCompare !== 0) return deptCompare;
+                // Then by course number
+                return a.number - b.number;
+            });
+        }
+        
         // Generate dynamic title based on what's being displayed
         let title = 'Course Catalog';
         if (category && departmentCategories[category]) {
@@ -852,6 +897,7 @@ app.get('/catalog', async (req, res) => {
             filters,
             title,
             pagination,
+            sortBy,
             buildPaginationUrl: (page, perPage) => buildPaginationUrl(page, perPage, req.query)
         });
     } catch (error) {
