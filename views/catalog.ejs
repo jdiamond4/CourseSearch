@@ -81,7 +81,7 @@
                     </a>
                     <div class="text-sm text-white">
                         <% if (typeof department !== 'undefined' && department) { %>
-                            <%= department %> Department
+                            <%= department.toUpperCase() %> Department
                         <% } else if (typeof search !== 'undefined' && search) { %>
                             Search Results
                         <% } else if (typeof level !== 'undefined' && level) { %>

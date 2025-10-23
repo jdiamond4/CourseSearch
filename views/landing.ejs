@@ -56,15 +56,36 @@
     </style>
 </head>
 <body class="bg-gray-50">
+    <!-- Fixed Header -->
+    <header class="fixed top-0 left-0 right-0 bg-[#232D4B] shadow-sm border-b border-[#232D4B] z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold text-[#E57200] hover:text-[#E57200]/80 transition-colors">
+                        HoosList
+                    </a>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="/advanced-search" class="text-sm text-white hover:text-[#E57200] transition-colors">
+                        Advanced Search
+                    </a>
+                    <a href="/catalog" class="text-sm text-white hover:text-[#E57200] transition-colors">
+                        Browse Catalog
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
     <!-- Hero Section -->
-    <div class="bg-[#232D4B] text-white">
+    <div class="bg-[#232D4B] text-white pt-20">
         <div class="container mx-auto px-6 py-16">
             <div class="text-center max-w-4xl mx-auto">
                 <h1 class="text-5xl font-bold mb-6 text-[#E57200]">HoosList</h1>
                 <p class="text-xl text-white mb-8">Find classes that fit your schedule, meet your requirements, and match your interests. Powered by real-time data and intelligent recommendations.</p>
                 
                 <!-- Search Section -->
-                <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
+                <div>
                     <h2 class="text-2xl font-semibold mb-6">Two Ways to Search:</h2>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
                         <a href="#departments" class="bg-white text-[#232D4B] px-10 py-4 rounded-lg font-bold text-xl hover:bg-gray-100 transition-colors shadow-lg">
