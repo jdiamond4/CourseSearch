@@ -17,6 +17,11 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Smooth scrolling for anchor links */
+        html {
+            scroll-behavior: smooth;
+        }
+        
         .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
@@ -51,69 +56,52 @@
     </style>
 </head>
 <body class="bg-gray-50">
+    <!-- Fixed Header -->
+    <header class="fixed top-0 left-0 right-0 bg-[#232D4B] shadow-sm border-b border-[#232D4B] z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold text-[#E57200] hover:text-[#E57200]/80 transition-colors">
+                        HoosList
+                    </a>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="/advanced-search" class="text-sm text-white hover:text-[#E57200] transition-colors">
+                        Advanced Search
+                    </a>
+                    <a href="/catalog" class="text-sm text-white hover:text-[#E57200] transition-colors">
+                        Browse Catalog
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
     <!-- Hero Section -->
-    <div class="bg-[#232D4B] text-white">
+    <div class="bg-[#232D4B] text-white pt-20">
         <div class="container mx-auto px-6 py-16">
             <div class="text-center max-w-4xl mx-auto">
                 <h1 class="text-5xl font-bold mb-6 text-[#E57200]">HoosList</h1>
                 <p class="text-xl text-white mb-8">Find classes that fit your schedule, meet your requirements, and match your interests. Powered by real-time data and intelligent recommendations.</p>
                 
                 <!-- Search Section -->
-                <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
-                    <h2 class="text-2xl font-semibold mb-6">Smart Course Search</h2>
-                    <form action="/catalog" method="GET" class="space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-11 gap-4 mb-6">
-                            <input type="text" 
-                                   name="search" 
-                                   placeholder="Course name" 
-                                   class="search-input text-gray-800 px-4 py-3 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-white/50 md:col-span-3">
-                            
-                            <input type="text" name="department" placeholder="Department" class="search-input text-gray-800 px-4 py-3 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-white/50 md:col-span-2">
-                            
-                            <select name="level" class="search-input text-white px-4 py-3 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-white/50 md:col-span-2">
-                                <option value="" class="text-white">Any Level</option>
-                                <option value="1000" class="text-gray-800">1000 Level</option>
-                                <option value="2000" class="text-gray-800">2000 Level</option>
-                                <option value="3000" class="text-gray-800">3000 Level</option>
-                                <option value="4000" class="text-gray-800">4000 Level</option>
-                                <option value="5000" class="text-gray-800">5000 Level</option>
-                                <option value="6000" class="text-gray-800">6000 Level</option>
-                                <option value="7000" class="text-gray-800">7000 Level</option>
-                                <option value="8000" class="text-gray-800">8000 Level</option>
-                                <option value="9000" class="text-gray-800">9000 Level</option>
-                            </select>
-                            
-                            <select name="status" class="search-input text-white px-4 py-3 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-white/50 md:col-span-2">
-                                <option value="" class="text-white">Any Status</option>
-                                <option value="open" class="text-gray-800">Open</option>
-                                <option value="closed" class="text-gray-800">Closed</option>
-                                <option value="waitlist" class="text-gray-800">Wait List</option>
-                            </select>
-                            
-                            <select name="gpa" class="search-input text-white px-4 py-3 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-white/50 md:col-span-2">
-                                <option value="" class="text-white">Any GPA</option>
-                                <option value="3.8" class="text-gray-800">3.8+ GPA</option>
-                                <option value="3.5" class="text-gray-800">3.5+ GPA</option>
-                                <option value="3.0" class="text-gray-800">3.0+ GPA</option>
-                                <option value="2.5" class="text-gray-800">2.5+ GPA</option>
-                            </select>
-                        </div>
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                            <button type="submit" class="bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors">
-                                Search Courses
-                            </button>
-                            <button type="button" class="border-2 border-white/30 text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-white/10 transition-colors">
-                                AI Mode (Coming Soon)
-                            </button>
-                        </div>
-                    </form>
+                <div>
+                    <h2 class="text-2xl font-semibold mb-6">Two Ways to Search:</h2>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="#departments" class="bg-white text-[#232D4B] px-10 py-4 rounded-lg font-bold text-xl hover:bg-gray-100 transition-colors shadow-lg">
+                            Department
+                        </a>
+                        <a href="/advanced-search" class="bg-[#E57200] text-white px-10 py-4 rounded-lg font-bold text-xl hover:bg-[#E57200]/90 transition-colors shadow-lg">
+                            Advanced Search
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Schools & Departments Section -->
-    <div class="container mx-auto px-6 py-16">
+    <div id="departments" class="container mx-auto px-6 py-16">
         <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Browse by School & Department</h2>
         
         <!-- College of Arts & Sciences -->
