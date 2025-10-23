@@ -394,11 +394,103 @@ function buildPaginationUrl(page, perPage, currentQuery) {
   if (currentQuery.gpa) params.set('gpa', currentQuery.gpa);
   if (currentQuery.filters) params.set('filters', currentQuery.filters);
   
+  // Add advanced search parameters
+  if (currentQuery.courseNumber) params.set('courseNumber', currentQuery.courseNumber);
+  if (currentQuery.units) params.set('units', currentQuery.units);
+  if (currentQuery.timeStart) params.set('timeStart', currentQuery.timeStart);
+  if (currentQuery.timeEnd) params.set('timeEnd', currentQuery.timeEnd);
+  if (currentQuery.requirement) {
+    // Handle requirement array
+    if (Array.isArray(currentQuery.requirement)) {
+      currentQuery.requirement.forEach(req => params.append('requirement', req));
+    } else {
+      params.set('requirement', currentQuery.requirement);
+    }
+  }
+  
   // Add pagination parameters
   params.set('page', page.toString());
   params.set('perPage', perPage.toString());
   
   return `?${params.toString()}`;
+}
+
+// Helper function to parse SIS time format to minutes since midnight
+function parseTimeToMinutes(timeStr) {
+  try {
+    // SIS format: "13.00.00.000000" or similar
+    if (timeStr.includes('.')) {
+      const parts = timeStr.split('.');
+      const hours = parseInt(parts[0]);
+      const minutes = parseInt(parts[1]);
+      
+      if (isNaN(hours) || isNaN(minutes)) return null;
+      return hours * 60 + minutes;
+    }
+    
+    // Fallback: assume HHMM format like "1300"
+    const timeNum = parseInt(timeStr);
+    if (isNaN(timeNum)) return null;
+    
+    const hours = Math.floor(timeNum / 100);
+    const minutes = timeNum % 100;
+    return hours * 60 + minutes;
+  } catch (error) {
+    return null;
+  }
+}
+
+// Helper function to parse user-provided time to minutes since midnight
+function parseUserTimeToMinutes(timeStr) {
+  try {
+    timeStr = timeStr.trim().toLowerCase();
+    
+    // Remove spaces
+    timeStr = timeStr.replace(/\s+/g, '');
+    
+    // Check for AM/PM
+    const isPM = timeStr.includes('pm');
+    const isAM = timeStr.includes('am');
+    
+    // Remove AM/PM
+    timeStr = timeStr.replace(/am|pm/g, '');
+    
+    // Parse time
+    let hours, minutes;
+    
+    if (timeStr.includes(':')) {
+      // Format: "10:30" or "2:30"
+      const parts = timeStr.split(':');
+      hours = parseInt(parts[0]);
+      minutes = parseInt(parts[1] || 0);
+    } else {
+      // Format: "1030" or "230"
+      const timeNum = parseInt(timeStr);
+      if (timeStr.length <= 2) {
+        // Just hours: "10" or "2"
+        hours = timeNum;
+        minutes = 0;
+      } else {
+        // HHMM format: "1030"
+        hours = Math.floor(timeNum / 100);
+        minutes = timeNum % 100;
+      }
+    }
+    
+    // Convert to 24-hour format if PM
+    if (isPM && hours !== 12) {
+      hours += 12;
+    } else if (isAM && hours === 12) {
+      hours = 0;
+    }
+    
+    if (isNaN(hours) || isNaN(minutes)) return null;
+    if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) return null;
+    
+    return hours * 60 + minutes;
+  } catch (error) {
+    return null;
+  }
 }
 
 // Routes
@@ -409,10 +501,31 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/advanced-search', (req, res) => {
+    res.render('advanced-search', {
+        title: 'Advanced Search',
+        department: req.query.department || '',
+        courseNumber: req.query.courseNumber || '',
+        search: req.query.search || '',
+        units: req.query.units || '',
+        status: req.query.status || '',
+        gpa: req.query.gpa || '',
+        timeStart: req.query.timeStart || '',
+        timeEnd: req.query.timeEnd || '',
+        requirement: req.query.requirement || ''
+    });
+});
+
 app.get('/catalog', async (req, res) => {
     try {
-        const { category, department, search, level, status, gpa, filters, page = 1, perPage = 15 } = req.query;
+        const { category, department, search, level, status, gpa, filters, page = 1, perPage = 15, courseNumber, units, timeStart, timeEnd } = req.query;
         const term = req.query.term || '1262'; // Default to Spring 2026
+        
+        // Handle requirement parameter (can be array or single value)
+        let requirements = req.query.requirement;
+        if (requirements && !Array.isArray(requirements)) {
+            requirements = [requirements];
+        }
         
         let courses = [];
         
@@ -447,6 +560,38 @@ app.get('/catalog', async (req, res) => {
                     const levelNum = parseInt(level);
                     // Use regex to match course numbers starting with the level digit
                     query.catalog_nbr = new RegExp(`^${levelNum.toString().charAt(0)}`);
+                }
+                
+                // Filter by course number (exact or range)
+                if (courseNumber) {
+                    if (courseNumber.includes('-')) {
+                        // Range query (e.g., "2000-3000")
+                        const [minStr, maxStr] = courseNumber.split('-').map(s => s.trim());
+                        const min = parseInt(minStr);
+                        const max = parseInt(maxStr);
+                        if (!isNaN(min) && !isNaN(max)) {
+                            // Match courses where catalog_nbr is between min and max
+                            query.catalog_nbr = {
+                                $gte: min.toString(),
+                                $lte: max.toString()
+                            };
+                        }
+                    } else {
+                        // Exact match
+                        query.catalog_nbr = courseNumber.trim();
+                    }
+                }
+                
+                // Filter by units
+                if (units) {
+                    query.units = units.trim();
+                }
+                
+                // Filter by course requirements (multiple values with OR logic)
+                if (requirements && requirements.length > 0) {
+                    // Match if courseAttributeValues contains ANY of the selected requirements
+                    const requirementRegexes = requirements.map(req => new RegExp(req, 'i'));
+                    query.courseAttributeValues = { $in: requirementRegexes };
                 }
                 
                 // Fetch courses from MongoDB
@@ -505,6 +650,56 @@ app.get('/catalog', async (req, res) => {
                     if (!isNaN(minGPA)) {
                         courses = courses.filter(course => course.hasGPAOver(minGPA));
                     }
+                }
+                
+                // Filter by time range (in-memory, after conversion)
+                if (timeStart || timeEnd) {
+                    courses = courses.filter(course => {
+                        // Check if ANY section falls within the time range
+                        const allSections = [...course.sections, ...course.discussions];
+                        
+                        return allSections.some(section => {
+                            // Parse section times (in SIS format like "13.00.00.000000")
+                            let sectionStartTime = null;
+                            let sectionEndTime = null;
+                            
+                            if (section.startTime && section.startTime !== 0 && section.startTime !== '') {
+                                sectionStartTime = parseTimeToMinutes(section.startTime.toString());
+                            }
+                            if (section.endTime && section.endTime !== 0 && section.endTime !== '') {
+                                sectionEndTime = parseTimeToMinutes(section.endTime.toString());
+                            }
+                            
+                            // If section has no valid times, skip it
+                            if (sectionStartTime === null || sectionEndTime === null) {
+                                return false;
+                            }
+                            
+                            // Parse user-provided time range
+                            let userStartMinutes = null;
+                            let userEndMinutes = null;
+                            
+                            if (timeStart) {
+                                userStartMinutes = parseUserTimeToMinutes(timeStart);
+                            }
+                            if (timeEnd) {
+                                userEndMinutes = parseUserTimeToMinutes(timeEnd);
+                            }
+                            
+                            // Check if section falls within range
+                            let matchesStart = true;
+                            let matchesEnd = true;
+                            
+                            if (userStartMinutes !== null) {
+                                matchesStart = sectionStartTime >= userStartMinutes;
+                            }
+                            if (userEndMinutes !== null) {
+                                matchesEnd = sectionEndTime <= userEndMinutes;
+                            }
+                            
+                            return matchesStart && matchesEnd;
+                        });
+                    });
                 }
                 
             } else {

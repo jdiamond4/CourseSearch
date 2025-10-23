@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HoosList - Advanced Search</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <!-- Android Chrome -->
+    <meta name="theme-color" content="#232D4B">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .filter-label {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .filter-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        .filter-input:focus {
+            outline: none;
+            border-color: #E57200;
+            ring: 2px;
+            ring-color: rgba(229, 114, 0, 0.2);
+        }
+        .filter-section {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+        }
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #232D4B;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #E57200;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-[#232D4B] shadow-sm border-b border-[#232D4B]">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold text-[#E57200] hover:text-[#E57200]/80 transition-colors">
+                        HoosList
+                    </a>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="/catalog" class="text-sm text-white hover:text-[#E57200] transition-colors">
+                        Browse Catalog
+                    </a>
+                    <a href="/" class="text-sm text-white hover:text-[#E57200] transition-colors">
+                        Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Title -->
+    <div class="bg-white border-b border-gray-200 py-8">
+        <div class="container mx-auto px-6">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Advanced Course Search</h1>
+            <p class="text-gray-600">Use multiple filters to find the perfect courses for your schedule</p>
+        </div>
+    </div>
+
+    <!-- Search Form -->
+    <main class="container mx-auto px-6 py-8">
+        <form action="/catalog" method="GET" class="max-w-5xl mx-auto">
+            
+            <!-- Course Information Section -->
+            <div class="filter-section mb-6">
+                <h2 class="section-title">Course Information</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Course Department -->
+                    <div>
+                        <label for="department" class="filter-label">Course Department</label>
+                        <input 
+                            type="text" 
+                            id="department" 
+                            name="department" 
+                            class="filter-input" 
+                            placeholder="e.g., CS, MATH, ECON"
+                            value="<%= typeof department !== 'undefined' ? department : '' %>">
+                        <p class="text-sm text-gray-500 mt-1">Enter department mnemonic</p>
+                    </div>
+
+                    <!-- Course Number -->
+                    <div>
+                        <label for="courseNumber" class="filter-label">Course Number</label>
+                        <input 
+                            type="text" 
+                            id="courseNumber" 
+                            name="courseNumber" 
+                            class="filter-input" 
+                            placeholder="e.g., 2150 or 2000-3000"
+                            value="<%= typeof courseNumber !== 'undefined' ? courseNumber : '' %>">
+                        <p class="text-sm text-gray-500 mt-1">Enter exact number or range (e.g., 2000-3000)</p>
+                    </div>
+
+                    <!-- Class Title -->
+                    <div>
+                        <label for="search" class="filter-label">Class Title</label>
+                        <input 
+                            type="text" 
+                            id="search" 
+                            name="search" 
+                            class="filter-input" 
+                            placeholder="e.g., Data Structures"
+                            value="<%= typeof search !== 'undefined' ? search : '' %>">
+                        <p class="text-sm text-gray-500 mt-1">Search by course title keywords</p>
+                    </div>
+
+                    <!-- Units -->
+                    <div>
+                        <label for="units" class="filter-label">Units (Credits)</label>
+                        <input 
+                            type="text" 
+                            id="units" 
+                            name="units" 
+                            class="filter-input" 
+                            placeholder="e.g., 3"
+                            value="<%= typeof units !== 'undefined' ? units : '' %>">
+                        <p class="text-sm text-gray-500 mt-1">Number of credit hours</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enrollment & Performance Section -->
+            <div class="filter-section mb-6">
+                <h2 class="section-title">Enrollment & Performance</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Status -->
+                    <div>
+                        <label for="status" class="filter-label">Enrollment Status</label>
+                        <select 
+                            id="status" 
+                            name="status" 
+                            class="filter-input">
+                            <option value="">Any Status</option>
+                            <option value="open" <%= typeof status !== 'undefined' && status === 'open' ? 'selected' : '' %>>Open</option>
+                            <option value="closed" <%= typeof status !== 'undefined' && status === 'closed' ? 'selected' : '' %>>Closed</option>
+                            <option value="wait list" <%= typeof status !== 'undefined' && status === 'wait list' ? 'selected' : '' %>>Wait List</option>
+                        </select>
+                        <p class="text-sm text-gray-500 mt-1">Filter by course availability</p>
+                    </div>
+
+                    <!-- Min GPA -->
+                    <div>
+                        <label for="gpa" class="filter-label">Minimum Instructor GPA</label>
+                        <input 
+                            type="text" 
+                            id="gpa" 
+                            name="gpa" 
+                            class="filter-input" 
+                            placeholder="e.g., 3.5"
+                            value="<%= typeof gpa !== 'undefined' ? gpa : '' %>">
+                        <p class="text-sm text-gray-500 mt-1">Minimum average GPA (0.0 - 4.0)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule Section -->
+            <div class="filter-section mb-6">
+                <h2 class="section-title">Schedule</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Time Start -->
+                    <div>
+                        <label for="timeStart" class="filter-label">Earliest Start Time</label>
+                        <input 
+                            type="text" 
+                            id="timeStart" 
+                            name="timeStart" 
+                            class="filter-input" 
+                            placeholder="e.g., 10:00 or 14:30"
+                            value="<%= typeof timeStart !== 'undefined' ? timeStart : '' %>">
+                        <p class="text-sm text-gray-500 mt-1">Format: HH:MM (24-hour or 12-hour)</p>
+                    </div>
+
+                    <!-- Time End -->
+                    <div>
+                        <label for="timeEnd" class="filter-label">Latest End Time</label>
+                        <input 
+                            type="text" 
+                            id="timeEnd" 
+                            name="timeEnd" 
+                            class="filter-input" 
+                            placeholder="e.g., 15:00 or 3:00 PM"
+                            value="<%= typeof timeEnd !== 'undefined' ? timeEnd : '' %>">
+                        <p class="text-sm text-gray-500 mt-1">Format: HH:MM (24-hour or 12-hour)</p>
+                    </div>
+                </div>
+                <div class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p class="text-sm text-blue-800">
+                        <strong>Note:</strong> Courses will be shown if ANY section falls within your specified time range.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Requirements Section -->
+            <div class="filter-section mb-6">
+                <h2 class="section-title">Course Requirements</h2>
+                <div>
+                    <label class="filter-label">Fulfills Requirements (select multiple)</label>
+                    <div class="space-y-3">
+                        <% 
+                            // Parse requirement parameter to array
+                            let selectedRequirements = [];
+                            if (typeof requirement !== 'undefined' && requirement) {
+                                selectedRequirements = Array.isArray(requirement) ? requirement : [requirement];
+                            }
+                        %>
+                        
+                        <!-- Diversity Requirements -->
+                        <div class="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                            <h4 class="font-semibold text-gray-700 mb-2 text-sm">Diversity Requirements</h4>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="requirement" value="ASUD-CSW" 
+                                           <%= selectedRequirements.includes('ASUD-CSW') ? 'checked' : '' %>
+                                           class="w-4 h-4 text-[#E57200] border-gray-300 rounded focus:ring-[#E57200]">
+                                    <span class="ml-2 text-sm text-gray-700">Cultures & Societies of the World</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="requirement" value="ASUD-HP"
+                                           <%= selectedRequirements.includes('ASUD-HP') ? 'checked' : '' %>
+                                           class="w-4 h-4 text-[#E57200] border-gray-300 rounded focus:ring-[#E57200]">
+                                    <span class="ml-2 text-sm text-gray-700">Historical Perspectives</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="requirement" value="ASUD-LS"
+                                           <%= selectedRequirements.includes('ASUD-LS') ? 'checked' : '' %>
+                                           class="w-4 h-4 text-[#E57200] border-gray-300 rounded focus:ring-[#E57200]">
+                                    <span class="ml-2 text-sm text-gray-700">Living Systems</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="requirement" value="ASUD-AIP"
+                                           <%= selectedRequirements.includes('ASUD-AIP') ? 'checked' : '' %>
+                                           class="w-4 h-4 text-[#E57200] border-gray-300 rounded focus:ring-[#E57200]">
+                                    <span class="ml-2 text-sm text-gray-700">Artistic, Interpretive, & Philosophical Inquiry</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="requirement" value="ASUD-CMP"
+                                           <%= selectedRequirements.includes('ASUD-CMP') ? 'checked' : '' %>
+                                           class="w-4 h-4 text-[#E57200] border-gray-300 rounded focus:ring-[#E57200]">
+                                    <span class="ml-2 text-sm text-gray-700">Chemical, Mathematical, and Physical Universe</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="requirement" value="ASUD-SES"
+                                           <%= selectedRequirements.includes('ASUD-SES') ? 'checked' : '' %>
+                                           class="w-4 h-4 text-[#E57200] border-gray-300 rounded focus:ring-[#E57200]">
+                                    <span class="ml-2 text-sm text-gray-700">Social & Economic Systems</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="requirement" value="ASUD-SS"
+                                           <%= selectedRequirements.includes('ASUD-SS') ? 'checked' : '' %>
+                                           class="w-4 h-4 text-[#E57200] border-gray-300 rounded focus:ring-[#E57200]">
+                                    <span class="ml-2 text-sm text-gray-700">Science & Society</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- World Languages -->
+                        <div class="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                            <h4 class="font-semibold text-gray-700 mb-2 text-sm">World Languages</h4>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="requirement" value="ASUW-WL"
+                                       <%= selectedRequirements.includes('ASUW-WL') ? 'checked' : '' %>
+                                       class="w-4 h-4 text-[#E57200] border-gray-300 rounded focus:ring-[#E57200]">
+                                <span class="ml-2 text-sm text-gray-700">World Languages</span>
+                            </label>
+                        </div>
+
+                        <!-- Quantification -->
+                        <div class="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                            <h4 class="font-semibold text-gray-700 mb-2 text-sm">Quantification</h4>
+                            <label class="flex items-center">
+                                <input type="checkbox" name="requirement" value="ASUQ-QCD"
+                                       <%= selectedRequirements.includes('ASUQ-QCD') ? 'checked' : '' %>
+                                       class="w-4 h-4 text-[#E57200] border-gray-300 rounded focus:ring-[#E57200]">
+                                <span class="ml-2 text-sm text-gray-700">Quantification, Computation & Data Analysis</span>
+                            </label>
+                        </div>
+
+                        <!-- Writing Requirements -->
+                        <div class="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                            <h4 class="font-semibold text-gray-700 mb-2 text-sm">Writing Requirements</h4>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="requirement" value="ASUR-R21C1"
+                                           <%= selectedRequirements.includes('ASUR-R21C1') ? 'checked' : '' %>
+                                           class="w-4 h-4 text-[#E57200] border-gray-300 rounded focus:ring-[#E57200]">
+                                    <span class="ml-2 text-sm text-gray-700">First Writing</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="requirement" value="ASUR-R21C2"
+                                           <%= selectedRequirements.includes('ASUR-R21C2') ? 'checked' : '' %>
+                                           class="w-4 h-4 text-[#E57200] border-gray-300 rounded focus:ring-[#E57200]">
+                                    <span class="ml-2 text-sm text-gray-700">Second Writing</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-3">Select one or more requirements to filter courses</p>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                <button 
+                    type="submit" 
+                    class="bg-[#E57200] text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-[#E57200]/90 transition-colors shadow-md">
+                    Search Courses
+                </button>
+                <button 
+                    type="reset" 
+                    class="bg-white text-gray-700 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-gray-50 transition-colors border-2 border-gray-300">
+                    Clear Filters
+                </button>
+                <a 
+                    href="/catalog" 
+                    class="bg-[#232D4B] text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-[#232D4B]/90 transition-colors shadow-md text-center">
+                    View All Courses
+                </a>
+            </div>
+        </form>
+
+        <!-- Help Section -->
+        <div class="max-w-5xl mx-auto mt-12 p-6 bg-white rounded-lg border border-gray-200">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Search Tips</h3>
+            <ul class="space-y-2 text-gray-600">
+                <li class="flex items-start">
+                    <span class="text-[#E57200] mr-2">•</span>
+                    <span><strong>Course Number:</strong> Enter an exact number like "2150" or a range like "2000-3000"</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-[#E57200] mr-2">•</span>
+                    <span><strong>Time Range:</strong> Enter times in 24-hour format (14:30) or 12-hour format (2:30 PM)</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-[#E57200] mr-2">•</span>
+                    <span><strong>Department:</strong> Use official department codes (CS for Computer Science, ECON for Economics, etc.)</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-[#E57200] mr-2">•</span>
+                    <span><strong>Combine Filters:</strong> Use multiple filters together to narrow down your search</span>
+                </li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-xl font-bold mb-2">HoosList</h3>
+            <p class="text-gray-300 text-sm">Advanced course search for UVA students</p>
+        </div>
+    </footer>
+
+    <script>
+        // Clear button handler
+        document.querySelector('button[type="reset"]').addEventListener('click', function() {
+            // Clear all form fields
+            document.querySelectorAll('input, select').forEach(field => {
+                if (field.type === 'text') {
+                    field.value = '';
+                } else if (field.tagName === 'SELECT') {
+                    field.selectedIndex = 0;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

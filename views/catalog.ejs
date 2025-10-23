@@ -75,18 +75,23 @@
                         HoosList
                     </a>
                 </div>
-                <div class="text-sm text-white">
-                    <% if (typeof department !== 'undefined' && department) { %>
-                        <%= department %> Department
-                    <% } else if (typeof search !== 'undefined' && search) { %>
-                        Search Results
-                    <% } else if (typeof level !== 'undefined' && level) { %>
-                        <%= level %> Level
-                    <% } else if (typeof status !== 'undefined' && status) { %>
-                        <%= status.charAt(0).toUpperCase() + status.slice(1) %>
-                    <% } else { %>
-                        Course Catalog
-                    <% } %>
+                <div class="flex items-center space-x-6">
+                    <a href="/advanced-search" class="text-sm text-white hover:text-[#E57200] transition-colors">
+                        Advanced Search
+                    </a>
+                    <div class="text-sm text-white">
+                        <% if (typeof department !== 'undefined' && department) { %>
+                            <%= department %> Department
+                        <% } else if (typeof search !== 'undefined' && search) { %>
+                            Search Results
+                        <% } else if (typeof level !== 'undefined' && level) { %>
+                            <%= level %> Level
+                        <% } else if (typeof status !== 'undefined' && status) { %>
+                            <%= status.charAt(0).toUpperCase() + status.slice(1) %>
+                        <% } else { %>
+                            Course Catalog
+                        <% } %>
+                    </div>
                 </div>
             </div>
         </div>
