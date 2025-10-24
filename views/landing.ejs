@@ -16,6 +16,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/js/favorites.js"></script>
     <style>
         /* Smooth scrolling for anchor links */
         html {
@@ -68,6 +69,10 @@
                 <div class="flex items-center space-x-6">
                     <a href="/advanced-search" class="text-sm text-white hover:text-[#E57200] transition-colors">
                         Advanced Search
+                    </a>
+                    <a href="/schedule" class="text-sm text-white hover:text-[#E57200] transition-colors">
+                        My Schedule
+                        <span id="favorite-count-badge" class="ml-1 bg-[#E57200] text-white px-2 py-0.5 rounded-full text-xs" style="display: none;">0</span>
                     </a>
                     <a href="/catalog" class="text-sm text-white hover:text-[#E57200] transition-colors">
                         Browse Catalog

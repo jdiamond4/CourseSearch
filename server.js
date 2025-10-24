@@ -519,6 +519,12 @@ app.get('/advanced-search', (req, res) => {
     });
 });
 
+app.get('/schedule', (req, res) => {
+    res.render('schedule', {
+        title: 'My Schedule'
+    });
+});
+
 app.get('/catalog', async (req, res) => {
     try {
         const { category, department, search, level, status, gpa, filters, page = 1, perPage = 15, courseNumber, units, timeStart, timeEnd, sortBy = 'level' } = req.query;
