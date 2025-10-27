@@ -174,12 +174,12 @@
                     <a href="/advanced-search" class="text-sm text-white hover:text-[#E57200] transition-colors">
                         Advanced Search
                     </a>
-                    <a href="/catalog" class="text-sm text-white hover:text-[#E57200] transition-colors">
-                        Browse Catalog
-                    </a>
                     <a href="/schedule" class="text-sm text-[#E57200] font-semibold">
                         My Schedule
                         <span id="favorite-count-badge" class="ml-1 bg-[#E57200] text-white px-2 py-0.5 rounded-full text-xs" style="display: none;">0</span>
+                    </a>
+                    <a href="/catalog" class="text-sm text-white hover:text-[#E57200] transition-colors">
+                        Browse Catalog
                     </a>
                 </div>
             </div>
@@ -287,8 +287,14 @@
             </div>
         </div>
 
+        <!-- All Favorited Courses List -->
+        <div id="all-courses-section" class="bg-white rounded-lg shadow p-6 mb-6" style="display: none;">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">All Favorited Courses</h2>
+            <div id="all-courses-list"></div>
+        </div>
+
         <!-- TBA Courses -->
-        <div id="tba-section" class="bg-white rounded-lg shadow p-6" style="display: none;">
+        <div id="tba-section" class="bg-white rounded-lg shadow p-6 mb-6" style="display: none;">
             <h2 class="text-xl font-bold text-gray-800 mb-4">Courses with TBA Times</h2>
             <div id="tba-courses"></div>
         </div>

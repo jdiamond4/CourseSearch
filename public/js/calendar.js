@@ -85,6 +85,7 @@ function renderCalendar() {
     const favorites = getFavorites();
     const calendarGrid = document.getElementById('calendar-grid');
     const tbaList = document.getElementById('tba-courses');
+    const allCoursesList = document.getElementById('all-courses-list');
     const emptyState = document.getElementById('empty-state');
     
     if (!calendarGrid) return;
@@ -98,10 +99,16 @@ function renderCalendar() {
         tbaList.innerHTML = '';
     }
     
+    // Clear all courses list
+    if (allCoursesList) {
+        allCoursesList.innerHTML = '';
+    }
+    
     // Show/hide empty state
     if (favorites.courses.length === 0) {
         if (emptyState) emptyState.style.display = 'block';
         if (tbaList) tbaList.parentElement.style.display = 'none';
+        if (allCoursesList) allCoursesList.parentElement.style.display = 'none';
         return;
     } else {
         if (emptyState) emptyState.style.display = 'none';
@@ -183,6 +190,47 @@ function renderCalendar() {
         });
     });
     
+    // Render all favorited courses list
+    if (favorites.courses.length > 0 && allCoursesList) {
+        const allCoursesSection = document.getElementById('all-courses-section');
+        if (allCoursesSection) allCoursesSection.style.display = 'block';
+        
+        favorites.courses.forEach(course => {
+            const item = document.createElement('div');
+            item.className = `border-l-4 ${course.sectionType === 'LEC' ? 'border-blue-500 bg-blue-50' : 'border-green-500 bg-green-50'} rounded-r p-3 mb-2`;
+            
+            const days = parseDays(course.days);
+            const startMinutes = parseTimeToMinutes(course.startTime);
+            const endMinutes = parseTimeToMinutes(course.endTime);
+            const hasTime = startMinutes !== null && endMinutes !== null && days.length > 0;
+            const timeStr = hasTime 
+                ? `${formatMinutesToTime(startMinutes)} - ${formatMinutesToTime(endMinutes)}` 
+                : 'TBA';
+            const daysStr = days.length > 0 ? days.join(', ') : 'TBA';
+            
+            item.innerHTML = `
+                <div class="flex justify-between items-start">
+                    <div class="flex-grow">
+                        <div class="font-bold text-gray-800 mb-1">${course.mnemonic} ${course.number}-${course.sectionNumber}</div>
+                        <div class="text-sm text-gray-600">${course.title}</div>
+                        <div class="text-sm text-gray-600 mt-1">
+                            <span class="font-medium">Instructor:</span> ${course.teacherName}
+                            ${course.instructorGPA && course.instructorGPA !== 'N/A' ? ` | <span class="font-medium">GPA:</span> ${course.instructorGPA}` : ''}
+                        </div>
+                        <div class="text-sm text-gray-600">
+                            <span class="font-medium">Time:</span> ${timeStr} | <span class="font-medium">Days:</span> ${daysStr}
+                        </div>
+                    </div>
+                    <button onclick="removeFavorite('${course.courseId}'); renderCalendar();" class="text-red-600 hover:text-red-800 font-bold text-lg ml-4">×</button>
+                </div>
+            `;
+            allCoursesList.appendChild(item);
+        });
+    } else if (allCoursesList) {
+        const allCoursesSection = document.getElementById('all-courses-section');
+        if (allCoursesSection) allCoursesSection.style.display = 'none';
+    }
+    
     // Render TBA courses
     if (tbaCourses.length > 0 && tbaList) {
         const tbaSection = document.getElementById('tba-section');
@@ -197,7 +245,7 @@ function renderCalendar() {
                         <div class="text-sm text-gray-600">${course.title}</div>
                         <div class="text-sm text-gray-600">${course.teacherName}</div>
                     </div>
-                    <button onclick="removeFavorite('${course.courseId}')" class="text-red-600 hover:text-red-800 font-bold text-lg">×</button>
+                    <button onclick="removeFavorite('${course.courseId}'); renderCalendar();" class="text-red-600 hover:text-red-800 font-bold text-lg">×</button>
                 </div>
             `;
             tbaList.appendChild(item);
