@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HoosList - <%= title %></title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <meta name="theme-color" content="#232D4B">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/js/favorites.js"></script>
+    <script src="/js/calendar.js"></script>
+    <style>
+        .calendar-container {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            height: calc(13 * 60px); /* 8 AM to 9 PM = 13 hours */
+            position: relative;
+            border: 1px solid #e5e7eb;
+            background: white;
+        }
+        
+        .time-column {
+            border-right: 2px solid #e5e7eb;
+            background: #f9fafb;
+        }
+        
+        .time-slot {
+            height: 60px;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            color: #6b7280;
+            text-align: right;
+        }
+        
+        .time-slot.half {
+            border-bottom: 1px dashed #e5e7eb;
+            opacity: 0.6;
+        }
+        
+        .day-columns {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            position: relative;
+        }
+        
+        #calendar-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .day-column {
+            border-right: 1px solid #e5e7eb;
+            position: relative;
+        }
+        
+        .day-column:last-child {
+            border-right: none;
+        }
+        
+        .day-header {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .grid-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+        
+        .grid-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .grid-line.half {
+            border-bottom: 1px dashed #f3f4f6;
+        }
+        
+        .course-block {
+            position: absolute;
+            border-radius: 4px;
+            padding: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+        
+        .course-block:hover {
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transform: scale(1.02);
+        }
+        
+        .course-block-hover {
+            display: none;
+            position: absolute;
+            background: white;
+            border: 2px solid #3b82f6;
+            border-radius: 6px;
+            padding: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 1000;
+            min-width: 250px;
+            color: #1f2937;
+            top: 50%;
+            left: 100%;
+            transform: translateY(-50%);
+            margin-left: 8px;
+        }
+        
+        .course-block:hover .course-block-hover {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .calendar-container {
+                grid-template-columns: 60px 1fr;
+            }
+            
+            .time-slot {
+                font-size: 0.65rem;
+                padding: 2px 4px;
+            }
+            
+            .course-block {
+                font-size: 0.65rem;
+                padding: 4px;
+            }
+            
+            .course-block-hover {
+                left: auto;
+                right: 0;
+                transform: translate(0, -50%);
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-[#232D4B] shadow-sm border-b border-[#232D4B]">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold text-[#E57200] hover:text-[#E57200]/80 transition-colors">
+                        HoosList
+                    </a>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="/advanced-search" class="text-sm text-white hover:text-[#E57200] transition-colors">
+                        Advanced Search
+                    </a>
+                    <a href="/catalog" class="text-sm text-white hover:text-[#E57200] transition-colors">
+                        Browse Catalog
+                    </a>
+                    <a href="/schedule" class="text-sm text-[#E57200] font-semibold">
+                        My Schedule
+                        <span id="favorite-count-badge" class="ml-1 bg-[#E57200] text-white px-2 py-0.5 rounded-full text-xs" style="display: none;">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 py-8">
+        <!-- Page Header -->
+        <div class="mb-6 flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800">My Schedule</h1>
+                <p class="text-gray-600 mt-2">Your favorited courses for the week</p>
+            </div>
+            <button onclick="clearAllFavorites()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-semibold transition-colors">
+                Clear All
+            </button>
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="bg-white rounded-lg shadow p-12 text-center" style="display: none;">
+            <svg class="w-24 h-24 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            <h2 class="text-2xl font-bold text-gray-700 mb-2">No courses yet</h2>
+            <p class="text-gray-600 mb-6">Start adding courses to your schedule by favoriting sections in the catalog</p>
+            <a href="/catalog" class="inline-block bg-[#E57200] hover:bg-[#E57200]/90 text-white px-6 py-3 rounded font-semibold transition-colors">
+                Browse Catalog
+            </a>
+        </div>
+
+        <!-- Calendar Grid -->
+        <div class="bg-white rounded-lg shadow overflow-hidden mb-8">
+            <!-- Day Headers -->
+            <div style="display: grid; grid-template-columns: 80px repeat(5, 1fr);">
+                <div class="bg-gray-100 border-b-2 border-gray-300"></div>
+                <div class="day-header bg-blue-50 border-b-2 border-blue-200 text-blue-800">Monday</div>
+                <div class="day-header bg-blue-50 border-b-2 border-blue-200 text-blue-800">Tuesday</div>
+                <div class="day-header bg-blue-50 border-b-2 border-blue-200 text-blue-800">Wednesday</div>
+                <div class="day-header bg-blue-50 border-b-2 border-blue-200 text-blue-800">Thursday</div>
+                <div class="day-header bg-blue-50 border-b-2 border-blue-200 text-blue-800">Friday</div>
+            </div>
+            
+            <!-- Calendar -->
+            <div class="calendar-container">
+                <!-- Time Column -->
+                <div class="time-column">
+                    <div class="time-slot">8:00 AM</div>
+                    <div class="time-slot">9:00 AM</div>
+                    <div class="time-slot">10:00 AM</div>
+                    <div class="time-slot">11:00 AM</div>
+                    <div class="time-slot">12:00 PM</div>
+                    <div class="time-slot">1:00 PM</div>
+                    <div class="time-slot">2:00 PM</div>
+                    <div class="time-slot">3:00 PM</div>
+                    <div class="time-slot">4:00 PM</div>
+                    <div class="time-slot">5:00 PM</div>
+                    <div class="time-slot">6:00 PM</div>
+                    <div class="time-slot">7:00 PM</div>
+                    <div class="time-slot">8:00 PM</div>
+                </div>
+                
+                <!-- Day Columns with Grid Lines -->
+                <div class="day-columns">
+                    <!-- Grid lines for hours -->
+                    <div class="grid-lines">
+                        <div class="grid-line" style="top: 60px;"></div>
+                        <div class="grid-line" style="top: 120px;"></div>
+                        <div class="grid-line" style="top: 180px;"></div>
+                        <div class="grid-line" style="top: 240px;"></div>
+                        <div class="grid-line" style="top: 300px;"></div>
+                        <div class="grid-line" style="top: 360px;"></div>
+                        <div class="grid-line" style="top: 420px;"></div>
+                        <div class="grid-line" style="top: 480px;"></div>
+                        <div class="grid-line" style="top: 540px;"></div>
+                        <div class="grid-line" style="top: 600px;"></div>
+                        <div class="grid-line" style="top: 660px;"></div>
+                        <div class="grid-line" style="top: 720px;"></div>
+                        <!-- Half hour lines -->
+                        <div class="grid-line half" style="top: 30px;"></div>
+                        <div class="grid-line half" style="top: 90px;"></div>
+                        <div class="grid-line half" style="top: 150px;"></div>
+                        <div class="grid-line half" style="top: 210px;"></div>
+                        <div class="grid-line half" style="top: 270px;"></div>
+                        <div class="grid-line half" style="top: 330px;"></div>
+                        <div class="grid-line half" style="top: 390px;"></div>
+                        <div class="grid-line half" style="top: 450px;"></div>
+                        <div class="grid-line half" style="top: 510px;"></div>
+                        <div class="grid-line half" style="top: 570px;"></div>
+                        <div class="grid-line half" style="top: 630px;"></div>
+                        <div class="grid-line half" style="top: 690px;"></div>
+                        <div class="grid-line half" style="top: 750px;"></div>
+                    </div>
+                    
+                    <!-- Individual day columns -->
+                    <div class="day-column"></div>
+                    <div class="day-column"></div>
+                    <div class="day-column"></div>
+                    <div class="day-column"></div>
+                    <div class="day-column"></div>
+                    
+                    <!-- Course blocks will be inserted here by JavaScript -->
+                    <div id="calendar-grid"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TBA Courses -->
+        <div id="tba-section" class="bg-white rounded-lg shadow p-6" style="display: none;">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Courses with TBA Times</h2>
+            <div id="tba-courses"></div>
+        </div>
+
+        <!-- Legend -->
+        <div class="mt-6 bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-bold text-gray-800 mb-3">Legend</h3>
+            <div class="flex flex-wrap gap-6">
+                <div class="flex items-center">
+                    <div class="w-6 h-6 bg-blue-500 rounded mr-2"></div>
+                    <span class="text-gray-700">Lecture</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-6 h-6 bg-green-500 rounded mr-2"></div>
+                    <span class="text-gray-700">Discussion/Lab</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
