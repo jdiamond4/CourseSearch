@@ -1,5 +1,31 @@
 # HoosList Commands Quick Reference
 
+## Automated Data Updates (GitHub Actions)
+
+A GitHub Action automatically runs every hour to update MongoDB with the latest course data for all departments.
+
+### Viewing the Action
+- Go to the "Actions" tab in your GitHub repository
+- Select "Update MongoDB Course Data" workflow
+- View past runs and their logs
+
+### Manual Trigger
+- Go to Actions > "Update MongoDB Course Data"
+- Click "Run workflow" button
+- Select branch and click "Run workflow"
+
+### Configuration
+- Location: `.github/workflows/update-mongodb.yml`
+- Schedule: Every hour at `:00` (cron: `0 * * * *`)
+- Command: `node scripts/sisToMongo.js --term=1262 --all --replace`
+- Required Secret: `MONGODB_URI` (see `.github/SETUP_SECRETS.md` for setup instructions)
+
+### Updating for New Semester
+Edit the workflow file and change the term code in the command:
+```bash
+run: node scripts/sisToMongo.js --term=1268 --all --replace  # Change 1262 to new term
+```
+
 ## MongoDB Data Management (Current System)
 
 ### Fetch and Store Course Data
