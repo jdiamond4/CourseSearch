@@ -30,6 +30,8 @@ function mongoToCourse(mongoData) {
           sectionData.enrollment.current || 0,
           sectionData.enrollment.max || 0
         );
+        section.waitlistTotal = sectionData.enrollment.waitlist || 0;
+        section.waitlistCapacity = sectionData.enrollment.waitlistCapacity || 0;
       }
       
       // Set schedule
@@ -69,6 +71,8 @@ function mongoToCourse(mongoData) {
           discussionData.enrollment.current || 0,
           discussionData.enrollment.max || 0
         );
+        discussion.waitlistTotal = discussionData.enrollment.waitlist || 0;
+        discussion.waitlistCapacity = discussionData.enrollment.waitlistCapacity || 0;
       }
       
       // Set schedule

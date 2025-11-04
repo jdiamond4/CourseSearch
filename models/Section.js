@@ -7,6 +7,8 @@ class Section {
     this.averageGPA = averageGPA;           // Double out of 4.0 (e.g., 3.94)
     this.currentEnrollment = 0;             // Current number of enrolled students
     this.maxEnrollment = 0;                 // Maximum capacity
+    this.waitlistTotal = 0;                 // Current number of students on waitlist
+    this.waitlistCapacity = 0;              // Maximum waitlist capacity
     this.days = [];                         // Array of day strings (e.g., ['Mo', 'We', 'Fr'])
     this.location = '';                     // Building and room (e.g., 'Rice Hall 130')
     this.status = 'Unknown';                // Enrollment status (e.g., 'Open', 'Full', 'Waitlist')

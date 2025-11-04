@@ -323,7 +323,10 @@
                                     days: section.days || 'TBA',
                                     startTime: section.startTime || 'TBA',
                                     endTime: section.endTime || 'TBA',
-                                    instructorGPA: section.instructorGPA || 'N/A'
+                                    instructorGPA: section.instructorGPA || 'N/A',
+                                    enrollmentStatus: section.status || 'Open',
+                                    currentEnrollment: section.currentEnrollment || 0,
+                                    maxEnrollment: section.maxEnrollment || 0
                                 };
                             %>
                             <div class="section-item border-l-4 border-blue-500 bg-blue-50 border border-blue-200 rounded-r p-3 mb-2 hover:bg-blue-100 transition-colors duration-150">
@@ -352,8 +355,8 @@
                                     </div>
                                     <div class="text-center font-medium text-gray-800">
                                         <%= section.currentEnrollment %>/<%= section.maxEnrollment %>
-                                        <% if (section.status === 'Wait List' && section.waitlistCapacity > 0) { %>
-                                            <br><span class="text-xs text-orange-600">(<%= section.waitlistTotal || 0 %>/<%= section.waitlistCapacity %> waitlist)</span>
+                                        <% if ((section.status === 'Wait List' || section.waitlistTotal > 0) && section.waitlistCapacity > 0) { %>
+                                            <br><span class="text-xs text-red-600 font-normal">Waitlist: <%= section.waitlistTotal || 0 %>/<%= section.waitlistCapacity %></span>
                                         <% } %>
                                     </div>
                                     <div class="text-center font-medium text-gray-800"><%= section.teacherName %></div>
@@ -393,7 +396,10 @@
                                     days: discussion.days || 'TBA',
                                     startTime: discussion.startTime || 'TBA',
                                     endTime: discussion.endTime || 'TBA',
-                                    instructorGPA: discussion.instructorGPA || 'N/A'
+                                    instructorGPA: discussion.instructorGPA || 'N/A',
+                                    enrollmentStatus: discussion.status || 'Open',
+                                    currentEnrollment: discussion.currentEnrollment || 0,
+                                    maxEnrollment: discussion.maxEnrollment || 0
                                 };
                             %>
                             <div class="discussion-item border-l-4 border-green-500 bg-green-50 border border-green-200 rounded-r p-3 mb-2 hover:bg-green-100 transition-colors duration-150">
@@ -422,8 +428,8 @@
                                     </div>
                                     <div class="text-center font-medium text-gray-800">
                                         <%= discussion.currentEnrollment %>/<%= discussion.maxEnrollment %>
-                                        <% if (discussion.status === 'Wait List' && discussion.waitlistCapacity > 0) { %>
-                                            <br><span class="text-xs text-orange-600">(<%= discussion.waitlistTotal || 0 %>/<%= discussion.waitlistCapacity %> waitlist)</span>
+                                        <% if ((discussion.status === 'Wait List' || discussion.waitlistTotal > 0) && discussion.waitlistCapacity > 0) { %>
+                                            <br><span class="text-xs text-red-600 font-normal">Waitlist: <%= discussion.waitlistTotal || 0 %>/<%= discussion.waitlistCapacity %></span>
                                         <% } %>
                                     </div>
                                     <div class="text-center font-medium text-gray-800"><%= discussion.teacherName %></div>
