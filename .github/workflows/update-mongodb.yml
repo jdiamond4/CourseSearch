@@ -2,8 +2,8 @@ name: Update MongoDB Course Data
 
 on:
   schedule:
-    # Run every hour at the top of the hour
-    - cron: '0 * * * *'
+    # Run every 30 minutes
+    - cron: '*/30 * * * *'
   workflow_dispatch: # Allows manual trigger from GitHub Actions tab
 
 jobs:
