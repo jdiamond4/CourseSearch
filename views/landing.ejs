@@ -16,17 +16,62 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+    
     <script src="/js/favorites.js"></script>
     <script defer src="/_vercel/insights/script.js"></script>
     <style>
+        :root {
+            --uva-navy: #232D4B;
+            --uva-orange: #E57200;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+        }
+
         /* Smooth scrolling for anchor links */
         html {
             scroll-behavior: smooth;
         }
         
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        /* Subtle Hero Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
+        .animate-fade-up {
+            opacity: 0; /* Start hidden */
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        /* Hero Pattern Background */
+        .hero-bg {
+            background-color: var(--uva-navy);
+            background-image: radial-gradient(#34426b 1px, transparent 1px);
+            background-size: 32px 32px;
+            position: relative;
+        }
+
         .card-hover {
             transition: all 0.3s ease;
         }
@@ -84,23 +129,30 @@
     </header>
 
     <!-- Hero Section -->
-    <div class="bg-[#232D4B] text-white pt-20">
-        <div class="container mx-auto px-6 py-16">
+    <div class="hero-bg text-white pt-20 pb-16">
+        <div class="container mx-auto px-6 py-12 relative z-10">
             <div class="text-center max-w-4xl mx-auto">
-                <h1 class="text-5xl font-bold mb-6 text-[#E57200]">HoosList</h1>
-                <p class="text-xl text-white mb-8">Find classes that fit your schedule, meet your requirements, and match your interests. Powered by real-time data and intelligent recommendations.</p>
+                <h1 class="text-5xl md:text-7xl font-black mb-8 text-white tracking-tight animate-fade-up">
+                    <span class="text-[#E57200]">Hoos</span>List
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-200 mb-10 leading-relaxed max-w-2xl mx-auto font-light animate-fade-up delay-100">
+                    The modern course catalog for UVA students. 
+                    <span class="hidden md:inline">Find classes, check real-time enrollment, and build your perfect schedule.</span>
+                </p>
                 
                 <!-- Search Section -->
-                <div>
-                    <h2 class="text-2xl font-semibold mb-6">Two Ways to Search:</h2>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="#departments" class="bg-white text-[#232D4B] px-10 py-4 rounded-lg font-bold text-xl hover:bg-gray-100 transition-colors shadow-lg">
-                            Department
+                <div class="animate-fade-up delay-200">
+                    <div class="flex flex-col sm:flex-row gap-5 justify-center items-center">
+                        <a href="#departments" class="w-full sm:w-auto bg-[#E57200] text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#E57200]/90 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                            Browse Departments
                         </a>
-                        <a href="/advanced-search" class="bg-[#E57200] text-white px-10 py-4 rounded-lg font-bold text-xl hover:bg-[#E57200]/90 transition-colors shadow-lg">
+                        <a href="/advanced-search" class="w-full sm:w-auto bg-transparent border-2 border-white/30 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white/10 transition-all hover:border-white">
                             Advanced Search
                         </a>
                     </div>
+                    <p class="mt-6 text-sm text-white/60">
+                        Updated for Spring 2026 • <a href="/catalog" class="underline hover:text-white">View Full Catalog</a>
+                    </p>
                 </div>
             </div>
         </div>
