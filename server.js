@@ -528,7 +528,7 @@ app.get('/schedule', (req, res) => {
 app.get('/catalog', async (req, res) => {
     try {
         const { category, department, search, level, status, gpa, filters, page = 1, perPage = 15, courseNumber, units, timeStart, timeEnd, sortBy = 'level' } = req.query;
-        const term = req.query.term || '1262'; // Default to Spring 2026
+        const term = req.query.term || '1268'; // Default to Fall 2026
         
         // Handle requirement parameter (can be array or single value)
         let requirements = req.query.requirement;
