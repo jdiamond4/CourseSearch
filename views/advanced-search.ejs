@@ -148,6 +148,32 @@
                             value="<%= typeof units !== 'undefined' ? units : '' %>">
                         <p class="text-sm text-gray-500 mt-1">Number of credit hours</p>
                     </div>
+
+                    <!-- Instructor first name -->
+                    <div>
+                        <label for="instructorFirst" class="filter-label">Instructor first name</label>
+                        <input 
+                            type="text" 
+                            id="instructorFirst" 
+                            name="instructorFirst" 
+                            class="filter-input" 
+                            placeholder="e.g., John"
+                            value="<%= typeof instructorFirst !== 'undefined' ? instructorFirst : '' %>">
+                        <p class="text-sm text-gray-500 mt-1">Filter by instructor first name</p>
+                    </div>
+
+                    <!-- Instructor last name -->
+                    <div>
+                        <label for="instructorLast" class="filter-label">Instructor last name</label>
+                        <input 
+                            type="text" 
+                            id="instructorLast" 
+                            name="instructorLast" 
+                            class="filter-input" 
+                            placeholder="e.g., Smith"
+                            value="<%= typeof instructorLast !== 'undefined' ? instructorLast : '' %>">
+                        <p class="text-sm text-gray-500 mt-1">Filter by instructor last name</p>
+                    </div>
                 </div>
             </div>
 

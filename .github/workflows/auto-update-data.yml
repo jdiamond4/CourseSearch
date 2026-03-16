@@ -62,7 +62,7 @@ jobs:
     - name: Run data builder and push to data branch
       run: |
         echo "🚀 Starting data update process..."
-        node scripts/databuilder.js --all --term=1258 --push-to-data
+        node scripts/databuilder.js --all --term=1262 --push-to-data
         echo "✅ Data update completed successfully"
       env:
         # Add any environment variables your script might need
