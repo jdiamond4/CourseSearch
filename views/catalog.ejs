@@ -129,11 +129,11 @@
     </div>
 
     <!-- Search Summary -->
-    <% if ((typeof category !== 'undefined' && category) || (typeof search !== 'undefined' && search) || (typeof department !== 'undefined' && department) || (typeof level !== 'undefined' && level) || (typeof status !== 'undefined' && status)) { %>
+    <% if ((typeof category !== 'undefined' && category) || (typeof search !== 'undefined' && search) || (typeof department !== 'undefined' && department) || (typeof level !== 'undefined' && level) || (typeof status !== 'undefined' && status) || (typeof instructorFirst !== 'undefined' && instructorFirst) || (typeof instructorLast !== 'undefined' && instructorLast)) { %>
     <div class="bg-blue-50 border-b border-blue-200 py-3">
         <div class="container mx-auto px-6">
             <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-4 text-sm text-blue-800">
+                <div class="flex items-center flex-wrap gap-2 text-sm text-blue-800">
                     <span class="font-medium">Search Filters:</span>
                     <% if (typeof category !== 'undefined' && category) { %>
                         <span class="bg-blue-100 px-2 py-1 rounded">Category: <%= category.charAt(0).toUpperCase() + category.slice(1) %></span>
@@ -150,8 +150,11 @@
                     <% if (typeof status !== 'undefined' && status) { %>
                         <span class="bg-blue-100 px-2 py-1 rounded">Status: <%= status.charAt(0).toUpperCase() + status.slice(1) %></span>
                     <% } %>
+                    <% if ((typeof instructorFirst !== 'undefined' && instructorFirst) || (typeof instructorLast !== 'undefined' && instructorLast)) { %>
+                        <span class="bg-blue-100 px-2 py-1 rounded">Instructor: <%= [instructorFirst, instructorLast].filter(Boolean).join(' ') %></span>
+                    <% } %>
                 </div>
-                <a href="/catalog" class="text-blue-600 hover:text-blue-800 text-sm font-medium">Clear All</a>
+                <a href="/catalog" class="text-blue-600 hover:text-blue-800 text-sm font-medium whitespace-nowrap">Clear All</a>
             </div>
         </div>
     </div>

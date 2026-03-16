@@ -273,6 +273,21 @@ function getEnrollmentStatus(available, status) {
   return 'Closed';
 }
 
+// Escape special regex characters in user input for instructor search
+function escapeRegex(str) {
+  if (!str || typeof str !== 'string') return '';
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// Build regex to match instructor name (first and/or last in any order, same string)
+function buildInstructorRegex(first, last) {
+  const f = escapeRegex((first || '').trim());
+  const l = escapeRegex((last || '').trim());
+  if (!f && !l) return null;
+  if (f && l) return new RegExp(`(?=.*${f})(?=.*${l})`, 'i');
+  return new RegExp(f || l, 'i');
+}
+
 // Department categories loaded from departments.csv
 let departmentCategories = {};
 
@@ -407,6 +422,8 @@ function buildPaginationUrl(page, perPage, currentQuery) {
       params.set('requirement', currentQuery.requirement);
     }
   }
+  if (currentQuery.instructorFirst) params.set('instructorFirst', currentQuery.instructorFirst);
+  if (currentQuery.instructorLast) params.set('instructorLast', currentQuery.instructorLast);
   
   // Add sorting parameter
   if (currentQuery.sortBy) params.set('sortBy', currentQuery.sortBy);
@@ -515,7 +532,9 @@ app.get('/advanced-search', (req, res) => {
         gpa: req.query.gpa || '',
         timeStart: req.query.timeStart || '',
         timeEnd: req.query.timeEnd || '',
-        requirement: req.query.requirement || ''
+        requirement: req.query.requirement || '',
+        instructorFirst: req.query.instructorFirst || '',
+        instructorLast: req.query.instructorLast || ''
     });
 });
 
@@ -527,7 +546,7 @@ app.get('/schedule', (req, res) => {
 
 app.get('/catalog', async (req, res) => {
     try {
-        const { category, department, search, level, status, gpa, filters, page = 1, perPage = 15, courseNumber, units, timeStart, timeEnd, sortBy = 'level' } = req.query;
+        const { category, department, search, level, status, gpa, filters, page = 1, perPage = 15, courseNumber, units, timeStart, timeEnd, sortBy = 'level', instructorFirst, instructorLast } = req.query;
         const term = req.query.term || '1268'; // Default to Fall 2026
         
         // Handle requirement parameter (can be array or single value)
@@ -601,6 +620,18 @@ app.get('/catalog', async (req, res) => {
                     // Match if courseAttributeValues contains ANY of the selected requirements
                     const requirementRegexes = requirements.map(req => new RegExp(req, 'i'));
                     query.courseAttributeValues = { $in: requirementRegexes };
+                }
+                
+                // Filter by instructor (first and/or last name in sections or discussions)
+                const instructorRegex = buildInstructorRegex(instructorFirst, instructorLast);
+                if (instructorRegex) {
+                    query.$and = query.$and || [];
+                    query.$and.push({
+                        $or: [
+                            { 'sections.teacherName': { $regex: instructorRegex } },
+                            { 'discussions.teacherName': { $regex: instructorRegex } }
+                        ]
+                    });
                 }
                 
                 // Fetch courses from MongoDB
@@ -781,6 +812,15 @@ app.get('/catalog', async (req, res) => {
                         });
                     }
                     
+                    if (instructorFirst || instructorLast) {
+                        const first = (instructorFirst || '').toLowerCase().trim();
+                        const last = (instructorLast || '').toLowerCase().trim();
+                        filteredData = filteredData.filter(row => {
+                            const names = (row.instructor_names || '').toLowerCase();
+                            return (!first || names.includes(first)) && (!last || names.includes(last));
+                        });
+                    }
+                    
                     const gpaData = await loadGPAData();
                     courses = transformSISDataToCourses(filteredData, gpaData);
                     
@@ -870,6 +910,10 @@ app.get('/catalog', async (req, res) => {
         if (req.query.gpa) {
             title = `${req.query.gpa}+ GPA Courses`;
         }
+        if (instructorFirst || instructorLast) {
+            const parts = [instructorFirst, instructorLast].filter(Boolean).map(s => (s || '').trim()).filter(Boolean);
+            title = parts.length ? `Courses by Instructor: ${parts.join(' ')}` : title;
+        }
         
         // Pagination logic
         const currentPage = parseInt(page);
@@ -901,6 +945,8 @@ app.get('/catalog', async (req, res) => {
             status,
             gpa: req.query.gpa,
             filters,
+            instructorFirst: instructorFirst || '',
+            instructorLast: instructorLast || '',
             title,
             pagination,
             sortBy,
