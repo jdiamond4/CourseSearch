@@ -29,7 +29,7 @@ jobs:
       - name: Update MongoDB with all departments
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
-        run: node scripts/sisToMongo.js --term=1262 --all --replace
+        run: node scripts/sisToMongo.js --term=1268 --all --replace
 
       - name: Report success
         if: success()
