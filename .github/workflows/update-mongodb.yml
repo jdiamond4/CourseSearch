@@ -21,6 +21,9 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
+        env:
+          # Avoid Puppeteer downloading Chromium during npm ci (workflow uses Playwright only)
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 1
         run: npm ci
 
       - name: Install Playwright browsers
