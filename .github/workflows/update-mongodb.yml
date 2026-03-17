@@ -22,11 +22,14 @@ jobs:
 
       - name: Install dependencies
         env:
+          CI: true
           # Avoid Puppeteer downloading Chromium during npm ci (workflow uses Playwright only)
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 1
+          PUPPETEER_SKIP_DOWNLOAD: 1
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
         run: npm ci
 
       - name: Install Playwright browsers
+        timeout-minutes: 20
         run: npx playwright install --with-deps chromium
 
       - name: Update MongoDB with all departments
