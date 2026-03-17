@@ -7,6 +7,7 @@ const https = require('https');
 const connectDB = require('./config/database');
 const MongoCourse = require('./models/MongoCourse');
 const { mongoToCourse } = require('./utils/mongoHelpers');
+const { getRequirementTitles } = require('./config/requirementLabels');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -241,6 +242,10 @@ function transformSISDataToCourses(sisData, gpaData) {
       // Sort sections and discussions by section number
       course.sections.sort((a, b) => a.sectionNumber.localeCompare(b.sectionNumber));
       course.discussions.sort((a, b) => a.sectionNumber.localeCompare(b.sectionNumber));
+      
+      const firstSection = course.sections[0] || course.discussions[0];
+      const requirementStr = firstSection?.courseAttributeValues || firstSection?.requirements || '';
+      course.requirementTitles = getRequirementTitles(requirementStr);
       
       // Add hasGPAOver method to each course object
       course.hasGPAOver = function(minGPA) {
@@ -672,6 +677,7 @@ app.get('/catalog', async (req, res) => {
                         }
                     });
                     
+                    course.requirementTitles = getRequirementTitles(mongoCourse.courseAttributeValues || '');
                     return course;
                 });
                 
