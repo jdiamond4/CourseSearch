@@ -33,8 +33,8 @@
         .enrollment-waitlist { background: #fef3c7; color: #92400e; border: 2px solid #fde68a; }
         
         .requirement-tag {
-            background: #E57200;
-            color: #000;
+            background: #232D4B;
+            color: #ffffff;
             padding: 0.25rem 0.5rem;
             border-radius: 0.5rem;
             font-size: 0.75rem;
@@ -60,6 +60,10 @@
         .department-link:hover {
             background-color: #f3f4f6;
             transform: translateX(4px);
+        }
+        
+        .hide-requirement-labels .requirement-tag {
+            display: none;
         }
         
         /* Ensure proper grid alignment */
@@ -185,7 +189,7 @@
                         </p>
                     </div>
                     
-                    <!-- Items per page and sort dropdowns -->
+                    <!-- Items per page, sort, and label toggle -->
                     <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                         <div class="flex items-center gap-2">
                             <label for="perPage" class="text-sm font-medium text-gray-700">Show:</label>
@@ -205,6 +209,13 @@
                                 <option value="department" <%= typeof sortBy !== 'undefined' && sortBy === 'department' ? 'selected' : '' %>>Department A-Z</option>
                                 <option value="gpa" <%= typeof sortBy !== 'undefined' && sortBy === 'gpa' ? 'selected' : '' %>>GPA</option>
                             </select>
+                        </div>
+                        
+                        <div class="flex items-center gap-2">
+                            <input id="toggleRequirementLabels" type="checkbox" class="w-4 h-4 text-[#E57200] border-gray-300 rounded focus:ring-[#E57200]" checked>
+                            <label for="toggleRequirementLabels" class="text-sm font-medium text-gray-700 whitespace-nowrap">
+                                Show requirement labels
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -637,6 +648,25 @@
                 }
             }
         }
+        
+        // Requirement label toggle
+        (function() {
+            const toggle = document.getElementById('toggleRequirementLabels');
+            if (!toggle) return;
+            
+            // Ensure initial state matches checkbox (checked = show labels)
+            if (!toggle.checked) {
+                document.body.classList.add('hide-requirement-labels');
+            }
+            
+            toggle.addEventListener('change', function(e) {
+                if (e.target.checked) {
+                    document.body.classList.remove('hide-requirement-labels');
+                } else {
+                    document.body.classList.add('hide-requirement-labels');
+                }
+            });
+        })();
     </script>
 </body>
 </html> 
