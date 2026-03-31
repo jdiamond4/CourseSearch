@@ -18,13 +18,6 @@ const REQUIREMENT_LABELS = {
   // Writing Requirements
   'ASUR-R21C1': 'First Writing',
   'ASUR-R21C2': 'Second Writing',
-  // Common CORE / NCLC codes from SIS
-  'CORE-CRITTHINK': 'Critical Thinking',
-  'CORE-WRITTEN': 'Written Communication',
-  'CORE-ORALCOMM': 'Oral Communication',
-  'CORE-RESEARCH': 'Research',
-  'NCLC-NOCOST': 'No Cost',
-  'NCLC-LOWCOST': 'Low Cost'
 };
 
 /**
@@ -44,6 +37,15 @@ function getRequirementTitles(courseAttributeValues) {
   const seen = new Set();
   const titles = [];
   for (const code of codes) {
+    // Hide generic CORE/NCLC tags from catalog badges.
+    if (
+      code === 'CORE' ||
+      code === 'NCLC' ||
+      code.startsWith('CORE-') ||
+      code.startsWith('NCLC-')
+    ) {
+      continue;
+    }
     if (seen.has(code)) continue;
     seen.add(code);
     const label = REQUIREMENT_LABELS[code];
