@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
 
@@ -34,15 +34,17 @@ class CourseForumScraper {
   }
 
   async initialize() {
-    this.browser = await puppeteer.launch({ 
-      headless: false, // Set to true in production
-      defaultViewport: null,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    this.browser = await chromium.launch({
+      headless: true
     });
-    this.page = await this.browser.newPage();
+    const context = await this.browser.newContext({
+      viewport: null,
+      userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    });
+    this.page = await context.newPage();
     
-    // Set user agent to avoid detection
-    await this.page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+    // Give pages some breathing room for slower network responses.
+    this.page.setDefaultTimeout(30000);
   }
 
   // Load SIS data to get course numbers for this semester
@@ -51,8 +53,6 @@ class CourseForumScraper {
       console.log(`🔍 Fetching fresh SIS data for ${this.subject} department...`);
       
       // Import the SIS fetching logic directly
-      const { chromium } = require('playwright');
-      
       let allCourseNumbers = new Set();
       let page = 1;
       let hasMoreData = true;
@@ -144,43 +144,58 @@ class CourseForumScraper {
       console.log(`📖 Scraping ${this.subject} ${courseNumber}: ${courseUrl}`);
       
       await this.page.goto(courseUrl, {
-        waitUntil: 'networkidle2',
-        timeout: 30000
+        waitUntil: 'domcontentloaded',
+        timeout: 45000
       });
+      // Ads/analytics prevent reliable networkidle; wait for instructor list instead.
+      await this.page.waitForSelector('a.instructor-card, .instructor-list', {
+        timeout: 20000
+      }).catch(() => {});
+      await new Promise(resolve => setTimeout(resolve, 800));
       
-      // Wait for the page to load
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Extract instructor data from this course page
+      // Extract instructor data from this course page (layout: a.instructor-card, see theCourseForum 2025+ redesign)
       const instructorData = await this.page.evaluate(() => {
         const instructors = [];
-        
-        // Find all instructor cards
-        const instructorCards = document.querySelectorAll('.row.no-gutters');
-        
-        instructorCards.forEach(card => {
+        const recentSemesters = [
+          'Fall 2024',
+          'Spring 2025',
+          'Summer 2025',
+          'Fall 2025',
+          'Spring 2026',
+          'Summer 2026',
+          'Fall 2026'
+        ];
+
+        const cards = document.querySelectorAll('a.instructor-card');
+
+        cards.forEach(card => {
           try {
-            // Get instructor name from the h3 title
-            const nameElement = card.querySelector('h3#title');
-            if (!nameElement) return;
-            
-            const name = nameElement.textContent.trim();
-            
-            // Extract stats from the info elements
-            const ratingElement = card.querySelector('#rating');
-            const difficultyElement = card.querySelector('#difficulty');
-            const gpaElement = card.querySelector('#gpa');
-            const sectionsElement = card.querySelector('#times');
-            const lastTaughtElement = card.querySelector('#recency');
-            
-            const rating = ratingElement ? ratingElement.textContent.trim() : 'N/A';
-            const difficulty = difficultyElement ? difficultyElement.textContent.trim() : 'N/A';
-            const gpa = gpaElement ? gpaElement.textContent.trim() : 'N/A';
-            const sections = sectionsElement ? sectionsElement.textContent.trim() : 'N/A';
-            const lastTaught = lastTaughtElement ? lastTaughtElement.textContent.trim() : 'N/A';
-            
-            // Include instructors who taught in recent semesters (Fall 2024, Spring 2025, Summer 2025, Fall 2025, Spring 2026)
-            const recentSemesters = ['Fall 2024', 'Spring 2025', 'Summer 2025', 'Fall 2025', 'Spring 2026'];
+            const nameEl = card.querySelector('h3.instructor-card__name');
+            if (!nameEl) return;
+
+            const name = nameEl.textContent.trim();
+            const semesterEl = card.querySelector('.instructor-card__semester');
+            const lastTaught = semesterEl ? semesterEl.textContent.trim() : 'N/A';
+
+            const statBlocks = card.querySelectorAll('.instructor-card__ratings .rating-stat');
+            let rating = 'N/A';
+            let difficulty = 'N/A';
+            let gpa = 'N/A';
+            statBlocks.forEach(block => {
+              const label = block.querySelector('.rating-stat__label')?.textContent.trim();
+              const value = block.querySelector('.rating-stat__value')?.textContent.trim();
+              if (!label || value == null) return;
+              if (label === 'Rating') rating = value;
+              else if (label === 'Difficulty') difficulty = value;
+              else if (label === 'GPA') gpa = value;
+            });
+
+            const timeEls = card.querySelectorAll('.section-times .section-time');
+            const sections =
+              timeEls.length > 0
+                ? [...timeEls].map(el => el.textContent.trim()).filter(Boolean).join('; ')
+                : 'N/A';
+
             if (recentSemesters.includes(lastTaught)) {
               instructors.push({
                 name,
@@ -191,12 +206,11 @@ class CourseForumScraper {
                 lastTaught
               });
             }
-            
           } catch (error) {
             console.log('Error parsing instructor card:', error);
           }
         });
-        
+
         return instructors;
       });
 
@@ -259,7 +273,7 @@ class CourseForumScraper {
         }
       }
 
-      console.log(`\n📊 Scraping completed! Found ${this.courses.length} instructor records for Fall 2025`);
+      console.log(`\n📊 Scraping completed! Found ${this.courses.length} instructor records (recent semesters)`);
 
       // Update master CSV with new data
       await this.updateMasterCSV();
