@@ -22,6 +22,28 @@ function getArg(name, defaultValue = undefined) {
   return defaultValue;
 }
 
+/** Matches the rest of the app (catalog, server, mongoHelpers) for “no data”. */
+const MISSING_METRIC = '\u2014';
+
+/**
+ * CourseForum renders missing rating/GPA/difficulty as numeric placeholders in the DOM
+ * (e.g. -0.3, -1.0, -1.00). Those must not be stored as real values.
+ */
+function normalizeCourseForumMetric(raw, kind) {
+  const s = String(raw ?? '').trim();
+  if (s === '' || s === 'N/A') return MISSING_METRIC;
+  const n = parseFloat(s.replace(/,/g, ''));
+  if (Number.isNaN(n)) return s;
+  if (kind === 'gpa') {
+    if (n < 0) return MISSING_METRIC;
+  } else if (kind === 'rating') {
+    if (n === -0.3) return MISSING_METRIC;
+  } else if (kind === 'difficulty') {
+    if (n === -1) return MISSING_METRIC;
+  }
+  return s;
+}
+
 class CourseForumScraper {
   constructor(departmentId, subject, term = null) {
     this.browser = null;
@@ -224,9 +246,9 @@ class CourseForumScraper {
             courseNumber: courseNumber.toString(),
             courseTitle: `Course ${courseNumber}`, // We'll get the actual title from SIS data later
             instructorName: instructor.name,
-            instructorGPA: instructor.gpa,
-            instructorRating: instructor.rating,
-            instructorDifficulty: instructor.difficulty,
+            instructorGPA: normalizeCourseForumMetric(instructor.gpa, 'gpa'),
+            instructorRating: normalizeCourseForumMetric(instructor.rating, 'rating'),
+            instructorDifficulty: normalizeCourseForumMetric(instructor.difficulty, 'difficulty'),
             instructorLastTaught: instructor.lastTaught,
             sections: instructor.sections,
             scrapedAt: new Date().toISOString()
