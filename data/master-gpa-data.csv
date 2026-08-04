@@ -1,663 +1,4 @@
 department,courseNumber,courseTitle,instructorName,instructorGPA,instructorRating,instructorDifficulty,instructorLastTaught,sections,scrapedAt
-ECON,1100,Course 1100,Edwin Burton,—,—,—,Fall 2025,1,2025-10-20T00:40:07.609Z
-ECON,2010,Course 2010,Kenneth Elzinga,3.14,4.04,3.11,Fall 2025,2,2025-10-20T00:40:14.550Z
-ECON,2010,Course 2010,Jessica Kripalani,3.36,3.00,3.50,Fall 2025,2,2025-10-20T00:40:14.550Z
-ECON,2010,Course 2010,To Announced,—,—,—,Fall 2025,65,2025-10-20T00:40:14.550Z
-ECON,2010,Course 2010,Alexander Mackay,—,—,—,Fall 2025,2,2025-10-20T00:40:14.550Z
-ECON,2010,Course 2010,Carter Doyle,3.12,3.66,2.88,Summer 2025,—,2025-10-20T00:40:14.550Z
-ECON,2010,Course 2010,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:40:14.550Z
-ECON,2010,Course 2010,Maria Westerfield,—,—,—,Fall 2024,—,2025-10-20T00:40:14.550Z
-ECON,2010,Course 2010,- -,—,—,—,Fall 2024,—,2025-10-20T00:40:14.550Z
-ECON,2020,Course 2020,Carter Doyle,3.12,3.25,3.06,Fall 2025,1,2025-10-20T00:40:22.687Z
-ECON,2020,Course 2020,To Announced,—,—,—,Fall 2025,14,2025-10-20T00:40:22.687Z
-ECON,2020,Course 2020,Lee Coppock,3.12,4.13,3.02,Spring 2025,—,2025-10-20T00:40:22.687Z
-ECON,2020,Course 2020,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:40:22.687Z
-ECON,3010,Course 3010,Peter Troyan,3.13,3.29,4.08,Fall 2025,2,2025-10-20T00:40:29.212Z
-ECON,3010,Course 3010,To Announced,—,—,—,Fall 2025,16,2025-10-20T00:40:29.212Z
-ECON,3010,Course 3010,Po Lin,—,5.00,4.50,Fall 2025,2,2025-10-20T00:40:29.212Z
-ECON,3010,Course 3010,Michael Moore,—,—,—,Summer 2025,—,2025-10-20T00:40:29.212Z
-ECON,3010,Course 3010,Marc Santugini,—,3.88,4.57,Summer 2025,—,2025-10-20T00:40:29.212Z
-ECON,3010,Course 3010,Maria Westerfield,2.99,3.79,4.18,Spring 2025,—,2025-10-20T00:40:29.212Z
-ECON,3010,Course 3010,Jessica Kripalani,3.07,3.39,4.42,Spring 2025,—,2025-10-20T00:40:29.212Z
-ECON,3010,Course 3010,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:40:29.212Z
-ECON,3020,Course 3020,Maria Westerfield,3.34,3.86,3.29,Fall 2025,2,2025-10-20T00:40:35.289Z
-ECON,3020,Course 3020,To Announced,—,1.67,5.00,Fall 2025,11,2025-10-20T00:40:35.289Z
-ECON,3020,Course 3020,Vladimir Smirnyagin,3.14,2.67,4.00,Spring 2025,—,2025-10-20T00:40:35.289Z
-ECON,3020,Course 3020,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:40:35.289Z
-ECON,3020,Course 3020,Eric Young,3.01,2.64,3.96,Fall 2024,—,2025-10-20T00:40:35.289Z
-ECON,3030,Course 3030,Carter Doyle,3.24,3.29,3.59,Fall 2025,2,2025-10-20T00:40:40.774Z
-ECON,3030,Course 3030,To Announced,—,—,—,Fall 2025,12,2025-10-20T00:40:40.774Z
-ECON,3030,Course 3030,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:40:40.774Z
-ECON,3600,Course 3600,Mark Thomas,3.55,4.67,3.00,Spring 2025,—,2025-10-20T00:40:45.883Z
-ECON,3640,Course 3640,Mark Plant,3.35,—,—,Spring 2025,—,2025-10-20T00:40:51.123Z
-ECON,3720,Course 3720,To Announced,—,—,—,Fall 2025,16,2025-10-20T00:40:56.672Z
-ECON,3720,Course 3720,Jack Fisher,—,1.13,4.50,Fall 2025,2,2025-10-20T00:40:56.672Z
-ECON,3720,Course 3720,Ahnaf Rafi,—,—,—,Fall 2025,2,2025-10-20T00:40:56.672Z
-ECON,3720,Course 3720,Christopher Mcgee,—,—,—,Summer 2025,—,2025-10-20T00:40:56.672Z
-ECON,3720,Course 3720,Stefan Ruediger,3.57,3.94,3.82,Spring 2025,—,2025-10-20T00:40:56.672Z
-ECON,3720,Course 3720,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:40:56.672Z
-ECON,3720,Course 3720,Leland Farmer,3.02,3.29,3.71,Fall 2024,—,2025-10-20T00:40:56.672Z
-ECON,3820,Course 3820,Charles Holt,—,—,—,Fall 2025,1,2025-10-20T00:41:01.761Z
-ECON,4110,Course 4110,Michael Moore,3.57,4.33,3.00,Summer 2025,—,2025-10-20T00:41:06.831Z
-ECON,4150,Course 4150,To Announced,—,—,—,Spring 2025,—,2025-10-20T00:41:12.293Z
-ECON,4150,Course 4150,Emma Harrington,3.73,5.00,2.50,Spring 2025,—,2025-10-20T00:41:12.293Z
-ECON,4150,Course 4150,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:41:12.293Z
-ECON,4210,Course 4210,John Mclaren,—,2.67,4.00,Fall 2024,—,2025-10-20T00:41:23.481Z
-ECON,4210,Course 4210,To Announced,—,—,—,Fall 2024,—,2025-10-20T00:41:23.481Z
-ECON,4220,Course 4220,Eric Wincoop,—,3.25,3.00,Fall 2025,1,2025-10-20T00:41:29.472Z
-ECON,4350,Course 4350,Noah Myung,—,—,—,Summer 2025,—,2025-10-20T00:41:40.488Z
-ECON,4350,Course 4350,Christopher Mcgee,—,2.56,2.83,Spring 2025,—,2025-10-20T00:41:40.488Z
-ECON,4350,Course 4350,To Announced,—,—,—,Spring 2025,—,2025-10-20T00:41:40.488Z
-ECON,4350,Course 4350,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:41:40.488Z
-ECON,4360,Course 4360,Steven Peterson,3.58,4.33,3.00,Spring 2025,—,2025-10-20T00:41:45.789Z
-ECON,4370,Course 4370,Edwin Burton,3.26,3.56,2.62,Spring 2025,—,2025-10-20T00:41:51.191Z
-ECON,4430,Course 4430,Sheetal Sekhri,3.57,3.35,2.67,Spring 2025,—,2025-10-20T00:42:01.817Z
-ECON,4430,Course 4430,To Announced,—,—,—,Spring 2025,—,2025-10-20T00:42:01.817Z
-ECON,4430,Course 4430,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:42:01.817Z
-ECON,4720,Course 4720,Lidia Kosenkova,3.39,2.11,4.00,Fall 2025,1,2025-10-20T00:42:12.267Z
-ECON,4720,Course 4720,To Announced,—,—,—,Fall 2025,2,2025-10-20T00:42:12.267Z
-ECON,4720,Course 4720,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:42:12.267Z
-ECON,4820,Course 4820,Charles Holt,3.86,3.67,2.00,Spring 2025,—,2025-10-20T00:42:17.802Z
-ECON,4880,Course 4880,Leora Friedberg,3.72,—,—,Spring 2025,—,2025-10-20T00:42:23.092Z
-ECON,4993,Course 4993,Charles Holt,—,—,—,Fall 2025,1,2025-10-20T00:42:28.855Z
-ECON,4993,Course 4993,Kenneth Elzinga,—,—,—,Fall 2025,1,2025-10-20T00:42:28.855Z
-ECON,4993,Course 4993,Edwin Burton,—,—,—,Fall 2025,1,2025-10-20T00:42:28.855Z
-ECON,4993,Course 4993,William Shobe,—,—,—,Fall 2025,1,2025-10-20T00:42:28.855Z
-ECON,4993,Course 4993,Anton Korinek,—,—,—,Fall 2025,1,2025-10-20T00:42:28.855Z
-ECON,4993,Course 4993,Carter Doyle,—,—,—,Spring 2025,—,2025-10-20T00:42:28.855Z
-ECON,4993,Course 4993,John Mclaren,—,—,—,Spring 2025,—,2025-10-20T00:42:28.855Z
-ECON,4999,Course 4999,Charles Holt,—,—,—,Spring 2025,—,2025-10-20T00:42:34.764Z
-ECON,4999,Course 4999,Kenneth Elzinga,—,—,—,Spring 2025,—,2025-10-20T00:42:34.764Z
-ECON,4999,Course 4999,Federico Ciliberto,—,—,—,Spring 2025,—,2025-10-20T00:42:34.764Z
-ECON,4999,Course 4999,Sarah Turner,—,—,—,Spring 2025,—,2025-10-20T00:42:34.764Z
-ECON,4999,Course 4999,Sheetal Sekhri,—,—,—,Spring 2025,—,2025-10-20T00:42:34.764Z
-ECON,4999,Course 4999,John Pepper,—,—,—,Spring 2025,—,2025-10-20T00:42:34.764Z
-ECON,4999,Course 4999,Leora Friedberg,—,—,—,Spring 2025,—,2025-10-20T00:42:34.764Z
-ECON,4999,Course 4999,Amalia Miller,—,—,—,Spring 2025,—,2025-10-20T00:42:34.764Z
-ECON,4999,Course 4999,Jonathan Colmer,—,—,—,Spring 2025,—,2025-10-20T00:42:34.764Z
-ECON,4999,Course 4999,Lee Lockwood,—,—,—,Spring 2025,—,2025-10-20T00:42:34.764Z
-ECON,4999,Course 4999,Kerem Cosar,—,—,—,Spring 2025,—,2025-10-20T00:42:34.764Z
-ECON,4999,Course 4999,Emma Harrington,—,—,—,Spring 2025,—,2025-10-20T00:42:34.764Z
-ECON,5351,Course 5351,Mark Thomas,—,—,—,Spring 2025,—,2025-10-20T00:42:40.448Z
-ECON,7030,Course 7030,Simon Anderson,3.33,—,—,Spring 2025,—,2025-10-20T00:42:45.559Z
-ECON,7030,Course 7030,To Announced,—,—,—,Spring 2025,—,2025-10-20T00:42:45.559Z
-ECON,7030,Course 7030,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:42:45.559Z
-ECON,7040,Course 7040,Eric Leeper,3.71,—,—,Spring 2025,—,2025-10-20T00:42:50.431Z
-ECON,7040,Course 7040,To Announced,—,—,—,Spring 2025,—,2025-10-20T00:42:50.431Z
-ECON,7040,Course 7040,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:42:50.431Z
-ECON,7720,Course 7720,John Pepper,3.41,—,—,Spring 2025,—,2025-10-20T00:42:55.889Z
-ECON,7720,Course 7720,To Announced,—,—,—,Spring 2025,—,2025-10-20T00:42:55.889Z
-ECON,7720,Course 7720,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:42:55.889Z
-ECON,8010,Course 8010,Maxim Engers,3.37,—,—,Spring 2025,—,2025-10-20T00:43:01.121Z
-ECON,8010,Course 8010,To Announced,—,—,—,Spring 2025,—,2025-10-20T00:43:01.121Z
-ECON,8010,Course 8010,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:43:01.121Z
-ECON,8160,Course 8160,Sarah Turner,3.83,—,—,Spring 2025,—,2025-10-20T00:43:06.364Z
-ECON,8160,Course 8160,Amalia Miller,3.63,—,—,Spring 2025,—,2025-10-20T00:43:06.364Z
-ECON,8180,Course 8180,Federico Ciliberto,3.41,—,—,Spring 2025,—,2025-10-20T00:43:11.575Z
-ECON,8190,Course 8190,Sandip Sukhtankar,—,—,—,Spring 2025,—,2025-10-20T00:43:16.987Z
-ECON,8220,Course 8220,Eric Wincoop,—,—,—,Fall 2024,—,2025-10-20T00:43:22.508Z
-ECON,8230,Course 8230,James Harrigan,3.65,—,—,Spring 2025,—,2025-10-20T00:43:28.158Z
-ECON,8320,Course 8320,Leora Friedberg,3.71,—,—,Spring 2025,—,2025-10-20T00:43:33.742Z
-ECON,8360,Course 8360,Eric Young,—,—,—,Spring 2025,—,2025-10-20T00:43:39.253Z
-ECON,8360,Course 8360,Eric Leeper,3.82,—,—,Fall 2024,—,2025-10-20T00:43:39.253Z
-ECON,8410,Course 8410,Sarah Turner,—,—,—,Fall 2025,1,2025-10-20T00:43:44.413Z
-ECON,8420,Course 8420,Eric Young,—,—,—,Fall 2025,1,2025-10-20T00:43:49.745Z
-ECON,8430,Course 8430,Charles Holt,—,—,—,Spring 2025,—,2025-10-20T00:43:55.089Z
-ECON,8440,Course 8440,James Harrigan,—,—,—,Fall 2025,1,2025-10-20T00:44:00.668Z
-ECON,8440,Course 8440,John Mclaren,—,—,—,Fall 2025,1,2025-10-20T00:44:00.668Z
-ECON,8440,Course 8440,Kerem Cosar,—,—,—,Fall 2025,1,2025-10-20T00:44:00.668Z
-ECON,8450,Course 8450,Jonathan Colmer,—,—,—,Fall 2025,1,2025-10-20T00:44:06.481Z
-ECON,8450,Course 8450,Lee Lockwood,—,—,—,Fall 2025,1,2025-10-20T00:44:06.481Z
-ECON,8470,Course 8470,Simon Anderson,—,—,—,Fall 2025,1,2025-10-20T00:44:12.212Z
-ECON,8470,Course 8470,Julie Mortimer,—,—,—,Fall 2024,—,2025-10-20T00:44:12.212Z
-ECON,8480,Course 8480,Sandip Sukhtankar,—,—,—,Fall 2025,1,2025-10-20T00:44:17.602Z
-ECON,8720,Course 8720,Leland Farmer,3.62,—,—,Spring 2025,—,2025-10-20T00:44:23.255Z
-ECON,8991,Course 8991,Sandip Sukhtankar,3.99,—,—,Fall 2025,1,2025-10-20T00:44:28.896Z
-ECON,8991,Course 8991,Anton Korinek,—,—,—,Fall 2025,1,2025-10-20T00:44:28.896Z
-ECON,8991,Course 8991,Eric Leeper,—,—,—,Spring 2025,—,2025-10-20T00:44:28.896Z
-ECON,8991,Course 8991,Federico Ciliberto,—,—,—,Fall 2024,—,2025-10-20T00:44:28.896Z
-ECON,8998,Course 8998,Simon Anderson,—,—,—,Fall 2025,1,2025-10-20T00:44:34.173Z
-ECON,8998,Course 8998,Amalia Miller,—,—,—,Fall 2025,1,2025-10-20T00:44:34.173Z
-ECON,8998,Course 8998,James Harrigan,—,—,—,Spring 2025,—,2025-10-20T00:44:34.173Z
-ECON,8999,Course 8999,James Harrigan,—,—,—,Fall 2025,1,2025-10-20T00:44:39.753Z
-ECON,9998,Course 9998,James Harrigan,—,—,—,Fall 2025,1,2025-10-20T00:44:45.226Z
-ECON,9999,Course 9999,Charles Holt,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Federico Ciliberto,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Sarah Turner,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Maxim Engers,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,James Harrigan,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Simon Anderson,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Sheetal Sekhri,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,John Pepper,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Leora Friedberg,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Eric Young,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Amalia Miller,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Peter Troyan,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Denis Nekipelov,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Eric Wincoop,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Ana Fostel,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Sandip Sukhtankar,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Jonathan Colmer,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Lee Lockwood,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Anton Korinek,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Eric Leeper,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,John Mclaren,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Shan Aman-Rana,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Kerem Cosar,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Vladimir Smirnyagin,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Emma Harrington,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Jack Fisher,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Alexander Mackay,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Ahnaf Rafi,—,—,—,Fall 2025,1,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Eric Van Wincoop,—,—,—,Spring 2025,—,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,William Johnson,—,—,—,Fall 2024,—,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Andrew Kloosterman,—,—,—,Fall 2024,—,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Karim Chalak,—,—,—,Fall 2024,—,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Gaurab Aryal,—,—,—,Fall 2024,—,2025-10-20T00:44:51.141Z
-ECON,9999,Course 9999,Zachary Bethune,—,—,—,Fall 2024,—,2025-10-20T00:44:51.141Z
-ENGL,2502,Course 2502,John O'Brien,3.61,—,—,Spring 2025,—,2025-10-20T00:45:13.697Z
-ENGL,2502,Course 2502,Alison Hurley,3.37,4.33,3.00,Spring 2025,—,2025-10-20T00:45:13.697Z
-ENGL,2502,Course 2502,Viola Cozzio,—,—,—,Spring 2025,—,2025-10-20T00:45:13.697Z
-ENGL,2502,Course 2502,Brad Pasanek,—,4.22,3.00,Fall 2024,—,2025-10-20T00:45:13.697Z
-ENGL,2506,Course 2506,Jahan Ramazani,—,4.47,3.80,Fall 2025,1,2025-10-20T00:45:19.143Z
-ENGL,2506,Course 2506,Hodges Adams,—,—,—,Fall 2025,1,2025-10-20T00:45:19.143Z
-ENGL,2506,Course 2506,Jeddie Sophronius,3.98,—,—,Spring 2025,—,2025-10-20T00:45:19.143Z
-ENGL,2506,Course 2506,Henrietta Hadley,3.11,—,—,Spring 2025,—,2025-10-20T00:45:19.143Z
-ENGL,2506,Course 2506,Kaitlyn Airy,—,—,—,Spring 2025,—,2025-10-20T00:45:19.143Z
-ENGL,2506,Course 2506,Taylor Schey,—,—,—,Spring 2025,—,2025-10-20T00:45:19.143Z
-ENGL,2506,Course 2506,Walter Jost,—,3.67,3.00,Fall 2024,—,2025-10-20T00:45:19.143Z
-ENGL,2506,Course 2506,Rebecca Rush,3.77,3.67,3.00,Fall 2024,—,2025-10-20T00:45:19.143Z
-ENGL,2507,Course 2507,Clare Kinney,—,—,—,Spring 2025,—,2025-10-20T00:45:24.484Z
-ENGL,2507,Course 2507,Adriana Streifer,3.78,4.33,2.00,Fall 2024,—,2025-10-20T00:45:24.484Z
-ENGL,2508,Course 2508,James Kinney,3.47,1.11,3.00,Fall 2025,1,2025-10-20T00:45:30.411Z
-ENGL,2508,Course 2508,Charity Fowler,3.71,5.00,2.00,Fall 2025,1,2025-10-20T00:45:30.411Z
-ENGL,2508,Course 2508,Caroline Rody,3.55,5.00,3.00,Spring 2025,—,2025-10-20T00:45:30.411Z
-ENGL,2508,Course 2508,Victoria Olwell,3.57,5.00,2.00,Spring 2025,—,2025-10-20T00:45:30.411Z
-ENGL,2508,Course 2508,Patricia Sullivan,3.89,4.50,3.00,Spring 2025,—,2025-10-20T00:45:30.411Z
-ENGL,2508,Course 2508,Debjani Ganguly,—,—,—,Spring 2025,—,2025-10-20T00:45:30.411Z
-ENGL,2508,Course 2508,Anna Brickhouse,—,—,—,Fall 2024,—,2025-10-20T00:45:30.411Z
-ENGL,2508,Course 2508,Mrinalini Chakravorty,3.60,4.67,4.00,Fall 2024,—,2025-10-20T00:45:30.411Z
-ENGL,2508,Course 2508,Stephen Arata,3.47,4.25,2.50,Fall 2024,—,2025-10-20T00:45:30.411Z
-ENGL,2527,Course 2527,Katharine Maus,3.51,1.67,2.00,Fall 2025,1,2025-10-20T00:45:36.306Z
-ENGL,2599,Course 2599,Cynthia Wall,3.60,3.67,2.00,Fall 2025,1,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,Jon D'Errico,3.70,—,—,Fall 2025,1,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,John Casteen,—,4.89,3.00,Fall 2025,1,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,Njelle Hamilton,—,—,—,Fall 2025,1,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,K. Grandison,—,—,—,Fall 2025,1,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,Adrienne Ghaly,3.94,—,—,Fall 2025,1,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,Lydia Brown,3.53,5.00,3.00,Fall 2025,1,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,Taylor Schey,—,—,—,Fall 2025,1,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,Alison Cotti-Lowell,—,—,—,Fall 2025,1,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,Charity Fowler,3.95,—,—,Summer 2025,—,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,Joshua Miller,3.84,—,—,Summer 2025,—,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,Shalmi Barman,—,—,—,Spring 2025,—,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,Courtney Watts,—,5.00,3.00,Spring 2025,—,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,Nasrin Olla,3.62,2.00,3.00,Spring 2025,—,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,Deborah McDowell,—,—,—,Fall 2024,—,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,Emily Ogden,3.70,4.67,4.00,Fall 2024,—,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,Sarah Cole,3.92,4.00,3.00,Fall 2024,—,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,Brian Teare,3.71,—,—,Fall 2024,—,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,Amber McBride,3.88,5.00,1.00,Fall 2024,—,2025-10-20T00:45:48.125Z
-ENGL,2599,Course 2599,Kate Stephenson,—,4.67,2.00,Fall 2024,—,2025-10-20T00:45:48.125Z
-ENGL,3002,Course 3002,Andrew Stauffer,3.54,3.83,2.50,Spring 2025,—,2025-10-20T00:45:54.060Z
-ENGL,3002,Course 3002,To Announced,—,—,—,Spring 2025,—,2025-10-20T00:45:54.060Z
-ENGL,3002,Course 3002,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:45:54.060Z
-ENGL,3010,Course 3010,Stephen Hopkins,3.76,—,—,Summer 2025,—,2025-10-20T00:45:59.687Z
-ENGL,3162,Course 3162,Elizabeth Fowler,3.81,—,—,Spring 2025,—,2025-10-20T00:46:05.284Z
-ENGL,3260,Course 3260,Rebecca Rush,3.28,—,—,Spring 2025,—,2025-10-20T00:46:10.519Z
-ENGL,3273,Course 3273,Katharine Maus,3.44,4.08,3.00,Spring 2025,—,2025-10-20T00:46:16.297Z
-ENGL,3273,Course 3273,To Announced,—,—,—,Spring 2025,—,2025-10-20T00:46:16.297Z
-ENGL,3273,Course 3273,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:46:16.297Z
-ENGL,3500,Course 3500,Brad Pasanek,—,2.67,5.00,Summer 2025,—,2025-10-20T00:46:27.011Z
-ENGL,3540,Course 3540,Taylor Schey,—,—,—,Fall 2025,1,2025-10-20T00:46:32.355Z
-ENGL,3540,Course 3540,Stephen Arata,3.60,—,—,Spring 2025,—,2025-10-20T00:46:32.355Z
-ENGL,3540,Course 3540,Cristina Griffin,3.79,—,—,Spring 2025,—,2025-10-20T00:46:32.355Z
-ENGL,3540,Course 3540,Mark Edmundson,3.53,—,—,Fall 2024,—,2025-10-20T00:46:32.355Z
-ENGL,3560,Course 3560,Lorna Martens,3.56,—,—,Fall 2025,1,2025-10-20T00:46:37.653Z
-ENGL,3560,Course 3560,Caroline Rody,3.58,—,—,Fall 2025,1,2025-10-20T00:46:37.654Z
-ENGL,3560,Course 3560,Adrienne Ghaly,—,—,—,Fall 2025,1,2025-10-20T00:46:37.654Z
-ENGL,3560,Course 3560,Joshua Miller,3.71,—,—,Fall 2025,1,2025-10-20T00:46:37.654Z
-ENGL,3560,Course 3560,Stephen Arata,3.60,—,—,Spring 2025,—,2025-10-20T00:46:37.654Z
-ENGL,3560,Course 3560,Mark Edmundson,3.68,4.33,2.00,Spring 2025,—,2025-10-20T00:46:37.654Z
-ENGL,3560,Course 3560,Njelle Hamilton,3.82,4.67,3.00,Spring 2025,—,2025-10-20T00:46:37.654Z
-ENGL,3560,Course 3560,Victor Luftig,3.77,—,—,Fall 2024,—,2025-10-20T00:46:37.654Z
-ENGL,3740,Course 3740,Sylvia Chong,3.83,—,—,Spring 2025,—,2025-10-20T00:46:43.200Z
-ENGL,3740,Course 3740,To Announced,—,—,—,Spring 2025,—,2025-10-20T00:46:43.200Z
-ENGL,3740,Course 3740,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:46:43.200Z
-ENGL,3790,Course 3790,Lisa Goff,—,—,—,Fall 2024,—,2025-10-20T00:46:54.101Z
-ENGL,3825,Course 3825,James Livingood,3.81,—,—,Spring 2025,—,2025-10-20T00:46:59.585Z
-ENGL,3924,Course 3924,Sylvia Chong,3.74,—,—,Fall 2024,—,2025-10-20T00:47:11.184Z
-ENGL,4500,Course 4500,Mark Edmundson,3.74,—,—,Fall 2025,1,2025-10-20T00:47:16.654Z
-ENGL,4500,Course 4500,Clare Kinney,—,—,—,Fall 2025,1,2025-10-20T00:47:16.654Z
-ENGL,4500,Course 4500,Jeffrey Grossman,—,—,—,Fall 2025,1,2025-10-20T00:47:16.654Z
-ENGL,4500,Course 4500,Cynthia Wall,3.34,3.33,4.00,Spring 2025,—,2025-10-20T00:47:16.654Z
-ENGL,4520,Course 4520,Rebecca Rush,3.76,—,—,Spring 2025,—,2025-10-20T00:47:28.488Z
-ENGL,4520,Course 4520,Elizabeth Fowler,—,—,—,Fall 2024,—,2025-10-20T00:47:28.488Z
-ENGL,4540,Course 4540,Susan Fraiman,3.64,—,—,Fall 2025,1,2025-10-20T00:47:34.009Z
-ENGL,4540,Course 4540,To Announced,—,—,—,Fall 2025,1,2025-10-20T00:47:34.009Z
-ENGL,4559,Course 4559,Sumita Chakraborty,—,—,—,Fall 2025,1,2025-10-20T00:47:38.846Z
-ENGL,4560,Course 4560,Victoria Olwell,3.74,—,—,Spring 2025,—,2025-10-20T00:47:44.464Z
-ENGL,4560,Course 4560,Susan Fraiman,3.79,—,—,Spring 2025,—,2025-10-20T00:47:44.464Z
-ENGL,4560,Course 4560,Njelle Hamilton,—,—,—,Fall 2024,—,2025-10-20T00:47:44.464Z
-ENGL,4560,Course 4560,Jahan Ramazani,—,—,—,Fall 2024,—,2025-10-20T00:47:44.464Z
-ENGL,4560,Course 4560,Joshua Miller,3.82,—,—,Fall 2024,—,2025-10-20T00:47:44.464Z
-ENGL,4570,Course 4570,Marlon Ross,—,—,—,Spring 2025,—,2025-10-20T00:47:49.840Z
-ENGL,4570,Course 4570,Carmen Lamas,—,—,—,Spring 2025,—,2025-10-20T00:47:49.840Z
-ENGL,4570,Course 4570,K. Grandison,—,—,—,Spring 2025,—,2025-10-20T00:47:49.840Z
-ENGL,4570,Course 4570,K. Ian Grandison,—,—,—,Spring 2025,—,2025-10-20T00:47:49.840Z
-ENGL,4570,Course 4570,Deborah McDowell,—,—,—,Fall 2024,—,2025-10-20T00:47:49.840Z
-ENGL,4580,Course 4580,Marlon Ross,—,—,—,Fall 2024,—,2025-10-20T00:47:55.056Z
-ENGL,4580,Course 4580,K. Grandison,—,—,—,Fall 2024,—,2025-10-20T00:47:55.056Z
-ENGL,4902,Course 4902,John Parker,—,—,—,Spring 2025,—,2025-10-20T00:48:00.559Z
-ENGL,4999,Course 4999,Caroline Rody,3.98,—,—,Spring 2025,—,2025-10-20T00:48:06.076Z
-ENGL,5500,Course 5500,Walter Jost,—,—,—,Fall 2025,1,2025-10-20T00:48:16.401Z
-ENGL,5500,Course 5500,James Seitz,—,—,—,Fall 2025,1,2025-10-20T00:48:16.401Z
-ENGL,5500,Course 5500,Mark Edmundson,—,—,—,Spring 2025,—,2025-10-20T00:48:16.401Z
-ENGL,5530,Course 5530,Michael Suarez,3.24,—,—,Spring 2025,—,2025-10-20T00:48:21.843Z
-ENGL,5559,Course 5559,James Kinney,3.89,—,—,Fall 2025,1,2025-10-20T00:48:26.932Z
-ENGL,5559,Course 5559,Carmen Lamas,—,—,—,Spring 2025,—,2025-10-20T00:48:26.932Z
-ENGL,5559,Course 5559,Alison Booth,3.62,—,—,Fall 2024,—,2025-10-20T00:48:26.932Z
-ENGL,5560,Course 5560,Victor Luftig,—,—,—,Fall 2025,1,2025-10-20T00:48:32.313Z
-ENGL,5560,Course 5560,Jahan Ramazani,—,—,—,Fall 2025,1,2025-10-20T00:48:32.313Z
-ENGL,5580,Course 5580,Lisa Goff,3.80,—,—,Spring 2025,—,2025-10-20T00:48:37.608Z
-ENGL,5580,Course 5580,Walter Jost,—,—,—,Spring 2025,—,2025-10-20T00:48:37.608Z
-ENGL,5580,Course 5580,David Meulen,—,—,—,Spring 2025,—,2025-10-20T00:48:37.608Z
-ENGL,5580,Course 5580,David Vander Meulen,—,—,—,Spring 2025,—,2025-10-20T00:48:37.608Z
-ENGL,8540,Course 8540,Victoria Olwell,—,—,—,Fall 2025,1,2025-10-20T00:48:48.500Z
-ENGL,8540,Course 8540,Taylor Schey,—,—,—,Spring 2025,—,2025-10-20T00:48:48.500Z
-ENGL,8540,Course 8540,Susan Fraiman,3.81,—,—,Fall 2024,—,2025-10-20T00:48:48.500Z
-ENGL,8560,Course 8560,Joshua Miller,—,—,—,Fall 2025,1,2025-10-20T00:48:59.811Z
-ENGL,8560,Course 8560,Njelle Hamilton,3.95,—,—,Spring 2025,—,2025-10-20T00:48:59.811Z
-ENGL,8560,Course 8560,Jahan Ramazani,—,—,—,Spring 2025,—,2025-10-20T00:48:59.811Z
-ENGL,8580,Course 8580,Adrienne Ghaly,—,—,—,Fall 2024,—,2025-10-20T00:49:05.654Z
-ENGL,8580,Course 8580,Nasrin Olla,3.83,—,—,Fall 2024,—,2025-10-20T00:49:05.654Z
-ENGL,8596,Course 8596,Kiki Petrosino,—,—,—,Fall 2025,1,2025-10-20T00:49:10.988Z
-ENGL,8596,Course 8596,Sumita Chakraborty,—,—,—,Spring 2025,—,2025-10-20T00:49:10.988Z
-ENGL,8598,Course 8598,Kevin Moffett,—,—,—,Spring 2025,—,2025-10-20T00:49:16.463Z
-ENGL,8598,Course 8598,Jane Alison,3.90,—,—,Fall 2024,—,2025-10-20T00:49:16.463Z
-ENGL,8900,Course 8900,James Livingood,—,—,—,Fall 2025,1,2025-10-20T00:49:22.048Z
-ENGL,8900,Course 8900,Stephanie Ceraso,—,—,—,Spring 2025,—,2025-10-20T00:49:22.048Z
-ENGL,8900,Course 8900,Heidi Nobles,—,—,—,Spring 2025,—,2025-10-20T00:49:22.048Z
-ENGL,8998,Course 8998,Brad Pasanek,—,—,—,Fall 2025,1,2025-10-20T00:49:26.835Z
-ENGL,8999,Course 8999,Brad Pasanek,—,—,—,Fall 2025,1,2025-10-20T00:49:32.718Z
-ENGL,8999,Course 8999,Caroline Rody,—,—,—,Summer 2025,—,2025-10-20T00:49:32.718Z
-ENGL,9710,Course 9710,Deborah McDowell,—,—,—,Fall 2025,1,2025-10-20T00:49:42.974Z
-ENGL,9710,Course 9710,To Announced,—,—,—,Spring 2025,—,2025-10-20T00:49:42.974Z
-ENGL,9710,Course 9710,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:49:42.974Z
-ENGL,9995,Course 9995,Bruce Holsinger,—,—,—,Spring 2025,—,2025-10-20T00:49:48.805Z
-ENGL,9998,Course 9998,Brad Pasanek,—,—,—,Fall 2025,1,2025-10-20T00:49:54.029Z
-ENGL,9999,Course 9999,Brad Pasanek,—,—,—,Fall 2025,1,2025-10-20T00:49:59.663Z
-EVSC,1010,Course 1010,Manuel Lerdau,3.26,1.50,3.67,Fall 2025,1,2025-10-20T00:50:29.932Z
-EVSC,1010,Course 1010,David Morris,—,—,—,Summer 2025,—,2025-10-20T00:50:29.932Z
-EVSC,1010,Course 1010,Scott Doney,3.61,3.67,2.00,Spring 2025,—,2025-10-20T00:50:29.932Z
-EVSC,1300,Course 1300,Ian Fitzsimmons,—,—,—,Summer 2025,—,2025-10-20T00:50:35.551Z
-EVSC,1300,Course 1300,Robert Davis,2.71,3.77,3.60,Spring 2025,—,2025-10-20T00:50:35.551Z
-EVSC,2800,Course 2800,Ajay Limaye,3.46,5.00,3.00,Fall 2025,1,2025-10-20T00:50:46.357Z
-EVSC,2800,Course 2800,Justin Richardson,—,—,—,Spring 2025,—,2025-10-20T00:50:46.357Z
-EVSC,2801,Course 2801,Ajay Limaye,3.85,—,—,Fall 2025,5,2025-10-20T00:50:51.960Z
-EVSC,2801,Course 2801,Justin Richardson,—,—,—,Spring 2025,—,2025-10-20T00:50:51.960Z
-EVSC,3020,Course 3020,John Porter,3.58,3.39,2.83,Fall 2025,3,2025-10-20T00:50:57.098Z
-EVSC,3020,Course 3020,Mirella Shaban,—,—,—,Summer 2025,—,2025-10-20T00:50:57.098Z
-EVSC,3200,Course 3200,Howard Epstein,2.95,3.69,3.29,Fall 2025,1,2025-10-20T00:51:02.601Z
-EVSC,3200,Course 3200,Meghan Blumstein,—,—,—,Spring 2025,—,2025-10-20T00:51:02.601Z
-EVSC,3200,Course 3200,Michael Pace,3.14,3.61,2.67,Fall 2024,—,2025-10-20T00:51:02.601Z
-EVSC,3201,Course 3201,Howard Epstein,3.49,3.33,2.00,Fall 2025,5,2025-10-20T00:51:09.505Z
-EVSC,3201,Course 3201,Meghan Blumstein,—,—,—,Spring 2025,—,2025-10-20T00:51:09.505Z
-EVSC,3201,Course 3201,Michael Pace,3.48,—,—,Fall 2024,—,2025-10-20T00:51:09.505Z
-EVSC,3300,Course 3300,Sally Pusede,3.49,3.67,3.00,Fall 2025,1,2025-10-20T00:51:15.164Z
-EVSC,3300,Course 3300,Stephan Wekker,—,4.33,3.00,Spring 2025,—,2025-10-20T00:51:15.164Z
-EVSC,3300,Course 3300,Stephan De Wekker,—,—,—,Spring 2025,—,2025-10-20T00:51:15.164Z
-EVSC,3300,Course 3300,Kevin Grise,3.20,4.67,2.60,Fall 2024,—,2025-10-20T00:51:15.164Z
-EVSC,3301,Course 3301,Sally Pusede,4.00,—,—,Fall 2025,4,2025-10-20T00:51:20.623Z
-EVSC,3301,Course 3301,Stephan Wekker,—,3.00,3.00,Spring 2025,—,2025-10-20T00:51:20.623Z
-EVSC,3301,Course 3301,Stephan De Wekker,—,—,—,Spring 2025,—,2025-10-20T00:51:20.623Z
-EVSC,3301,Course 3301,Kevin Grise,3.66,1.33,4.00,Fall 2024,—,2025-10-20T00:51:20.623Z
-EVSC,3600,Course 3600,Matthew Reidenbach,3.06,4.00,2.73,Fall 2025,1,2025-10-20T00:51:31.477Z
-EVSC,3600,Course 3600,Todd Scanlon,3.13,3.93,2.70,Spring 2025,—,2025-10-20T00:51:31.477Z
-EVSC,3600,Course 3600,Frederick Cheng,3.62,—,—,Fall 2024,—,2025-10-20T00:51:31.477Z
-EVSC,3601,Course 3601,Matthew Reidenbach,3.49,4.17,3.00,Fall 2025,4,2025-10-20T00:51:37.526Z
-EVSC,3601,Course 3601,Todd Scanlon,3.62,—,—,Spring 2025,—,2025-10-20T00:51:37.526Z
-EVSC,3601,Course 3601,Frederick Cheng,—,—,—,Fall 2024,—,2025-10-20T00:51:37.526Z
-EVSC,4002,Course 4002,Stephen Macko,—,4.67,1.00,Fall 2025,1,2025-10-20T00:51:42.820Z
-EVSC,4140,Course 4140,Karen Mcglathery,—,—,—,Spring 2025,—,2025-10-20T00:52:04.129Z
-EVSC,4542,Course 4542,Ajay Limaye,3.91,—,—,Spring 2025,—,2025-10-20T00:52:14.050Z
-EVSC,4559,Course 4559,Howard Epstein,—,—,—,Fall 2025,1,2025-10-20T00:52:19.525Z
-EVSC,4559,Course 4559,Antonios Mamalakis,3.85,—,—,Fall 2025,1,2025-10-20T00:52:19.525Z
-EVSC,4559,Course 4559,Karen Mcglathery,—,—,—,Fall 2024,—,2025-10-20T00:52:19.525Z
-EVSC,4640,Course 4640,Lawrence Band,—,—,—,Spring 2025,—,2025-10-20T00:52:29.854Z
-EVSC,4991,Course 4991,Scott Doney,3.83,—,—,Spring 2025,—,2025-10-20T00:52:50.581Z
-EVSC,4993,Course 4993,Manuel Lerdau,—,—,—,Fall 2025,1,2025-10-20T00:52:56.179Z
-EVSC,4993,Course 4993,Howard Epstein,—,—,—,Fall 2025,1,2025-10-20T00:52:56.179Z
-EVSC,4993,Course 4993,Peter Berg,—,—,—,Fall 2025,1,2025-10-20T00:52:56.179Z
-EVSC,4993,Course 4993,John Porter,—,—,—,Fall 2025,1,2025-10-20T00:52:56.179Z
-EVSC,4993,Course 4993,Meghan Blumstein,—,—,—,Fall 2025,1,2025-10-20T00:52:56.179Z
-EVSC,4993,Course 4993,Stephen Macko,—,—,—,Spring 2025,—,2025-10-20T00:52:56.179Z
-EVSC,4993,Course 4993,Kevin Grise,—,—,—,Spring 2025,—,2025-10-20T00:52:56.179Z
-EVSC,4993,Course 4993,Scott Doney,—,—,—,Spring 2025,—,2025-10-20T00:52:56.179Z
-EVSC,4995,Course 4995,Manuel Lerdau,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Howard Epstein,3.79,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Stephen Macko,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Todd Scanlon,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Matthew Reidenbach,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,John Porter,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Robert Davis,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,David Carr,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Kyle Haynes,—,—,—,Fall 2025,2,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Stephan Wekker,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Sally Pusede,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Xi Yang,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Scott Doney,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Lauren Simkins,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Max Castorani,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Ajay Limaye,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Karen Mcglathery,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,T'ai Roulston,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Kathleen Schiro,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Charity Nyelele,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Justin Richardson,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Frederick Cheng,—,—,—,Fall 2025,1,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Michael Pace,—,—,—,Spring 2025,—,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Peter Berg,—,—,—,Spring 2025,—,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Brian Richter,—,—,—,Spring 2025,—,2025-10-20T00:53:02.081Z
-EVSC,4995,Course 4995,Stephan De Wekker,—,—,—,Spring 2025,—,2025-10-20T00:53:02.081Z
-EVSC,4999,Course 4999,Howard Epstein,—,—,—,Fall 2025,1,2025-10-20T00:53:08.055Z
-EVSC,4999,Course 4999,Peter Berg,—,—,—,Fall 2025,1,2025-10-20T00:53:08.055Z
-EVSC,4999,Course 4999,Todd Scanlon,—,—,—,Fall 2025,1,2025-10-20T00:53:08.055Z
-EVSC,4999,Course 4999,Matthew Reidenbach,—,—,—,Fall 2025,1,2025-10-20T00:53:08.055Z
-EVSC,4999,Course 4999,John Porter,—,—,—,Fall 2025,1,2025-10-20T00:53:08.055Z
-EVSC,4999,Course 4999,Robert Davis,—,—,—,Fall 2025,1,2025-10-20T00:53:08.055Z
-EVSC,4999,Course 4999,David Carr,—,—,—,Fall 2025,1,2025-10-20T00:53:08.055Z
-EVSC,4999,Course 4999,Stephan Wekker,—,—,—,Fall 2025,1,2025-10-20T00:53:08.055Z
-EVSC,4999,Course 4999,Xi Yang,—,—,—,Fall 2025,1,2025-10-20T00:53:08.055Z
-EVSC,4999,Course 4999,Lawrence Band,—,—,—,Fall 2025,1,2025-10-20T00:53:08.055Z
-EVSC,4999,Course 4999,Lauren Simkins,—,—,—,Fall 2025,1,2025-10-20T00:53:08.055Z
-EVSC,4999,Course 4999,T'ai Roulston,—,—,—,Fall 2025,2,2025-10-20T00:53:08.055Z
-EVSC,4999,Course 4999,Kathleen Schiro,—,—,—,Fall 2025,1,2025-10-20T00:53:08.055Z
-EVSC,4999,Course 4999,Charity Nyelele,—,—,—,Fall 2025,1,2025-10-20T00:53:08.055Z
-EVSC,4999,Course 4999,Antonios Mamalakis,—,—,—,Fall 2025,2,2025-10-20T00:53:08.055Z
-EVSC,4999,Course 4999,Frederick Cheng,—,—,—,Fall 2025,1,2025-10-20T00:53:08.055Z
-EVSC,4999,Course 4999,Michael Pace,—,—,—,Spring 2025,—,2025-10-20T00:53:08.055Z
-EVSC,4999,Course 4999,Max Castorani,—,—,—,Spring 2025,—,2025-10-20T00:53:08.055Z
-EVSC,5020,Course 5020,John Porter,3.62,—,—,Fall 2025,3,2025-10-20T00:53:14.037Z
-EVSC,5020,Course 5020,Mirella Shaban,—,—,—,Summer 2025,—,2025-10-20T00:53:14.037Z
-EVSC,5050,Course 5050,Stephen Macko,3.88,—,—,Summer 2025,—,2025-10-20T00:53:19.628Z
-EVSC,5559,Course 5559,Chris Mooney,3.58,2.67,3.00,Spring 2025,—,2025-10-20T00:53:29.634Z
-EVSC,7092,Course 7092,Frederick Cheng,—,—,—,Fall 2025,1,2025-10-20T00:54:06.526Z
-EVSC,7092,Course 7092,Meghan Blumstein,—,—,—,Fall 2025,1,2025-10-20T00:54:06.526Z
-EVSC,7092,Course 7092,Charity Nyelele,—,—,—,Spring 2025,—,2025-10-20T00:54:06.526Z
-EVSC,7092,Course 7092,Antonios Mamalakis,—,—,—,Fall 2024,—,2025-10-20T00:54:06.526Z
-EVSC,7559,Course 7559,Howard Epstein,—,—,—,Fall 2025,1,2025-10-20T00:54:11.839Z
-EVSC,7559,Course 7559,Antonios Mamalakis,—,—,—,Spring 2025,—,2025-10-20T00:54:11.839Z
-EVSC,8999,Course 8999,Manuel Lerdau,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Howard Epstein,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Peter Berg,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Stephen Macko,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Todd Scanlon,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Matthew Reidenbach,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Robert Davis,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,David Carr,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Kyle Haynes,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Kevin Grise,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Stephan Wekker,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Sally Pusede,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Xi Yang,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Lawrence Band,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Scott Doney,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Lauren Simkins,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Max Castorani,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Ajay Limaye,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Karen Mcglathery,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,T'ai Roulston,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Kathleen Schiro,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Charity Nyelele,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Justin Richardson,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Frederick Cheng,—,—,—,Fall 2025,1,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Michael Pace,—,—,—,Summer 2025,—,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Antonios Mamalakis,—,—,—,Summer 2025,—,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,John Porter,—,—,—,Spring 2025,—,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Stephan De Wekker,—,—,—,Spring 2025,—,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Deborah Lawrence,—,—,—,Fall 2024,—,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,Patricia Wiberg,—,—,—,Fall 2024,—,2025-10-20T00:54:17.982Z
-EVSC,8999,Course 8999,To Announced,—,—,—,Fall 2024,—,2025-10-20T00:54:17.982Z
-EVSC,9995,Course 9995,Howard Epstein,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Peter Berg,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Todd Scanlon,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Matthew Reidenbach,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Brian Richter,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Kyle Haynes,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Stephan Wekker,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Sally Pusede,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Xi Yang,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Lawrence Band,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Scott Doney,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Lauren Simkins,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Max Castorani,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Ajay Limaye,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Karen Mcglathery,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,T'ai Roulston,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Kathleen Schiro,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Charity Nyelele,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Frederick Cheng,—,—,—,Fall 2025,1,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Michael Pace,—,—,—,Spring 2025,—,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Stephen Macko,—,—,—,Spring 2025,—,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Kevin Grise,—,—,—,Spring 2025,—,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Stephan De Wekker,—,—,—,Spring 2025,—,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Linda Blum,—,—,—,Fall 2024,—,2025-10-20T00:54:24.164Z
-EVSC,9995,Course 9995,Patricia Wiberg,—,—,—,Fall 2024,—,2025-10-20T00:54:24.164Z
-EVSC,9999,Course 9999,Manuel Lerdau,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Howard Epstein,—,—,—,Fall 2025,2,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Peter Berg,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Stephen Macko,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Todd Scanlon,—,—,—,Fall 2025,2,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Matthew Reidenbach,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,John Porter,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Robert Davis,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,David Carr,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Kyle Haynes,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Kevin Grise,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Stephan Wekker,—,—,—,Fall 2025,2,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Sally Pusede,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Xi Yang,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Lawrence Band,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Scott Doney,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Lauren Simkins,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Max Castorani,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Ajay Limaye,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Karen Mcglathery,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,T'ai Roulston,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Kathleen Schiro,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,To Announced,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Charity Nyelele,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Justin Richardson,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Frederick Cheng,—,—,—,Fall 2025,1,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Michael Pace,—,—,—,Summer 2025,—,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Patricia Wiberg,—,—,—,Summer 2025,—,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Antonios Mamalakis,—,—,—,Summer 2025,—,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Stephan De Wekker,—,—,—,Spring 2025,—,2025-10-20T00:54:29.956Z
-EVSC,9999,Course 9999,Deborah Lawrence,—,—,—,Fall 2024,—,2025-10-20T00:54:29.956Z
-FREN,1000,Course 1000,To Announced,—,—,—,Spring 2025,—,2025-10-20T00:54:45.602Z
-FREN,1000,Course 1000,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:54:45.602Z
-FREN,1010,Course 1010,Cecile Rey,3.46,4.71,2.86,Fall 2025,1,2025-10-20T00:54:51.529Z
-FREN,1010,Course 1010,Faculty Staff,—,—,—,Fall 2025,2,2025-10-20T00:54:51.529Z
-FREN,1010,Course 1010,Anne Jurado,—,—,—,Spring 2025,—,2025-10-20T00:54:51.529Z
-FREN,1010,Course 1010,- -,—,—,—,Fall 2024,—,2025-10-20T00:54:51.529Z
-FREN,1020,Course 1020,Cecile Rey,3.52,4.33,3.33,Fall 2025,1,2025-10-20T00:54:56.913Z
-FREN,1020,Course 1020,Faculty Staff,—,—,—,Fall 2025,1,2025-10-20T00:54:56.913Z
-FREN,1020,Course 1020,- -,—,—,—,Fall 2024,—,2025-10-20T00:54:56.913Z
-FREN,1050,Course 1050,Faculty Staff,—,4.67,4.00,Fall 2025,1,2025-10-20T00:55:02.436Z
-FREN,1050,Course 1050,- -,—,—,—,Fall 2024,—,2025-10-20T00:55:02.436Z
-FREN,2010,Course 2010,Spyridon Simotas,3.65,—,—,Fall 2025,2,2025-10-20T00:55:08.307Z
-FREN,2010,Course 2010,Faculty Staff,—,4.00,3.00,Fall 2025,5,2025-10-20T00:55:08.307Z
-FREN,2010,Course 2010,Elizabeth Hall,3.55,4.63,2.13,Spring 2025,—,2025-10-20T00:55:08.307Z
-FREN,2010,Course 2010,- -,—,—,—,Fall 2024,—,2025-10-20T00:55:08.307Z
-FREN,2020,Course 2020,Rachel Geer,3.67,4.46,2.63,Fall 2025,1,2025-10-20T00:55:14.643Z
-FREN,2020,Course 2020,Faculty Staff,—,—,—,Fall 2025,4,2025-10-20T00:55:14.643Z
-FREN,2020,Course 2020,Christopher Ice,3.93,—,—,Spring 2025,—,2025-10-20T00:55:14.643Z
-FREN,2020,Course 2020,Spyridon Simotas,3.51,2.00,4.00,Fall 2024,—,2025-10-20T00:55:14.643Z
-FREN,2020,Course 2020,- -,—,—,—,Fall 2024,—,2025-10-20T00:55:14.643Z
-FREN,3029,Course 3029,Guillaume Bisson,—,5.00,1.00,Spring 2025,—,2025-10-20T00:55:20.013Z
-FREN,3030,Course 3030,Cecile Rey,—,—,—,Spring 2025,—,2025-10-20T00:55:25.151Z
-FREN,3031,Course 3031,Amy Ogden,3.29,3.33,3.00,Fall 2025,1,2025-10-20T00:55:30.403Z
-FREN,3031,Course 3031,Cheryl Krueger,3.63,4.60,3.20,Fall 2025,1,2025-10-20T00:55:30.403Z
-FREN,3031,Course 3031,Rachel Geer,3.65,4.50,3.50,Fall 2025,1,2025-10-20T00:55:30.403Z
-FREN,3031,Course 3031,Karen James,3.73,4.33,3.00,Spring 2025,—,2025-10-20T00:55:30.403Z
-FREN,3031,Course 3031,Spyridon Simotas,3.61,4.67,2.00,Fall 2024,—,2025-10-20T00:55:30.403Z
-FREN,3036,Course 3036,Elizabeth Hall,3.90,4.44,2.33,Fall 2024,—,2025-10-20T00:55:35.812Z
-FREN,3040,Course 3040,Elizabeth Hall,—,—,—,Fall 2025,1,2025-10-20T00:55:40.996Z
-FREN,3040,Course 3040,To Announced,—,—,—,Fall 2025,1,2025-10-20T00:55:40.996Z
-FREN,3043,Course 3043,Claire Lyu,3.80,3.67,3.50,Spring 2025,—,2025-10-20T00:55:46.122Z
-FREN,3043,Course 3043,Ari Blatt,3.77,4.53,2.27,Fall 2024,—,2025-10-20T00:55:46.122Z
-FREN,4999,Course 4999,Jennifer Tsien,—,—,—,Spring 2025,—,2025-10-20T00:56:21.852Z
-FREN,5510,Course 5510,Amy Ogden,—,—,—,Fall 2024,—,2025-10-20T00:56:27.381Z
-FREN,5560,Course 5560,Cheryl Krueger,—,—,—,Spring 2025,—,2025-10-20T00:56:33.030Z
-FREN,5585,Course 5585,Ferial Boutaghou,3.20,—,—,Fall 2025,1,2025-10-20T00:56:38.128Z
-FREN,5585,Course 5585,Janet Horne,—,—,—,Spring 2025,—,2025-10-20T00:56:38.128Z
-FREN,5585,Course 5585,Jennifer Sessions,—,—,—,Spring 2025,—,2025-10-20T00:56:38.128Z
-FREN,8510,Course 8510,Amy Ogden,3.76,—,—,Fall 2024,—,2025-10-20T00:56:43.759Z
-FREN,8560,Course 8560,Cheryl Krueger,3.63,—,—,Spring 2025,—,2025-10-20T00:56:49.025Z
-FREN,8585,Course 8585,Ferial Boutaghou,3.90,—,—,Fall 2025,1,2025-10-20T00:56:54.572Z
-FREN,8585,Course 8585,Janet Horne,—,—,—,Spring 2025,—,2025-10-20T00:56:54.572Z
-FREN,8585,Course 8585,Jennifer Sessions,—,—,—,Spring 2025,—,2025-10-20T00:56:54.572Z
-FREN,9998,Course 9998,Claire Lyu,—,—,—,Fall 2025,1,2025-10-20T00:57:00.117Z
-FREN,9999,Course 9999,Amy Ogden,—,—,—,Fall 2025,1,2025-10-20T00:57:06.173Z
-FREN,9999,Course 9999,Cheryl Krueger,—,—,—,Fall 2025,1,2025-10-20T00:57:06.173Z
-FREN,9999,Course 9999,Alison Levine,—,—,—,Fall 2025,1,2025-10-20T00:57:06.173Z
-FREN,9999,Course 9999,Claire Lyu,—,—,—,Fall 2025,1,2025-10-20T00:57:06.173Z
-FREN,9999,Course 9999,Ari Blatt,—,—,—,Fall 2025,1,2025-10-20T00:57:06.173Z
-FREN,9999,Course 9999,Jennifer Tsien,—,—,—,Fall 2025,1,2025-10-20T00:57:06.173Z
-FREN,9999,Course 9999,Janet Horne,—,—,—,Fall 2025,1,2025-10-20T00:57:06.173Z
-FREN,9999,Course 9999,Deborah McGrady,—,—,—,Fall 2025,1,2025-10-20T00:57:06.173Z
-FREN,9999,Course 9999,Ferial Boutaghou,—,—,—,Fall 2025,1,2025-10-20T00:57:06.173Z
-FREN,9999,Course 9999,Gary Ferguson,—,—,—,Fall 2025,1,2025-10-20T00:57:06.173Z
-GERM,1010,Course 1010,Stefanie Parker,3.91,—,—,Fall 2025,2,2025-10-20T00:57:20.522Z
-GERM,1010,Course 1010,To Announced,—,—,—,Fall 2025,1,2025-10-20T00:57:20.522Z
-GERM,1010,Course 1010,Cora Schenberg,3.71,4.75,1.75,Spring 2025,—,2025-10-20T00:57:20.522Z
-GERM,1010,Course 1010,Paul Dobryden,3.77,5.00,2.00,Fall 2024,—,2025-10-20T00:57:20.522Z
-GERM,1020,Course 1020,Marcel Schmid,—,—,—,Fall 2025,1,2025-10-20T00:57:26.439Z
-GERM,1020,Course 1020,Stefanie Parker,3.48,4.00,3.00,Spring 2025,—,2025-10-20T00:57:26.439Z
-GERM,1020,Course 1020,Klara Lahme,—,—,—,Spring 2025,—,2025-10-20T00:57:26.439Z
-GERM,1020,Course 1020,To Announced,—,—,—,Fall 2024,—,2025-10-20T00:57:26.439Z
-GERM,2010,Course 2010,Cora Schenberg,3.77,4.00,2.00,Fall 2025,2,2025-10-20T00:57:32.463Z
-GERM,2010,Course 2010,Chrisann Zuerner,—,—,—,Spring 2025,—,2025-10-20T00:57:32.463Z
-GERM,2010,Course 2010,Stefanie Parker,3.56,3.11,2.33,Fall 2024,—,2025-10-20T00:57:32.463Z
-GERM,2010,Course 2010,To Announced,—,—,—,Fall 2024,—,2025-10-20T00:57:32.463Z
-GERM,2020,Course 2020,Chrisann Zuerner,3.77,4.67,1.00,Fall 2025,2,2025-10-20T00:57:38.117Z
-GERM,2020,Course 2020,Stefanie Parker,3.56,2.56,2.00,Spring 2025,—,2025-10-20T00:57:38.117Z
-GERM,2020,Course 2020,Julia Gutterman,3.67,—,—,Spring 2025,—,2025-10-20T00:57:38.117Z
-GERM,3000,Course 3000,Michael Wellmon,—,—,—,Fall 2025,1,2025-10-20T00:57:43.533Z
-GERM,3000,Course 3000,Marcel Schmid,3.92,—,—,Spring 2025,—,2025-10-20T00:57:43.533Z
-GERM,3230,Course 3230,Benjamin Bennett,—,—,—,Fall 2024,—,2025-10-20T00:57:48.736Z
-GERM,3290,Course 3290,To Announced,—,—,—,Fall 2025,1,2025-10-20T00:57:54.168Z
-GERM,3290,Course 3290,Klara Lahme,—,—,—,Spring 2025,—,2025-10-20T00:57:54.168Z
-GERM,3300,Course 3300,Stefanie Parker,—,—,—,Fall 2025,1,2025-10-20T00:57:59.223Z
-GERM,4600,Course 4600,Benjamin Bennett,—,1.00,3.00,Spring 2025,—,2025-10-20T00:58:04.584Z
-GERM,8995,Course 8995,Paul Dobryden,—,—,—,Spring 2025,—,2025-10-20T00:58:09.699Z
-GERM,8998,Course 8998,William McDonald,—,—,—,Fall 2025,1,2025-10-20T00:58:14.937Z
-GERM,8998,Course 8998,Michael Wellmon,—,—,—,Fall 2025,1,2025-10-20T00:58:14.937Z
-GERM,8998,Course 8998,Jeffrey Grossman,—,—,—,Spring 2025,—,2025-10-20T00:58:14.937Z
-GERM,8999,Course 8999,Jeffrey Grossman,—,—,—,Fall 2025,1,2025-10-20T00:58:20.159Z
-GERM,8999,Course 8999,To Announced,—,—,—,Fall 2025,1,2025-10-20T00:58:20.159Z
-GERM,8999,Course 8999,Benjamin Bennett,—,—,—,Spring 2025,—,2025-10-20T00:58:20.159Z
-GERM,9998,Course 9998,Jeffrey Grossman,—,—,—,Fall 2025,1,2025-10-20T00:58:25.537Z
-GERM,9998,Course 9998,To Announced,—,—,—,Fall 2025,1,2025-10-20T00:58:25.537Z
-GERM,9998,Course 9998,Lorna Martens,—,—,—,Spring 2025,—,2025-10-20T00:58:25.537Z
-GERM,9998,Course 9998,William McDonald,—,—,—,Spring 2025,—,2025-10-20T00:58:25.537Z
-GERM,9998,Course 9998,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:58:25.537Z
-GERM,9999,Course 9999,William McDonald,—,—,—,Fall 2025,1,2025-10-20T00:58:30.912Z
-GERM,9999,Course 9999,Jeffrey Grossman,—,—,—,Fall 2025,1,2025-10-20T00:58:30.912Z
-GERM,9999,Course 9999,Benjamin Bennett,—,—,—,Fall 2025,1,2025-10-20T00:58:30.912Z
-GERM,9999,Course 9999,Michael Wellmon,—,—,—,Fall 2025,1,2025-10-20T00:58:30.912Z
-GERM,9999,Course 9999,Lorna Martens,—,—,—,Spring 2025,—,2025-10-20T00:58:30.912Z
-GERM,9999,Course 9999,To Announced,—,—,—,Spring 2025,—,2025-10-20T00:58:30.912Z
-GERM,9999,Course 9999,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:58:30.912Z
-HIST,1501,Course 1501,William Hitchcock,3.57,—,—,Fall 2024,—,2025-10-20T00:58:52.667Z
-HIST,2014,Course 2014,Manuela Achilles,3.71,4.00,2.00,Spring 2025,—,2025-10-20T00:58:58.420Z
-HIST,2014,Course 2014,Kyrill Kunakhovich,—,—,—,Spring 2025,—,2025-10-20T00:58:58.420Z
-HIST,2014,Course 2014,To Announced,—,—,—,Spring 2025,—,2025-10-20T00:58:58.420Z
-HIST,2014,Course 2014,To Be Announced,—,—,—,Spring 2025,—,2025-10-20T00:58:58.420Z
-HIST,2214,Course 2214,William Hitchcock,3.50,4.85,2.85,Fall 2024,—,2025-10-20T00:59:14.672Z
-HIST,2214,Course 2214,To Announced,—,—,—,Fall 2024,—,2025-10-20T00:59:14.672Z
-HIST,3501,Course 3501,Christian McMillen,—,—,—,Fall 2025,1,2025-10-20T00:59:31.518Z
-HIST,3501,Course 3501,Amir Syed,3.68,—,—,Fall 2025,1,2025-10-20T00:59:31.518Z
-HIST,3501,Course 3501,S. Edelson,—,—,—,Summer 2025,—,2025-10-20T00:59:31.518Z
-HIST,3501,Course 3501,John Mason,—,—,—,Spring 2025,—,2025-10-20T00:59:31.518Z
-HIST,3501,Course 3501,Brian Owensby,—,—,—,Spring 2025,—,2025-10-20T00:59:31.518Z
-HIST,3501,Course 3501,Erin Lambert,3.77,5.00,2.00,Fall 2024,—,2025-10-20T00:59:31.518Z
-HIST,3559,Course 3559,Jennifer Sessions,—,—,—,Spring 2025,—,2025-10-20T00:59:39.034Z
-HIST,3861,Course 3861,Laurent Dubois,3.87,—,—,Spring 2025,—,2025-10-20T00:59:44.496Z
-HIST,4501,Course 4501,Paul Halliday,—,—,—,Fall 2025,1,2025-10-20T00:59:57.352Z
-HIST,4501,Course 4501,Jeffrey Rossman,3.25,—,—,Fall 2025,1,2025-10-20T00:59:57.352Z
-HIST,4501,Course 4501,Paul Kershaw,3.30,—,—,Spring 2025,—,2025-10-20T00:59:57.352Z
-HIST,4991,Course 4991,Kyrill Kunakhovich,—,—,—,Spring 2025,—,2025-10-20T01:00:03.802Z
-HIST,5351,Course 5351,Mark Thomas,2.49,—,—,Spring 2025,—,2025-10-20T01:00:11.325Z
-HIST,5559,Course 5559,Joseph Seeley,—,—,—,Fall 2025,1,2025-10-20T01:00:18.853Z
-HIST,8001,Course 8001,Erin Lambert,—,—,—,Spring 2025,—,2025-10-20T01:00:30.822Z
-HIST,8999,Course 8999,Grace Hale,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Cong Zhang,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Jon Lendon,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Paul Kershaw,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Paul Halliday,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Thomas Klubock,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Brian Owensby,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,William Hitchcock,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Erin Lambert,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Elizabeth Meyer,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Xiaoyuan Liu,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Christa Dierksheide,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Andrew Kahrl,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Kyrill Kunakhovich,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Fahad Bishara,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Christopher Gratien,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Penny Eschen,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Caroline Janney,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Justene Edwards,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Kristina Richardson,—,—,—,Fall 2025,1,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Philip Zelikow,—,—,—,Spring 2025,—,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Elizabeth Varon,—,—,—,Spring 2025,—,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Alan Taylor,—,—,—,Spring 2025,—,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Joshua White,—,—,—,Spring 2025,—,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Erik Linstrum,—,—,—,Spring 2025,—,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,S. Edelson,—,—,—,Spring 2025,—,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Penny Von Eschen,—,—,—,Spring 2025,—,2025-10-20T01:00:42.983Z
-HIST,8999,Course 8999,Justene Hill Edwards,—,—,—,Spring 2025,—,2025-10-20T01:00:42.983Z
-HIST,9962,Course 9962,Cong Zhang,—,—,—,Spring 2025,—,2025-10-20T01:00:49.542Z
-HIST,9962,Course 9962,Brian Owensby,—,—,—,Spring 2025,—,2025-10-20T01:00:49.542Z
-HIST,9962,Course 9962,William Hitchcock,—,—,—,Spring 2025,—,2025-10-20T01:00:49.542Z
-HIST,9962,Course 9962,Xiaoyuan Liu,—,—,—,Spring 2025,—,2025-10-20T01:00:49.542Z
-HIST,9962,Course 9962,Caroline Janney,—,—,—,Spring 2025,—,2025-10-20T01:00:49.542Z
-HIST,9999,Course 9999,Claudrena Harold,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Grace Hale,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,James Loeffler,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Paul Halliday,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Thomas Klubock,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Neeti Nair,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,William Hitchcock,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Philip Zelikow,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Elizabeth Varon,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Erin Lambert,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Joshua White,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Elizabeth Meyer,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Xiaoyuan Liu,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Erik Linstrum,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Christa Dierksheide,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Andrew Kahrl,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Fahad Bishara,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Kevin Gaines,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Penny Eschen,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Caroline Janney,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,S. Edelson,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Justene Edwards,—,—,—,Fall 2025,1,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Manuela Achilles,—,—,—,Spring 2025,—,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Paul Kershaw,—,—,—,Spring 2025,—,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Alan Taylor,—,—,—,Spring 2025,—,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Sarah Milov,—,—,—,Spring 2025,—,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Christopher Gratien,—,—,—,Spring 2025,—,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Penny Von Eschen,—,—,—,Spring 2025,—,2025-10-20T01:01:03.776Z
-HIST,9999,Course 9999,Justene Hill Edwards,—,—,—,Spring 2025,—,2025-10-20T01:01:03.776Z
-HIAF,3051,Course 3051,James Fleur,—,—,—,Spring 2025,—,2025-10-20T01:01:24.014Z
-HIAF,3051,Course 3051,James La Fleur,—,—,—,Spring 2025,—,2025-10-20T01:01:24.014Z
-HIAF,3501,Course 3501,James Fleur,—,—,—,Fall 2025,1,2025-10-20T01:01:29.397Z
 HIEU,1501,Course 1501,Jennifer Sessions,—,—,—,Fall 2025,1,2025-10-20T01:01:50.281Z
 HIEU,2041,Course 2041,Elizabeth Meyer,2.99,2.44,4.33,Spring 2025,—,2025-10-20T01:01:55.988Z
 HIEU,2041,Course 2041,To Announced,—,—,—,Spring 2025,—,2025-10-20T01:01:55.988Z
@@ -1920,16 +1261,6 @@ SLAV,8999,Course 8999,To Announced,—,—,—,Fall 2025,1,2025-10-23T21:45:35.7
 SLAV,8999,Course 8999,Edith Clowes,—,—,—,Spring 2025,—,2025-10-23T21:45:35.761Z
 SLAV,9998,Course 9998,Edith Clowes,—,—,—,Fall 2025,1,2025-10-23T21:45:40.934Z
 SLAV,9999,Course 9999,Edith Clowes,—,—,—,Fall 2025,1,2025-10-23T21:45:46.313Z
-KOR,1020,Course 1020,YOON CHOI,3.69,-0.3,-1.0,Spring 2026,N/A,2026-04-07T03:22:56.357Z
-KOR,1020,Course 1020,Juyeon Chung,3.67,5.0,2.0,Spring 2026,N/A,2026-04-07T03:22:56.357Z
-KOR,1020,Course 1020,YOON HWA CHOI,-1.00,-0.3,-1.0,Spring 2025,N/A,2026-04-07T03:22:56.357Z
-KOR,2020,Course 2020,Rosa Han,3.46,-0.3,-1.0,Spring 2026,N/A,2026-04-07T03:22:59.305Z
-KOR,2020,Course 2020,YOON CHOI,4.00,-0.3,-1.0,Summer 2025,N/A,2026-04-07T03:22:59.305Z
-KOR,2060,Course 2060,Juyeon Chung,3.32,-0.3,-1.0,Spring 2026,N/A,2026-04-07T03:23:02.317Z
-KOR,2559,Course 2559,Juyeon Chung,-1.00,-0.3,-1.0,Spring 2026,N/A,2026-04-07T03:23:05.265Z
-KOR,3015,Course 3015,Rosa Han,-1.00,-0.3,-1.0,Fall 2026,tba,2026-04-07T03:23:08.237Z
-KOR,3020,Course 3020,Rosa Han,-1.00,-0.3,-1.0,Spring 2026,N/A,2026-04-07T03:23:11.211Z
-KOR,3559,Course 3559,YOON CHOI,-1.00,4.7,1.0,Spring 2026,N/A,2026-04-07T03:23:14.170Z
 CS,1110,Course 1110,Arohi Khargonkar,3.40,3.7,2.9,Fall 2026,mowefr 11:00am - 11:50am; mowefr 9:00am - 9:50am,2026-08-04T02:50:16.534Z
 CS,1112,Course 1112,Nada Basit,3.91,4.5,2.0,Fall 2026,mowefr 12:30pm - 1:45pm; mowefr 2:00pm - 3:15pm,2026-08-04T02:50:19.467Z
 CS,2100,Course 2100,Briana Morrison,3.49,3.0,2.9,Fall 2026,mowefr 11:00am - 11:50am; mowefr 2:00pm - 2:50pm,2026-08-04T02:50:25.294Z
@@ -3362,3 +2693,496 @@ JAPN,2010,Course 2010,Yoko Hasegawa,—,—,—,Fall 2026,motuweth 11:00am - 11:
 JAPN,3010,Course 3010,Mieko Kawai,3.54,—,—,Fall 2026,mowefr 9:00am - 9:50am,2026-08-04T03:15:20.730Z
 JAPN,3015,Course 3015,Yoko Hasegawa,—,—,—,Fall 2026,tba,2026-08-04T03:15:23.651Z
 JAPN,3050,Course 3050,Mieko Kawai,3.55,—,—,Fall 2026,tuth 12:30pm - 1:45pm,2026-08-04T03:15:26.557Z
+KOR,1010,Course 1010,YOON CHOI,3.50,4.8,3.0,Fall 2026,motuweth 10:00am - 10:50am; motuweth 11:00am - 11:50am,2026-08-04T03:15:42.686Z
+KOR,1010,Course 1010,Rosa Han,—,—,—,Fall 2026,motuweth 12:00pm - 12:50pm; motuweth 1:00pm - 1:50pm,2026-08-04T03:15:42.689Z
+KOR,1060,Course 1060,Juyeon Chung,3.44,3.0,3.0,Fall 2026,mowefr 9:00am - 9:50am,2026-08-04T03:15:45.622Z
+KOR,2010,Course 2010,Juyeon Chung,—,—,—,Fall 2026,motuweth 11:00am - 11:50am; motuweth 10:00am - 10:50am,2026-08-04T03:15:48.545Z
+KOR,3010,Course 3010,Rosa Han,3.61,3.7,4.5,Fall 2026,tuth 2:00pm - 3:15pm,2026-08-04T03:15:51.478Z
+KOR,3015,Course 3015,Rosa Han,—,—,—,Fall 2026,tba,2026-08-04T03:15:54.387Z
+EALC,4998,Course 4998,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:16:07.351Z
+ECON,1100,Course 1100,Edwin Burton,3.92,—,—,Fall 2026,N/A,2026-08-04T03:16:28.849Z
+ECON,2010,Course 2010,Jessica Kripalani,3.37,3.3,3.1,Fall 2026,mowe 12:00pm - 12:50pm; mowe 10:00am - 10:50am,2026-08-04T03:16:31.796Z
+ECON,2010,Course 2010,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:16:31.796Z
+ECON,2010,Course 2010,Alexander Mackay,—,2.0,4.0,Fall 2026,tuth 11:00am - 12:15pm; tuth 12:30pm - 1:45pm,2026-08-04T03:16:31.796Z
+ECON,2020,Course 2020,Carter Doyle,3.13,3.3,3.1,Fall 2026,mowe 9:00am - 9:50am,2026-08-04T03:16:34.732Z
+ECON,2020,Course 2020,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:16:34.732Z
+ECON,2070,Course 2070,Amalia Miller,3.31,1.3,3.0,Fall 2026,tuth 12:30pm - 1:45pm,2026-08-04T03:16:37.687Z
+ECON,2070,Course 2070,To Announced,—,3.0,2.0,Fall 2026,N/A,2026-08-04T03:16:37.687Z
+ECON,3010,Course 3010,Peter Troyan,3.13,3.3,4.1,Fall 2026,mowe 2:00pm - 3:15pm,2026-08-04T03:16:40.619Z
+ECON,3010,Course 3010,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:16:40.619Z
+ECON,3010,Course 3010,Marc Santugini,3.08,3.8,4.6,Fall 2026,tuth 11:00am - 12:15pm; tuth 2:00pm - 3:15pm,2026-08-04T03:16:40.619Z
+ECON,3010,Course 3010,Po Lin,3.04,4.2,4.7,Fall 2026,tuth 5:00pm - 6:15pm; tuth 2:00pm - 3:15pm,2026-08-04T03:16:40.619Z
+ECON,3020,Course 3020,Maria Westerfield,3.35,3.8,3.3,Fall 2026,tuth 3:30pm - 4:45pm,2026-08-04T03:16:43.552Z
+ECON,3020,Course 3020,To Announced,—,1.7,5.0,Fall 2026,N/A,2026-08-04T03:16:43.552Z
+ECON,3020,Course 3020,Chang He,3.34,3.7,2.0,Fall 2026,mowe 9:00am - 9:50am; mowe 10:00am - 10:50am,2026-08-04T03:16:43.552Z
+ECON,3030,Course 3030,Carter Doyle,3.27,3.4,3.6,Fall 2026,mowe 1:00pm - 1:50pm; mowe 12:00pm - 12:50pm,2026-08-04T03:16:46.487Z
+ECON,3030,Course 3030,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:16:46.487Z
+ECON,3040,Course 3040,Sarah Turner,3.27,3.9,2.9,Fall 2026,mowe 11:00am - 11:50am,2026-08-04T03:16:49.419Z
+ECON,3040,Course 3040,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:16:49.419Z
+ECON,3110,Course 3110,Maxim Engers,3.46,4.0,4.3,Fall 2026,tuth 11:00am - 12:15pm,2026-08-04T03:16:52.351Z
+ECON,3110,Course 3110,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:16:52.351Z
+ECON,3720,Course 3720,Leland Farmer,3.02,3.2,3.9,Fall 2026,tuth 12:30pm - 1:45pm; tuth 2:00pm - 3:15pm,2026-08-04T03:17:00.322Z
+ECON,3720,Course 3720,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:17:00.323Z
+ECON,4010,Course 4010,Maxim Engers,3.35,3.9,4.5,Fall 2026,tuth 2:00pm - 3:15pm,2026-08-04T03:17:03.264Z
+ECON,4010,Course 4010,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:17:03.264Z
+ECON,4080,Course 4080,Maria Westerfield,3.51,3.9,2.2,Fall 2026,tuth 2:00pm - 3:15pm,2026-08-04T03:17:06.237Z
+ECON,4170,Course 4170,Marc Santugini,3.62,4.3,3.0,Fall 2026,mowe 3:30pm - 4:45pm,2026-08-04T03:17:09.170Z
+ECON,4190,Course 4190,Federico Ciliberto,3.33,3.8,4.5,Fall 2026,mowe 8:30am - 9:45am,2026-08-04T03:17:12.102Z
+ECON,4190,Course 4190,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:17:12.102Z
+ECON,4210,Course 4210,John Mclaren,—,2.7,4.0,Fall 2026,tuth 5:00pm - 6:15pm,2026-08-04T03:17:15.041Z
+ECON,4210,Course 4210,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:17:15.041Z
+ECON,4220,Course 4220,Eric Wincoop,3.39,3.3,3.0,Fall 2026,tuth 9:30am - 10:45am,2026-08-04T03:17:17.977Z
+ECON,4300,Course 4300,Lee Coppock,3.56,4.9,4.0,Fall 2026,tuth 9:30am - 10:45am; tuth 8:00am - 9:15am,2026-08-04T03:17:20.902Z
+ECON,4310,Course 4310,Jessica Kripalani,3.51,4.7,3.0,Fall 2026,mowe 2:00pm - 3:15pm,2026-08-04T03:17:23.824Z
+ECON,4310,Course 4310,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:17:23.824Z
+ECON,4340,Course 4340,Edwin Burton,3.28,3.3,2.9,Fall 2026,tuth 9:30am - 10:45am,2026-08-04T03:17:26.753Z
+ECON,4350,Course 4350,Christopher Mcgee,3.21,2.4,2.9,Fall 2026,tuth 5:00pm - 6:15pm,2026-08-04T03:17:29.684Z
+ECON,4350,Course 4350,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:17:29.684Z
+ECON,4390,Course 4390,Simon Anderson,3.25,2.7,4.3,Fall 2026,tuth 2:00pm - 3:15pm,2026-08-04T03:17:32.608Z
+ECON,4430,Course 4430,Sheetal Sekhri,3.59,3.3,2.7,Fall 2026,tuth 11:00am - 12:15pm; tuth 2:00pm - 3:15pm,2026-08-04T03:17:35.543Z
+ECON,4430,Course 4430,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:17:35.543Z
+ECON,4720,Course 4720,Denis Nekipelov,3.31,1.7,3.5,Fall 2026,mowe 3:30pm - 4:45pm,2026-08-04T03:17:38.471Z
+ECON,4720,Course 4720,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:17:38.471Z
+ECON,4990,Course 4990,Kerem Cosar,—,—,—,Fall 2026,tuth 3:30pm - 4:45pm,2026-08-04T03:17:41.400Z
+ECON,4993,Course 4993,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:17:44.329Z
+ECON,5090,Course 5090,Shan Aman-Rana,3.88,—,—,Fall 2026,tuth 11:00am - 12:15pm,2026-08-04T03:17:47.265Z
+ECON,5090,Course 5090,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:17:47.265Z
+ECON,7010,Course 7010,Peter Troyan,3.36,4.7,4.0,Fall 2026,tu 3:30pm - 6:00pm,2026-08-04T03:17:50.195Z
+ECON,7010,Course 7010,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:17:50.195Z
+ECON,7020,Course 7020,Eric Young,3.44,—,—,Fall 2026,mowe 11:00am - 11:50am,2026-08-04T03:17:53.116Z
+ECON,7020,Course 7020,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:17:53.116Z
+ECON,7710,Course 7710,Denis Nekipelov,3.40,—,—,Fall 2026,mowe 2:00pm - 3:15pm,2026-08-04T03:17:56.036Z
+ECON,7710,Course 7710,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:17:56.036Z
+ECON,8170,Course 8170,Simon Anderson,3.36,—,—,Fall 2026,tuth 11:00am - 12:15pm,2026-08-04T03:18:01.887Z
+ECON,8210,Course 8210,John Mclaren,3.52,—,—,Fall 2026,tuth 2:00pm - 3:15pm,2026-08-04T03:18:04.799Z
+ECON,8310,Course 8310,Lee Lockwood,3.74,—,—,Fall 2026,tuth 9:30am - 10:45am,2026-08-04T03:18:07.718Z
+ECON,8350,Course 8350,Eric Young,3.99,—,—,Fall 2026,mowe 2:00pm - 3:15pm,2026-08-04T03:18:10.630Z
+ECON,8410,Course 8410,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:18:13.557Z
+ECON,8420,Course 8420,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:18:16.477Z
+ECON,8430,Course 8430,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:18:19.396Z
+ECON,8440,Course 8440,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:18:22.328Z
+ECON,8450,Course 8450,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:18:25.257Z
+ECON,8470,Course 8470,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:18:28.181Z
+ECON,8480,Course 8480,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:18:31.109Z
+ECON,8710,Course 8710,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:18:36.997Z
+ECON,8710,Course 8710,Ahnaf Rafi,—,—,—,Fall 2026,mowe 9:00am - 9:50am,2026-08-04T03:18:36.997Z
+ECON,8745,Course 8745,Eric Young,—,—,—,Fall 2026,tuth 12:30pm - 1:45pm,2026-08-04T03:18:39.915Z
+ECON,8991,Course 8991,Ana Fostel,—,—,—,Fall 2026,N/A,2026-08-04T03:18:45.803Z
+ECON,8991,Course 8991,Sandip Sukhtankar,3.99,—,—,Fall 2026,N/A,2026-08-04T03:18:45.803Z
+ECON,8995,Course 8995,Peter Troyan,—,—,—,Fall 2026,N/A,2026-08-04T03:18:48.756Z
+ECON,8998,Course 8998,Simon Anderson,—,—,—,Fall 2026,N/A,2026-08-04T03:18:51.666Z
+ECON,8998,Course 8998,Amalia Miller,—,—,—,Fall 2026,N/A,2026-08-04T03:18:51.666Z
+ECON,8999,Course 8999,James Harrigan,—,—,—,Fall 2026,N/A,2026-08-04T03:18:54.578Z
+ECON,9998,Course 9998,Peter Troyan,—,—,—,Fall 2026,N/A,2026-08-04T03:18:57.505Z
+ECON,9999,Course 9999,Charles Holt,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Federico Ciliberto,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Sarah Turner,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Maxim Engers,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,James Harrigan,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Simon Anderson,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Sheetal Sekhri,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,John Pepper,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Leora Friedberg,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Eric Young,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Amalia Miller,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Peter Troyan,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Denis Nekipelov,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Eric Wincoop,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Ana Fostel,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Sandip Sukhtankar,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Jonathan Colmer,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Lee Lockwood,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Anton Korinek,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Eric Leeper,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,John Mclaren,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Shan Aman-Rana,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Kerem Cosar,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Vladimir Smirnyagin,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Emma Harrington,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Jack Fisher,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Alexander Mackay,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ECON,9999,Course 9999,Ahnaf Rafi,—,—,—,Fall 2026,N/A,2026-08-04T03:19:00.446Z
+ENGL,2500,Course 2500,John O'Brien,3.57,—,—,Fall 2026,N/A,2026-08-04T03:19:12.792Z
+ENGL,2500,Course 2500,Walter Jost,3.62,—,—,Fall 2026,N/A,2026-08-04T03:19:12.792Z
+ENGL,2500,Course 2500,Kate Stephenson,—,—,—,Fall 2026,N/A,2026-08-04T03:19:12.792Z
+ENGL,2506,Course 2506,Alison Booth,—,—,—,Fall 2026,N/A,2026-08-04T03:19:15.737Z
+ENGL,2506,Course 2506,Emily Ogden,3.80,—,—,Fall 2026,N/A,2026-08-04T03:19:15.737Z
+ENGL,2508,Course 2508,Stephen Arata,3.47,4.3,2.5,Fall 2026,N/A,2026-08-04T03:19:21.588Z
+ENGL,2508,Course 2508,James Kinney,3.44,1.2,3.0,Fall 2026,N/A,2026-08-04T03:19:21.588Z
+ENGL,2508,Course 2508,Alison Cotti-Lowell,—,—,—,Fall 2026,N/A,2026-08-04T03:19:21.588Z
+ENGL,2527,Course 2527,Katharine Maus,3.40,1.7,2.0,Fall 2026,N/A,2026-08-04T03:19:24.509Z
+ENGL,2599,Course 2599,Jon D'Errico,3.73,—,—,Fall 2026,N/A,2026-08-04T03:19:27.446Z
+ENGL,2599,Course 2599,Charity Fowler,3.95,—,—,Fall 2026,N/A,2026-08-04T03:19:27.446Z
+ENGL,2599,Course 2599,K. Grandison,3.68,2.7,3.0,Fall 2026,N/A,2026-08-04T03:19:27.446Z
+ENGL,2599,Course 2599,Nasrin Olla,3.64,2.0,3.0,Fall 2026,N/A,2026-08-04T03:19:27.446Z
+ENGL,2599,Course 2599,Joshua Miller,3.84,—,—,Fall 2026,N/A,2026-08-04T03:19:27.446Z
+ENGL,3001,Course 3001,Rebecca Rush,3.55,3.7,3.0,Fall 2026,mowe 12:00pm - 12:50pm,2026-08-04T03:19:30.382Z
+ENGL,3001,Course 3001,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:19:30.382Z
+ENGL,3271,Course 3271,Katharine Maus,3.21,4.8,3.5,Fall 2026,mowe 11:00am - 11:50am,2026-08-04T03:19:33.351Z
+ENGL,3271,Course 3271,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:19:33.351Z
+ENGL,3320,Course 3320,Brad Pasanek,—,—,—,Fall 2026,tuth 12:30pm - 1:45pm,2026-08-04T03:19:36.283Z
+ENGL,3480,Course 3480,Victoria Baena,—,—,—,Fall 2026,tuth 12:30pm - 1:45pm,2026-08-04T03:19:39.221Z
+ENGL,3560,Course 3560,Mark Edmundson,3.71,4.3,2.0,Fall 2026,tuth 3:30pm - 4:45pm,2026-08-04T03:19:48.033Z
+ENGL,3560,Course 3560,Joshua Miller,3.73,—,—,Fall 2026,tuth 12:30pm - 1:45pm,2026-08-04T03:19:48.033Z
+ENGL,3570,Course 3570,Lisa Goff,—,—,—,Fall 2026,tuth 12:30pm - 1:45pm,2026-08-04T03:19:50.965Z
+ENGL,3570,Course 3570,Marlon Ross,—,—,—,Fall 2026,tuth 2:00pm - 3:15pm,2026-08-04T03:19:50.965Z
+ENGL,3570,Course 3570,K. Grandison,—,—,—,Fall 2026,tuth 2:00pm - 3:15pm,2026-08-04T03:19:50.965Z
+ENGL,3572,Course 3572,Marlon Ross,3.45,—,—,Fall 2026,tuth 9:30am - 10:45am,2026-08-04T03:19:53.929Z
+ENGL,3791,Course 3791,Sylvia Chong,3.61,—,—,Fall 2026,N/A,2026-08-04T03:19:59.783Z
+ENGL,3915,Course 3915,Lisa Goff,3.59,—,—,Fall 2026,N/A,2026-08-04T03:20:02.852Z
+ENGL,4500,Course 4500,Jennifer Greeson,—,—,—,Fall 2026,N/A,2026-08-04T03:20:05.774Z
+ENGL,4500,Course 4500,Cynthia Wall,3.38,3.3,4.0,Fall 2026,N/A,2026-08-04T03:20:05.774Z
+ENGL,4510,Course 4510,Clare Kinney,—,—,—,Fall 2026,N/A,2026-08-04T03:20:08.691Z
+ENGL,4520,Course 4520,James Kinney,3.55,—,—,Fall 2026,N/A,2026-08-04T03:20:11.611Z
+ENGL,4530,Course 4530,Brad Pasanek,—,—,—,Fall 2026,N/A,2026-08-04T03:20:14.527Z
+ENGL,4540,Course 4540,Taylor Schey,—,5.0,3.0,Fall 2026,N/A,2026-08-04T03:20:17.451Z
+ENGL,4559,Course 4559,Matthew Kirschenbaum,—,—,—,Fall 2026,we 3:30pm - 6:00pm,2026-08-04T03:20:20.382Z
+ENGL,4560,Course 4560,Victoria Olwell,3.72,—,—,Fall 2026,N/A,2026-08-04T03:20:23.309Z
+ENGL,4561,Course 4561,Christopher Krentz,3.20,—,—,Fall 2026,N/A,2026-08-04T03:20:26.239Z
+ENGL,4901,Course 4901,John Parker,—,—,—,Fall 2026,N/A,2026-08-04T03:20:29.166Z
+ENGL,4998,Course 4998,Caroline Rody,3.90,—,—,Fall 2026,N/A,2026-08-04T03:20:32.101Z
+ENGL,5500,Course 5500,Mark Edmundson,3.95,—,—,Fall 2026,N/A,2026-08-04T03:20:35.035Z
+ENGL,5500,Course 5500,Alison Booth,—,—,—,Fall 2026,N/A,2026-08-04T03:20:35.035Z
+ENGL,5520,Course 5520,Rebecca Rush,—,—,—,Fall 2026,N/A,2026-08-04T03:20:37.962Z
+ENGL,5560,Course 5560,Caroline Rody,—,—,—,Fall 2026,N/A,2026-08-04T03:20:40.891Z
+ENGL,5700,Course 5700,Lisa Woolfork,3.72,—,—,Fall 2026,N/A,2026-08-04T03:20:43.824Z
+ENGL,5810,Course 5810,David Meulen,3.87,—,—,Fall 2026,N/A,2026-08-04T03:20:46.750Z
+ENGL,5900,Course 5900,Cristina Griffin,3.94,—,—,Fall 2026,N/A,2026-08-04T03:20:49.677Z
+ENGL,8520,Course 8520,John Parker,3.88,—,—,Fall 2026,N/A,2026-08-04T03:20:52.600Z
+ENGL,8559,Course 8559,James Seitz,—,—,—,Fall 2026,we 3:30pm - 4:30pm,2026-08-04T03:20:55.528Z
+ENGL,8560,Course 8560,Stephen Arata,—,—,—,Fall 2026,N/A,2026-08-04T03:20:58.455Z
+ENGL,8570,Course 8570,Sylvia Chong,—,—,—,Fall 2026,N/A,2026-08-04T03:21:01.382Z
+ENGL,8580,Course 8580,Tamika Carey,—,—,—,Fall 2026,N/A,2026-08-04T03:21:04.306Z
+ENGL,8580,Course 8580,Taylor Schey,—,—,—,Fall 2026,N/A,2026-08-04T03:21:04.306Z
+ENGL,8596,Course 8596,Lisa Spaar,—,—,—,Fall 2026,N/A,2026-08-04T03:21:07.233Z
+ENGL,8598,Course 8598,Kevin Moffett,—,—,—,Fall 2026,N/A,2026-08-04T03:21:10.163Z
+ENGL,8998,Course 8998,Brad Pasanek,—,—,—,Fall 2026,N/A,2026-08-04T03:21:16.036Z
+ENGL,8999,Course 8999,Brad Pasanek,—,—,—,Fall 2026,N/A,2026-08-04T03:21:18.968Z
+ENGL,9710,Course 9710,Deborah McDowell,—,—,—,Fall 2026,N/A,2026-08-04T03:21:21.894Z
+ENGL,9998,Course 9998,Brad Pasanek,—,—,—,Fall 2026,N/A,2026-08-04T03:21:24.820Z
+ENGL,9999,Course 9999,Brad Pasanek,—,—,—,Fall 2026,N/A,2026-08-04T03:21:27.744Z
+ENWR,1505,Course 1505,Claire Chantell,3.45,4.9,2.0,Fall 2026,N/A,2026-08-04T03:21:42.352Z
+ENWR,1505,Course 1505,Patricia Sullivan,3.34,5.0,2.0,Fall 2026,N/A,2026-08-04T03:21:42.352Z
+ENWR,1505,Course 1505,John Modica,3.88,5.0,2.0,Fall 2026,N/A,2026-08-04T03:21:42.352Z
+ENWR,1505,Course 1505,Ethan King,3.57,—,—,Fall 2026,N/A,2026-08-04T03:21:42.352Z
+ENWR,1510,Course 1510,Jon D'Errico,3.68,3.6,3.1,Fall 2026,N/A,2026-08-04T03:21:45.299Z
+ENWR,1510,Course 1510,John Casteen,3.56,3.9,3.0,Fall 2026,N/A,2026-08-04T03:21:45.299Z
+ENWR,1510,Course 1510,Keith Driver,3.78,4.2,2.3,Fall 2026,N/A,2026-08-04T03:21:45.299Z
+ENWR,1510,Course 1510,Kate Kostelnik,3.74,4.7,3.0,Fall 2026,N/A,2026-08-04T03:21:45.299Z
+ENWR,1510,Course 1510,Charity Fowler,3.79,3.5,2.4,Fall 2026,N/A,2026-08-04T03:21:45.299Z
+ENWR,1510,Course 1510,Cory Shaman,3.78,3.9,1.9,Fall 2026,N/A,2026-08-04T03:21:45.299Z
+ENWR,1510,Course 1510,Kevin Smith,3.71,3.4,2.7,Fall 2026,N/A,2026-08-04T03:21:45.299Z
+ENWR,1510,Course 1510,devin donovan,3.96,4.1,1.9,Fall 2026,N/A,2026-08-04T03:21:45.299Z
+ENWR,1510,Course 1510,To Announced,—,4.3,3.0,Fall 2026,N/A,2026-08-04T03:21:45.299Z
+ENWR,1510,Course 1510,Kate Natishan,3.97,4.8,1.5,Fall 2026,N/A,2026-08-04T03:21:45.299Z
+ENWR,1510,Course 1510,Rhiannon Goad,3.77,—,—,Fall 2026,N/A,2026-08-04T03:21:45.299Z
+ENWR,1510,Course 1510,Davy Tran,3.90,1.0,2.0,Fall 2026,N/A,2026-08-04T03:21:45.299Z
+ENWR,1510,Course 1510,Dana Little,3.98,4.5,1.0,Fall 2026,N/A,2026-08-04T03:21:45.299Z
+ENWR,1510,Course 1510,Kate Stephenson,3.87,—,—,Fall 2026,N/A,2026-08-04T03:21:45.299Z
+ENWR,1510,Course 1510,Tyler Carter,3.80,4.7,2.0,Fall 2026,N/A,2026-08-04T03:21:45.299Z
+ENWR,1510,Course 1510,Jodie Childers,3.95,—,—,Fall 2026,N/A,2026-08-04T03:21:45.299Z
+ENWR,1510,Course 1510,Rory Sullivan,—,5.0,2.0,Fall 2026,N/A,2026-08-04T03:21:45.299Z
+ENWR,1520,Course 1520,Piers Gelly,—,—,—,Fall 2026,N/A,2026-08-04T03:21:48.229Z
+ENWR,1520,Course 1520,Sarah Richardson,3.93,4.2,2.0,Fall 2026,N/A,2026-08-04T03:21:48.229Z
+ENWR,1520,Course 1520,Kate Stephenson,3.97,4.7,2.0,Fall 2026,N/A,2026-08-04T03:21:48.229Z
+ENWR,2510,Course 2510,Penny Eschen,—,—,—,Fall 2026,N/A,2026-08-04T03:21:51.152Z
+ENWR,2510,Course 2510,Anri Yasuda,3.96,—,—,Fall 2026,N/A,2026-08-04T03:21:51.152Z
+ENWR,2510,Course 2510,devin donovan,—,4.8,1.8,Fall 2026,N/A,2026-08-04T03:21:51.152Z
+ENWR,2520,Course 2520,Kate Natishan,—,—,—,Fall 2026,N/A,2026-08-04T03:21:54.070Z
+ENWR,2520,Course 2520,Sarah Richardson,3.85,—,—,Fall 2026,N/A,2026-08-04T03:21:54.070Z
+ENWR,2520,Course 2520,Dana Little,4.00,3.7,2.0,Fall 2026,N/A,2026-08-04T03:21:54.070Z
+ENWR,2520,Course 2520,Tyler Carter,3.82,3.0,4.0,Fall 2026,N/A,2026-08-04T03:21:54.070Z
+ENWR,2520,Course 2520,Ethan King,—,4.7,3.0,Fall 2026,N/A,2026-08-04T03:21:54.070Z
+ENWR,2610,Course 2610,Keith Driver,3.71,5.0,2.5,Fall 2026,N/A,2026-08-04T03:21:56.986Z
+ENWR,2700,Course 2700,Kate Sweeney,—,3.3,1.0,Fall 2026,tuth 9:30am - 10:45am,2026-08-04T03:22:02.807Z
+ENWR,2800,Course 2800,John Modica,3.97,—,—,Fall 2026,N/A,2026-08-04T03:22:05.719Z
+ENWR,3500,Course 3500,Rhiannon Goad,3.88,—,—,Fall 2026,N/A,2026-08-04T03:22:08.637Z
+ENWR,3640,Course 3640,Steph Ceraso,—,—,—,Fall 2026,N/A,2026-08-04T03:22:11.542Z
+ENWR,3665,Course 3665,Cory Shaman,3.72,5.0,2.5,Fall 2026,N/A,2026-08-04T03:22:14.461Z
+ENWR,3680,Course 3680,Jodie Childers,—,—,—,Fall 2026,N/A,2026-08-04T03:22:17.381Z
+ENWR,3740,Course 3740,Tamika Carey,3.61,—,—,Fall 2026,N/A,2026-08-04T03:22:20.306Z
+ENWR,3900,Course 3900,John Casteen,3.76,5.0,4.0,Fall 2026,N/A,2026-08-04T03:22:23.228Z
+EVSC,1010,Course 1010,Manuel Lerdau,3.41,1.6,3.4,Fall 2026,tuth 2:00pm - 3:15pm,2026-08-04T03:22:44.917Z
+EVSC,1600,Course 1600,Frederick Cheng,3.69,4.3,1.0,Fall 2026,mowefr 11:00am - 11:50am,2026-08-04T03:22:47.861Z
+EVSC,2050,Course 2050,To Announced,—,—,—,Fall 2026,mowefr 12:00pm - 12:50pm,2026-08-04T03:22:50.775Z
+EVSC,2800,Course 2800,Lauren Simkins,3.46,—,—,Fall 2026,tuth 12:30pm - 1:45pm,2026-08-04T03:22:53.685Z
+EVSC,2801,Course 2801,Lauren Simkins,3.57,—,—,Fall 2026,N/A,2026-08-04T03:22:56.593Z
+EVSC,3020,Course 3020,John Porter,3.60,3.4,2.8,Fall 2026,tuth 2:00pm - 3:15pm,2026-08-04T03:22:59.494Z
+EVSC,3060,Course 3060,Matthew Reidenbach,3.46,4.1,2.7,Fall 2026,mowefr 1:00pm - 1:50pm,2026-08-04T03:23:02.439Z
+EVSC,3200,Course 3200,Charity Nyelele,—,—,—,Fall 2026,tuth 11:00am - 12:15pm,2026-08-04T03:23:05.353Z
+EVSC,3201,Course 3201,Charity Nyelele,—,—,—,Fall 2026,N/A,2026-08-04T03:23:08.274Z
+EVSC,3300,Course 3300,Kathleen Schiro,3.39,—,—,Fall 2026,mowefr 1:00pm - 1:50pm,2026-08-04T03:23:11.190Z
+EVSC,3301,Course 3301,Kathleen Schiro,3.77,—,—,Fall 2026,N/A,2026-08-04T03:23:14.124Z
+EVSC,3600,Course 3600,Todd Scanlon,3.13,3.9,2.7,Fall 2026,mowefr 9:00am - 9:50am,2026-08-04T03:23:17.048Z
+EVSC,3601,Course 3601,Todd Scanlon,3.62,—,—,Fall 2026,N/A,2026-08-04T03:23:19.978Z
+EVSC,4002,Course 4002,Lauren Simkins,—,—,—,Fall 2026,N/A,2026-08-04T03:23:22.895Z
+EVSC,4010,Course 4010,Xi Yang,3.67,—,—,Fall 2026,tuth 2:00pm - 3:15pm,2026-08-04T03:23:25.820Z
+EVSC,4100,Course 4100,Charity Nyelele,3.78,—,—,Fall 2026,tuth 12:30pm - 1:45pm,2026-08-04T03:23:28.715Z
+EVSC,4110,Course 4110,Karen Mcglathery,—,—,—,Fall 2026,tuth 11:00am - 12:15pm,2026-08-04T03:23:31.621Z
+EVSC,4340,Course 4340,Robert Davis,3.39,—,—,Fall 2026,mofr 10:00am - 10:50am,2026-08-04T03:23:34.541Z
+EVSC,4452,Course 4452,Kevin Grise,3.91,—,—,Fall 2026,N/A,2026-08-04T03:23:37.454Z
+EVSC,4490,Course 4490,Sally Pusede,3.56,—,—,Fall 2026,tuth 9:30am - 10:45am,2026-08-04T03:23:40.372Z
+EVSC,4559,Course 4559,Huilin Huang,—,—,—,Fall 2026,mowefr 10:00am - 10:50am; tuth 2:00pm - 3:15pm,2026-08-04T03:23:43.293Z
+EVSC,4870,Course 4870,Justin Richardson,3.92,5.0,3.0,Fall 2026,mowefr 11:00am - 11:50am,2026-08-04T03:23:46.211Z
+EVSC,4993,Course 4993,Manuel Lerdau,3.88,—,—,Fall 2026,N/A,2026-08-04T03:23:49.112Z
+EVSC,4993,Course 4993,Howard Epstein,3.71,—,—,Fall 2026,N/A,2026-08-04T03:23:49.112Z
+EVSC,4993,Course 4993,Peter Berg,4.00,—,—,Fall 2026,N/A,2026-08-04T03:23:49.112Z
+EVSC,4993,Course 4993,John Porter,—,—,—,Fall 2026,N/A,2026-08-04T03:23:49.112Z
+EVSC,4993,Course 4993,Sally Pusede,—,—,—,Fall 2026,N/A,2026-08-04T03:23:49.112Z
+EVSC,4993,Course 4993,Meghan Blumstein,—,—,—,Fall 2026,N/A,2026-08-04T03:23:49.112Z
+EVSC,4995,Course 4995,Manuel Lerdau,4.00,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Howard Epstein,3.81,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Stephen Macko,3.75,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Todd Scanlon,3.95,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Matthew Reidenbach,3.95,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,John Porter,4.00,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Robert Davis,3.94,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,David Carr,4.00,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Kyle Haynes,4.00,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Stephan Wekker,—,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Sally Pusede,3.88,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Xi Yang,3.98,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Scott Doney,4.00,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Lauren Simkins,3.91,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Max Castorani,4.00,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Ajay Limaye,—,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Karen Mcglathery,—,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,T'ai Roulston,—,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Kathleen Schiro,—,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Charity Nyelele,—,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Justin Richardson,—,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4995,Course 4995,Frederick Cheng,—,—,—,Fall 2026,N/A,2026-08-04T03:23:52.051Z
+EVSC,4999,Course 4999,Manuel Lerdau,—,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,Howard Epstein,3.86,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,Peter Berg,4.00,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,Todd Scanlon,3.93,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,Matthew Reidenbach,4.00,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,John Porter,—,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,Robert Davis,3.96,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,David Carr,4.00,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,Stephan Wekker,—,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,Xi Yang,4.00,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,Lawrence Band,—,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,Lauren Simkins,—,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,Ajay Limaye,—,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,Karen Mcglathery,—,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,T'ai Roulston,—,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,Kathleen Schiro,—,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,Charity Nyelele,—,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,Antonios Mamalakis,—,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,4999,Course 4999,Frederick Cheng,—,—,—,Fall 2026,N/A,2026-08-04T03:23:54.973Z
+EVSC,5020,Course 5020,John Porter,3.63,—,—,Fall 2026,tuth 2:00pm - 3:15pm,2026-08-04T03:23:57.888Z
+EVSC,5830,Course 5830,Justin Richardson,—,—,—,Fall 2026,mowe 2:00pm - 3:15pm,2026-08-04T03:24:00.786Z
+EVSC,7082,Course 7082,Kathleen Schiro,—,—,—,Fall 2026,N/A,2026-08-04T03:24:06.604Z
+EVSC,7092,Course 7092,Meghan Blumstein,—,—,—,Fall 2026,N/A,2026-08-04T03:24:09.511Z
+EVSC,7092,Course 7092,Huilin Huang,—,—,—,Fall 2026,N/A,2026-08-04T03:24:09.511Z
+EVSC,7559,Course 7559,Huilin Huang,—,—,—,Fall 2026,mowefr 10:00am - 10:50am; tuth 2:00pm - 3:15pm,2026-08-04T03:24:12.435Z
+EVSC,8999,Course 8999,Manuel Lerdau,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Howard Epstein,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Peter Berg,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Todd Scanlon,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Matthew Reidenbach,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Robert Davis,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,David Carr,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Kyle Haynes,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Kevin Grise,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Stephan Wekker,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Sally Pusede,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Xi Yang,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Lawrence Band,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Scott Doney,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Lauren Simkins,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Max Castorani,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Ajay Limaye,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Karen Mcglathery,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,T'ai Roulston,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Kathleen Schiro,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Charity Nyelele,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Justin Richardson,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Frederick Cheng,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,8999,Course 8999,Meghan Blumstein,—,—,—,Fall 2026,N/A,2026-08-04T03:24:15.356Z
+EVSC,9995,Course 9995,Manuel Lerdau,—,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Howard Epstein,4.00,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Peter Berg,4.00,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Stephen Macko,4.00,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Todd Scanlon,3.96,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Matthew Reidenbach,4.00,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Brian Richter,4.00,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Kyle Haynes,4.00,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Stephan Wekker,—,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Sally Pusede,4.00,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Xi Yang,4.00,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Lawrence Band,4.00,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Scott Doney,4.00,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Lauren Simkins,4.00,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Max Castorani,4.00,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Ajay Limaye,4.00,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Karen Mcglathery,—,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,T'ai Roulston,—,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Kathleen Schiro,—,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Charity Nyelele,—,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Antonios Mamalakis,—,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Justin Richardson,—,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Frederick Cheng,—,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9995,Course 9995,Meghan Blumstein,—,—,—,Fall 2026,N/A,2026-08-04T03:24:18.279Z
+EVSC,9999,Course 9999,Manuel Lerdau,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,Howard Epstein,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,Peter Berg,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,Stephen Macko,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,Todd Scanlon,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,Matthew Reidenbach,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,John Porter,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,Robert Davis,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,David Carr,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,Kyle Haynes,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,Kevin Grise,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,Stephan Wekker,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,Sally Pusede,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,Xi Yang,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,Lawrence Band,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,Scott Doney,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,Lauren Simkins,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,Max Castorani,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,Ajay Limaye,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.222Z
+EVSC,9999,Course 9999,Karen Mcglathery,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.223Z
+EVSC,9999,Course 9999,T'ai Roulston,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.223Z
+EVSC,9999,Course 9999,Kathleen Schiro,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.223Z
+EVSC,9999,Course 9999,Charity Nyelele,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.223Z
+EVSC,9999,Course 9999,Justin Richardson,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.223Z
+EVSC,9999,Course 9999,Frederick Cheng,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.223Z
+EVSC,9999,Course 9999,Meghan Blumstein,—,—,—,Fall 2026,N/A,2026-08-04T03:24:21.223Z
+FREN,1010,Course 1010,Cecile Rey,3.47,4.7,2.9,Fall 2026,mowe 11:00am - 11:50am; tuth 11:00am - 12:15pm,2026-08-04T03:24:33.531Z
+FREN,1010,Course 1010,Faculty Staff,—,—,—,Fall 2026,mowe 1:00pm - 1:50pm; tuth 12:30pm - 1:45pm; mowe 9:00am - 9:50am; tuth 9:30am - 10:45am,2026-08-04T03:24:33.531Z
+FREN,1020,Course 1020,Faculty Staff,—,—,—,Fall 2026,mowe 12:00pm - 12:50pm; tuth 12:30pm - 1:45pm; mowe 9:00am - 9:50am; tuth 9:30am - 10:45am,2026-08-04T03:24:36.451Z
+FREN,1050,Course 1050,Faculty Staff,—,4.7,4.0,Fall 2026,mowe 12:00pm - 12:50pm; tuth 12:30pm - 1:45pm,2026-08-04T03:24:39.369Z
+FREN,2010,Course 2010,Spyridon Simotas,3.74,—,—,Fall 2026,mowefr 1:00pm - 1:50pm; mowefr 12:00pm - 12:50pm,2026-08-04T03:24:42.273Z
+FREN,2010,Course 2010,Faculty Staff,—,4.0,3.0,Fall 2026,tuth 9:30am - 10:45am; mowefr 11:00am - 11:50am; tuth 12:30pm - 1:45pm; tuth 2:00pm - 3:15pm; mowefr 10:00am - 10:50am,2026-08-04T03:24:42.273Z
+FREN,2020,Course 2020,Rachel Geer,3.67,4.5,2.6,Fall 2026,tuth 12:30pm - 1:45pm,2026-08-04T03:24:45.206Z
+FREN,2020,Course 2020,Faculty Staff,—,—,—,Fall 2026,mowefr 1:00pm - 1:50pm; mowefr 11:00am - 11:50am; tuth 9:30am - 10:45am,2026-08-04T03:24:45.206Z
+FREN,2020,Course 2020,Christopher Ice,3.95,—,—,Fall 2026,mowefr 10:00am - 10:50am,2026-08-04T03:24:45.206Z
+FREN,3028,Course 3028,Faculty Staff,—,—,—,Fall 2026,N/A,2026-08-04T03:24:48.129Z
+FREN,3031,Course 3031,Amy Ogden,3.37,3.3,3.0,Fall 2026,N/A,2026-08-04T03:24:51.047Z
+FREN,3031,Course 3031,Rachel Geer,3.71,4.7,3.3,Fall 2026,N/A,2026-08-04T03:24:51.047Z
+FREN,3031,Course 3031,Christopher Ice,—,—,—,Fall 2026,N/A,2026-08-04T03:24:51.047Z
+FREN,3034,Course 3034,Christopher Ice,4.00,—,—,Fall 2026,mowefr 9:00am - 9:50am,2026-08-04T03:24:53.955Z
+FREN,3035,Course 3035,Spyridon Simotas,3.81,—,—,Fall 2026,mowe 3:30pm - 4:45pm,2026-08-04T03:24:56.855Z
+FREN,3140,Course 3140,Elizabeth Hall,—,—,—,Fall 2026,N/A,2026-08-04T03:24:59.772Z
+FREN,3150,Course 3150,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:25:02.716Z
+FREN,3882,Course 3882,Cheryl Krueger,3.97,—,—,Fall 2026,tuth 2:00pm - 3:15pm,2026-08-04T03:25:08.556Z
+FREN,4520,Course 4520,To Announced,—,—,—,Fall 2026,mowe 3:30pm - 4:45pm,2026-08-04T03:25:11.477Z
+FREN,4585,Course 4585,Cheryl Krueger,3.91,5.0,3.0,Fall 2026,tuth 12:30pm - 1:45pm,2026-08-04T03:25:14.387Z
+FREN,4854,Course 4854,Ferial Boutaghou,3.64,—,—,Fall 2026,tuth 9:30am - 10:45am,2026-08-04T03:25:17.285Z
+FREN,4993,Course 4993,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:25:20.204Z
+FREN,4998,Course 4998,Jennifer Tsien,—,—,—,Fall 2026,N/A,2026-08-04T03:25:23.096Z
+FREN,5011,Course 5011,Amy Ogden,4.00,—,—,Fall 2026,mo 1:00pm - 1:50pm,2026-08-04T03:25:26.006Z
+FREN,5510,Course 5510,Amy Ogden,3.26,—,—,Fall 2026,N/A,2026-08-04T03:25:28.922Z
+FREN,5540,Course 5540,Jennifer Tsien,3.81,—,—,Fall 2026,N/A,2026-08-04T03:25:31.845Z
+FREN,5584,Course 5584,Ari Blatt,3.74,—,—,Fall 2026,N/A,2026-08-04T03:25:34.748Z
+FREN,7040,Course 7040,Karen James,3.96,—,—,Fall 2026,tuth 2:00pm - 3:15pm,2026-08-04T03:25:37.663Z
+FREN,8510,Course 8510,Amy Ogden,3.76,—,—,Fall 2026,mowe 2:00pm - 3:15pm,2026-08-04T03:25:40.574Z
+FREN,8540,Course 8540,Jennifer Tsien,3.67,—,—,Fall 2026,N/A,2026-08-04T03:25:43.486Z
+FREN,8584,Course 8584,Ari Blatt,3.88,—,—,Fall 2026,N/A,2026-08-04T03:25:46.388Z
+FREN,9998,Course 9998,Ferial Boutaghou,—,—,—,Fall 2026,N/A,2026-08-04T03:25:49.325Z
+FREN,9999,Course 9999,Amy Ogden,—,—,—,Fall 2026,N/A,2026-08-04T03:25:52.240Z
+FREN,9999,Course 9999,Cheryl Krueger,—,—,—,Fall 2026,N/A,2026-08-04T03:25:52.240Z
+FREN,9999,Course 9999,Alison Levine,—,—,—,Fall 2026,N/A,2026-08-04T03:25:52.240Z
+FREN,9999,Course 9999,Claire Lyu,—,—,—,Fall 2026,N/A,2026-08-04T03:25:52.240Z
+FREN,9999,Course 9999,Ari Blatt,—,—,—,Fall 2026,N/A,2026-08-04T03:25:52.240Z
+FREN,9999,Course 9999,Jennifer Tsien,—,—,—,Fall 2026,N/A,2026-08-04T03:25:52.240Z
+FREN,9999,Course 9999,Janet Horne,1.30,—,—,Fall 2026,N/A,2026-08-04T03:25:52.240Z
+FREN,9999,Course 9999,Deborah McGrady,—,—,—,Fall 2026,N/A,2026-08-04T03:25:52.240Z
+FREN,9999,Course 9999,Ferial Boutaghou,—,—,—,Fall 2026,N/A,2026-08-04T03:25:52.240Z
+GERM,1010,Course 1010,Stefanie Parker,3.66,4.0,3.0,Fall 2026,mowefr 11:00am - 11:50am; mowefr 1:00pm - 1:50pm; mowefr 12:00pm - 12:50pm,2026-08-04T03:26:03.197Z
+GERM,1015,Course 1015,Benjamin Bennett,—,—,—,Fall 2026,tuth 2:00pm - 3:15pm,2026-08-04T03:26:06.124Z
+GERM,1020,Course 1020,Marcel Schmid,3.91,—,—,Fall 2026,mowefr 10:00am - 10:50am,2026-08-04T03:26:09.051Z
+GERM,2010,Course 2010,Marcel Schmid,—,—,—,Fall 2026,mowefr 11:00am - 11:50am,2026-08-04T03:26:11.981Z
+GERM,2020,Course 2020,Chrisann Zuerner,3.84,4.5,1.5,Fall 2026,mowefr 12:00pm - 12:50pm; mowefr 9:00am - 9:50am,2026-08-04T03:26:14.890Z
+GERM,3000,Course 3000,Michael Wellmon,3.55,5.0,3.0,Fall 2026,N/A,2026-08-04T03:26:17.790Z
+GERM,3300,Course 3300,Stefanie Parker,—,—,—,Fall 2026,tba,2026-08-04T03:26:20.701Z
+GERM,3559,Course 3559,To Announced,—,—,—,Fall 2026,mowefr 1:00pm - 1:50pm,2026-08-04T03:26:23.635Z
+GERM,3559,Course 3559,Chrisann Zuerner,3.92,—,—,Fall 2026,mowefr 10:00am - 10:50am,2026-08-04T03:26:23.635Z
+GERM,4993,Course 4993,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:26:26.558Z
+GERM,4998,Course 4998,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:26:29.467Z
+GERM,5015,Course 5015,Benjamin Bennett,—,—,—,Fall 2026,tuth 2:00pm - 3:15pm,2026-08-04T03:26:32.386Z
+HIST,1501,Course 1501,Penny Eschen,—,—,—,Fall 2026,N/A,2026-08-04T03:26:45.812Z
+HIST,2011,Course 2011,Emily Burrill,3.64,2.0,3.6,Fall 2026,mowe 1:00pm - 1:50pm,2026-08-04T03:26:48.733Z
+HIST,2011,Course 2011,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:26:48.733Z
+HIST,2212,Course 2212,S. Edelson,3.68,3.5,2.0,Fall 2026,mowe 2:00pm - 2:50pm,2026-08-04T03:26:51.646Z
+HIST,2212,Course 2212,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:26:51.646Z
+HIST,2559,Course 2559,Penny Eschen,—,—,—,Fall 2026,tuth 2:00pm - 3:15pm,2026-08-04T03:26:54.558Z
+HIST,3281,Course 3281,Jeffrey Rossman,3.30,3.9,3.2,Fall 2026,mowe 12:00pm - 12:50pm,2026-08-04T03:26:57.480Z
+HIST,3281,Course 3281,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:26:57.480Z
+HIST,3501,Course 3501,Brian Owensby,3.72,—,—,Fall 2026,N/A,2026-08-04T03:27:00.390Z
+HIST,4501,Course 4501,William Hitchcock,3.71,—,—,Fall 2026,N/A,2026-08-04T03:27:03.300Z
+HIST,4501,Course 4501,Jeffrey Rossman,3.46,—,—,Fall 2026,N/A,2026-08-04T03:27:03.300Z
+HIST,4990,Course 4990,Joshua White,3.89,—,—,Fall 2026,N/A,2026-08-04T03:27:06.226Z
+HIST,7001,Course 7001,Erin Lambert,—,—,—,Fall 2026,N/A,2026-08-04T03:27:09.146Z
+HIST,7001,Course 7001,Justene Edwards,—,—,—,Fall 2026,N/A,2026-08-04T03:27:09.146Z
+HIST,8999,Course 8999,Claudrena Harold,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Grace Hale,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Cong Zhang,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Jon Lendon,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Paul Kershaw,1.30,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Paul Halliday,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Thomas Klubock,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Brian Owensby,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,William Hitchcock,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Erin Lambert,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Elizabeth Meyer,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Xiaoyuan Liu,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Erik Linstrum,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Christa Dierksheide,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Andrew Kahrl,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Kyrill Kunakhovich,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Fahad Bishara,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Christopher Gratien,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Penny Eschen,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Caroline Janney,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Justene Edwards,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,8999,Course 8999,Indrani Chatterjee,—,—,—,Fall 2026,N/A,2026-08-04T03:27:12.072Z
+HIST,9964,Course 9964,Cong Zhang,—,—,—,Fall 2026,N/A,2026-08-04T03:27:17.904Z
+HIST,9964,Course 9964,Thomas Klubock,—,—,—,Fall 2026,N/A,2026-08-04T03:27:17.904Z
+HIST,9964,Course 9964,Brian Owensby,—,—,—,Fall 2026,N/A,2026-08-04T03:27:17.904Z
+HIST,9964,Course 9964,Neeti Nair,—,—,—,Fall 2026,N/A,2026-08-04T03:27:17.904Z
+HIST,9964,Course 9964,William Hitchcock,—,—,—,Fall 2026,N/A,2026-08-04T03:27:17.904Z
+HIST,9964,Course 9964,Erin Lambert,3.85,—,—,Fall 2026,N/A,2026-08-04T03:27:17.904Z
+HIST,9964,Course 9964,Joshua White,—,—,—,Fall 2026,N/A,2026-08-04T03:27:17.904Z
+HIST,9964,Course 9964,Sarah Milov,—,—,—,Fall 2026,N/A,2026-08-04T03:27:17.904Z
+HIST,9964,Course 9964,Erik Linstrum,—,—,—,Fall 2026,N/A,2026-08-04T03:27:17.904Z
+HIST,9964,Course 9964,Fahad Bishara,—,—,—,Fall 2026,N/A,2026-08-04T03:27:17.904Z
+HIST,9964,Course 9964,Christopher Gratien,—,—,—,Fall 2026,N/A,2026-08-04T03:27:17.904Z
+HIST,9964,Course 9964,Penny Eschen,—,—,—,Fall 2026,N/A,2026-08-04T03:27:17.904Z
+HIST,9964,Course 9964,Caroline Janney,—,—,—,Fall 2026,N/A,2026-08-04T03:27:17.904Z
+HIST,9964,Course 9964,Justene Edwards,—,—,—,Fall 2026,N/A,2026-08-04T03:27:17.904Z
+HIST,9999,Course 9999,Claudrena Harold,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Grace Hale,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Cong Zhang,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,James Loeffler,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Paul Halliday,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Thomas Klubock,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Brian Owensby,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Neeti Nair,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,William Hitchcock,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Philip Zelikow,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Elizabeth Varon,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Erin Lambert,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Joshua White,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Elizabeth Meyer,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Xiaoyuan Liu,1.30,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Erik Linstrum,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Christa Dierksheide,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Andrew Kahrl,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Fahad Bishara,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Christopher Gratien,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Kevin Gaines,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Penny Eschen,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Caroline Janney,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,S. Edelson,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIST,9999,Course 9999,Justene Edwards,—,—,—,Fall 2026,N/A,2026-08-04T03:27:23.717Z
+HIAF,2001,Course 2001,James Fleur,3.50,4.5,3.1,Fall 2026,tuth 9:30am - 10:45am,2026-08-04T03:27:33.320Z
+HIAF,2001,Course 2001,To Announced,—,—,—,Fall 2026,N/A,2026-08-04T03:27:33.320Z
+HIAF,3011,Course 3011,Amir Syed,—,—,—,Fall 2026,tuth 11:00am - 12:15pm,2026-08-04T03:27:36.251Z
+HIAF,3112,Course 3112,James Fleur,3.88,5.0,2.5,Fall 2026,tuth 2:00pm - 3:15pm,2026-08-04T03:27:39.170Z
+HIAF,3501,Course 3501,James Fleur,3.98,—,—,Fall 2026,N/A,2026-08-04T03:27:42.091Z
+HIAF,5559,Course 5559,Emily Burrill,—,—,—,Fall 2026,tu 2:00pm - 4:30pm,2026-08-04T03:27:45.007Z
+HIAF,5559,Course 5559,Amir Syed,—,—,—,Fall 2026,tu 2:00pm - 4:30pm,2026-08-04T03:27:45.007Z
