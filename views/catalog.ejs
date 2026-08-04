@@ -300,7 +300,7 @@
                                     const averageGPA = sectionsWithGPA.length > 0 ? (totalGPA / sectionsWithGPA.length) : null;
                                     
                                     // Build Course Forum URL
-                                    const courseForumUrl = `https://thecourseforum.com/course/${course.mnemonic.toLowerCase()}/${course.number}/All`;
+                                    const courseForumUrl = `https://thecourseforum.com/course/${course.mnemonic.toLowerCase()}/${course.number}/`;
                                 %>
                                 <% if (averageGPA !== null && !isNaN(averageGPA)) { %>
                                     <a href="<%= courseForumUrl %>" target="_blank" rel="noopener noreferrer" class="text-center hover:opacity-80 transition-opacity block">
