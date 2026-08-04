@@ -59,19 +59,20 @@ node scripts/viewMongoCourses.js 1262
 GPA data is stored locally in `localdata/master-gpa-data.csv` and loaded by the server automatically.
 
 ```bash
-# Scrape GPA data for a single department (updates local CSV)
-node scripts/scrapeCourseForum.js --departmentId=31 --subject=CS --term=1262
+# Scrape GPA data for a single department (updates data/master-gpa-data.csv)
+# CourseForum URLs are /course/{SUBJECT}/{NUMBER}/ (no /all; defaults to current semester)
+node scripts/scrapeCourseForum.js --departmentId=31 --subject=CS --term=1268
 
 # Scrape GPA data for all departments (takes ~30 minutes)
-node scripts/scrapeCourseForum.js --all --term=1262
+node scripts/scrapeCourseForum.js --all --term=1268
 
 # Scrape GPA data in ranges (recommended for better control)
-node scripts/scrapeCourseForum.js --range=1-10 --term=1262
-node scripts/scrapeCourseForum.js --range=11-20 --term=1262
-node scripts/scrapeCourseForum.js --range=21-30 --term=1262
-node scripts/scrapeCourseForum.js --range=31-40 --term=1262
-node scripts/scrapeCourseForum.js --range=41-50 --term=1262
-node scripts/scrapeCourseForum.js --range=51-61 --term=1262
+node scripts/scrapeCourseForum.js --range=1-10 --term=1268
+node scripts/scrapeCourseForum.js --range=11-20 --term=1268
+node scripts/scrapeCourseForum.js --range=21-30 --term=1268
+node scripts/scrapeCourseForum.js --range=31-40 --term=1268
+node scripts/scrapeCourseForum.js --range=41-50 --term=1268
+node scripts/scrapeCourseForum.js --range=51-61 --term=1268
 
 # GPA data is automatically merged with course data when displaying
 # The server loads from localdata/master-gpa-data.csv on each page load

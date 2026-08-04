@@ -161,21 +161,30 @@ class CourseForumScraper {
   // Scrape instructor data from a specific course page
   async scrapeCoursePage(courseNumber) {
     try {
-      // Use /all at the end of URL to show all semesters (faster than clicking button)
-      const courseUrl = `https://thecourseforum.com/course/${this.subject}/${courseNumber}/all`;
+      // Current semester instructors/GPA live at /course/{subj}/{num}/
+      // (/all was removed; use ?latest=false for last-5-years if needed)
+      const courseUrl = `https://thecourseforum.com/course/${this.subject}/${courseNumber}/`;
       console.log(`📖 Scraping ${this.subject} ${courseNumber}: ${courseUrl}`);
       
       await this.page.goto(courseUrl, {
         waitUntil: 'domcontentloaded',
         timeout: 45000
       });
+
+      // 404 or missing course pages have no instructor cards
+      const pageTitle = await this.page.title();
+      if (/404/i.test(pageTitle)) {
+        console.log(`⚠️ Course page not found for ${this.subject} ${courseNumber}`);
+        return [];
+      }
+
       // Ads/analytics prevent reliable networkidle; wait for instructor list instead.
-      await this.page.waitForSelector('a.instructor-card, .instructor-list', {
+      await this.page.waitForSelector('a.instructor-card, .instructors-header__title', {
         timeout: 20000
       }).catch(() => {});
       await new Promise(resolve => setTimeout(resolve, 800));
       
-      // Extract instructor data from this course page (layout: a.instructor-card, see theCourseForum 2025+ redesign)
+      // Extract instructor data (layout: a.instructor-card + recency toggle)
       const instructorData = await this.page.evaluate(() => {
         const instructors = [];
         const recentSemesters = [
@@ -185,7 +194,8 @@ class CourseForumScraper {
           'Fall 2025',
           'Spring 2026',
           'Summer 2026',
-          'Fall 2026'
+          'Fall 2026',
+          'Spring 2027'
         ];
 
         const cards = document.querySelectorAll('a.instructor-card');
@@ -237,7 +247,7 @@ class CourseForumScraper {
       });
 
       if (instructorData && instructorData.length > 0) {
-        console.log(`✅ Found ${instructorData.length} instructors for ${this.subject} ${courseNumber} (recent semesters)`);
+        console.log(`✅ Found ${instructorData.length} instructors for ${this.subject} ${courseNumber} (current semester)`);
         
         // Add course context to each instructor record
         instructorData.forEach(instructor => {
